@@ -74,6 +74,13 @@ p{margin:0}
 
 /* Header */
 .site-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+/* Audience switch (research: persistent pro / patient zones on every page) */
+.zone-bar{background:var(--sunk);border-bottom:1px solid var(--line)}
+.zone-bar .wrap{padding-block:0}
+.zone-bar nav{display:flex;gap:.25rem}
+.zone-bar a{font:600 .8rem var(--body);color:var(--muted);text-decoration:none;padding:.45rem .7rem;border-bottom:2px solid transparent}
+.zone-bar a:hover{color:var(--ink)}
+.zone-bar a[aria-current="true"]{color:var(--brand);border-bottom-color:var(--brand)}
 .site-head .wrap{display:flex;align-items:center;gap:1.25rem;padding-block:.7rem}
 .logo{display:block;width:132px;aspect-ratio:214/68;background:var(--logo);
   -webkit-mask:url(assets/vipok-logo.svg) no-repeat center/contain;mask:url(assets/vipok-logo.svg) no-repeat center/contain;flex:none}
@@ -416,6 +423,9 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
 </div>
 
 <header class="site-head">
+  <div class="zone-bar"><div class="wrap"><nav aria-label="Audience">
+    <a href="#home" data-zone="pro">Eye care professionals</a><a href="#patients" data-zone="patients">Patients &amp; parents</a>
+  </nav></div></div>
   <div class="wrap">
     <a href="#home" class="logo" aria-label="VIPOK Inc. home"></a>
     <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
@@ -900,11 +910,12 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       <header class="page-head">
         <p class="eyebrow">VIPOK admin · Design options</p>
         <h1>Three directions, one palette</h1>
-        <p class="lede">Same VIPOK blue, lime and navy, and the same content. Each option lays out the home page and the doctor dashboard differently. Pick one, or mix parts, before the full build.</p>
+        <p class="lede">Same VIPOK blue, lime and navy, and the same content. Each option lays out the home page and the doctor dashboard differently.</p>
       </header>
+      <div class="callout"><strong>Decision (2026-09-28): Option A, plus C’s audience switch.</strong> A is the only option with every page built, and its top navigation suits a manufacturer site. C’s public lens-selector hero conflicts with keeping the chart behind the doctor login. From C we kept the persistent “Eye care professionals / Patients &amp; parents” switch, now at the top of every page. B and C stay here for reference.</div>
       <div class="options">
         <article class="opt">
-          <div class="opt-head"><div><span class="eyebrow">Option A · current mockup</span><h2>Scanline heritage</h2></div><a class="btn btn-ghost btn-sm" href="#home">View A</a></div>
+          <div class="opt-head"><div><span class="eyebrow">Option A · chosen</span><h2>Scanline heritage</h2></div><a class="btn btn-ghost btn-sm" href="#home">View A</a></div>
           <p>Full-width blue hero with the old site's scanlines and a lens-zone bullseye, a facts strip, then stacked sections. Top navigation. Closest to a classic manufacturer site.</p>
         </article>
         <article class="opt">
@@ -1299,6 +1310,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   const nav = document.getElementById("nav");
   const menuBtn = document.getElementById("menu-btn");
 
+  const PATIENT_ROUTES = ["patients", "safety"];
   function show(route) {
     if (!pages.some(p => p.dataset.route === route)) route = "home";
     pages.forEach(p => { p.hidden = p.dataset.route !== route; });
@@ -1307,6 +1319,9 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       else a.removeAttribute("aria-current");
     });
     nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false");
+    // Patient-facing routes light up the "Patients & parents" zone; everything else is professional.
+    const zone = PATIENT_ROUTES.includes(route) ? "patients" : "pro";
+    document.querySelectorAll(".zone-bar a").forEach(a => a.setAttribute("aria-current", String(a.dataset.zone === zone)));
     applyRole();
     window.scrollTo(0, 0);
   }
