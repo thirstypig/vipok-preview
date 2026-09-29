@@ -344,6 +344,9 @@ a.tile:hover{border-color:var(--brand);color:var(--ink)}
 .qlist{display:grid;gap:1rem;max-width:80ch;padding-left:1.4rem}
 .qlist i{color:var(--muted)}
 .changes{display:grid;gap:.4rem;max-width:80ch}
+.email-draft{max-width:80ch}
+.email-body{white-space:pre-wrap;font-size:.95rem;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:1rem 1.1rem;user-select:text}
+.todo-link{display:inline-block;margin-top:.3rem;font-size:.85rem;font-weight:600}
 
 .spec tbody th{font:600 .88rem var(--body);text-transform:none;letter-spacing:0;color:var(--ink);background:transparent;white-space:nowrap}
 
@@ -1503,6 +1506,10 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
         n.textContent = i.n ?? "";
         title.querySelector("b").textContent = i.title || "";
         title.querySelector("small").textContent = i.detail || "";
+        if (typeof i.link === "string" && /^#[a-z-]+$/.test(i.link)) {
+          const go = Object.assign(document.createElement("a"), { href: i.link, className: "todo-link", textContent: (i.link_label || "Open") + " →" });
+          title.append(document.createElement("br"), go);
+        }
         who.textContent = i.owner || "";
         added.textContent = i.added || "";
         const d = target.firstChild; d.value = i.target || ""; d.disabled = todoReadOnly;
@@ -1713,6 +1720,37 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     catch { getSelection().selectAllChildren($("email")); btn.textContent = "Selected"; }
     setTimeout(() => (btn.textContent = "Copy"), 1800);
   });
+
+  /* ---------- Legal review email (admin) ----------
+     Copy puts the subject and body on the clipboard. The PDF is published
+     next to this page; the downloads capability hands it to the viewer, who
+     confirms the save. The section is absent from the public preview build. */
+  const draftBtn = $("copy-email-draft");
+  if (draftBtn) {
+    const emailStatus = msg => { const s = $("email-status"); s.textContent = msg; s.hidden = !msg; };
+    draftBtn.addEventListener("click", async () => {
+      const text = `Subject: ${$("email-subject").textContent}\n\n${$("email-body").textContent}`;
+      try { await navigator.clipboard.writeText(text); emailStatus("Copied. Paste it into a new message and attach the PDF."); }
+      catch { getSelection().selectAllChildren($("email-body")); emailStatus("Copying isn't allowed here, so the email text is selected. Press ⌘C or Ctrl+C."); }
+    });
+    (async () => {
+      const downloads = window.claude && window.claude.use ? await window.claude.use("downloads") : null;
+      if (!downloads) return; // the button stays hidden where files can't be offered
+      const pdfBtn = $("download-legal-pdf");
+      pdfBtn.hidden = false;
+      pdfBtn.addEventListener("click", async () => {
+        try {
+          const res = await fetch("docs/legal/vipok-legal-review-questions.pdf");
+          if (!res.ok) throw { code: "fetch_failed" };
+          await downloads.save({ filename: "vipok-legal-review-questions.pdf", data: await res.blob() });
+          emailStatus("");
+        } catch (err) {
+          if (err && err.code === "declined") return; // the viewer said no; that's fine
+          emailStatus(err && err.code === "rate_limited" ? "A save prompt is already open." : "Couldn't prepare the PDF. Reload the page and try again.");
+        }
+      });
+    })();
+  }
 })();
 </script>
 
