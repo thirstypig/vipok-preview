@@ -823,16 +823,11 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       <form class="form" id="contact-form">
         <div class="field"><label for="c-first">First name <i>*</i></label><input id="c-first" name="firstname" required autocomplete="given-name"></div>
         <div class="field"><label for="c-last">Last name <i>*</i></label><input id="c-last" name="lastname" required autocomplete="family-name"></div>
-        <div class="field"><label for="c-title">Credentials</label><select id="c-title" name="title"><option value="">Select</option><option>OD</option><option>MD (Ophthalmologist)</option><option>Optometrist (non-US)</option><option>Practice manager</option><option>Other</option></select></div>
-        <div class="field"><label for="c-practice">Practice name</label><input id="c-practice" name="company" autocomplete="organization"></div>
-        <div class="field full"><label for="c-addr">Address <i>*</i></label><input id="c-addr" name="address1" required autocomplete="address-line1"></div>
-        <div class="field"><label for="c-city">City <i>*</i></label><input id="c-city" name="city" required autocomplete="address-level2"></div>
-        <div class="field"><label for="c-state">State / province <i>*</i></label><input id="c-state" name="state" required autocomplete="address-level1"></div>
-        <div class="field"><label for="c-zip">Postal code <i>*</i></label><input id="c-zip" name="zip" required autocomplete="postal-code"></div>
-        <div class="field"><label for="c-country">Country <i>*</i></label><input id="c-country" name="country" required autocomplete="country-name"></div>
-        <div class="field"><label for="c-phone">Office phone <i>*</i></label><input id="c-phone" name="phone" type="tel" required autocomplete="tel"></div>
         <div class="field"><label for="c-email">Email <i>*</i></label><input id="c-email" name="email" type="email" required autocomplete="email"></div>
-        <div class="field full"><label for="c-comments">Tell us about your practice</label><textarea id="c-comments" name="comments" rows="5" placeholder="Current ortho-k volume, markets you serve, questions…"></textarea></div>
+        <div class="field"><label for="c-title">I am a</label><select id="c-title" name="title"><option value="">Select</option><option>Optometrist (OD)</option><option>Ophthalmologist (MD / DO)</option><option>Eye care practitioner outside the US</option><option>Practice staff</option><option>Distributor</option><option>Other</option></select></div>
+        <div class="field"><label for="c-practice">Practice or company</label><input id="c-practice" name="company" autocomplete="organization"></div>
+        <div class="field"><label for="c-country">Country <i>*</i></label><input id="c-country" name="country" required autocomplete="country-name"></div>
+        <div class="field full"><label for="c-comments">How can we help? <i>*</i></label><textarea id="c-comments" name="comments" rows="5" required placeholder="Questions about VIPOK lenses, distribution in your country, or training…"></textarea></div>
         <div class="full" style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap"><button class="btn btn-primary" type="submit">Send inquiry</button><span style="font-size:.85rem;color:var(--muted)"><i style="color:var(--brand);font-style:normal">*</i> Required</span></div>
         <p class="full form-fine">VIPOK uses these details only to respond to your inquiry, as described in the <a href="#privacy">Privacy Policy</a>. Please don’t include patient names or other patient health information. <b>Preview: this form doesn’t send anything.</b></p>
         <p class="form-status" id="form-status" hidden></p>
@@ -1154,7 +1149,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       <p>This policy explains how VIPOK Inc. (“VIPOK”, “we”) collects, uses and shares personal information through this website and the VIPOK doctor portal. Contact us at customer_service@vipok.com or <span class="tbd">[mailing address]</span>.</p>
       <h2>Information we collect</h2>
       <ul>
-        <li><b>Inquiries:</b> the name, credentials, practice, address, phone, email and message you send through the contact form.</li>
+        <li><b>Inquiries:</b> the name, email, role, practice or company, country and message you send through the contact form.</li>
         <li><b>Doctor accounts:</b> your email, password (stored only in hashed form by our sign-in provider), name, professional credentials, license number and issuing state or country, NPI number if you give it, and practice details.</li>
         <li><b>Orders</b> (planned): what you order and where it ships. Orders identify patients only by your own reference number. Please do not send us patient names or other patient health information.</li>
         <li><b>Technical information:</b> our hosting provider records standard server logs, such as IP address, browser type and pages requested. The site loads fonts from Google Fonts and scripts from cdnjs (Cloudflare), which receive your IP address when your browser requests them. We do not use advertising cookies. <span class="tbd">[Confirm whether any analytics will be used.]</span></li>
@@ -1696,4 +1691,5 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
 })();
 </script>
 
-<div style="position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:9999;max-width:calc(100% - 32px);padding:6px 14px;border-radius:999px;background:#1d2a33;color:#fff;font:500 12px/1.4 system-ui,sans-serif;text-align:center;pointer-events:none;opacity:.9">Preview build · lens chart values are sample data, not VIPOK’s chart</div>
+<style>.pv-banner{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:9999;max-width:calc(100% - 32px);padding:6px 14px;border-radius:999px;background:#1d2a33;color:#fff;font:500 12px/1.4 system-ui,sans-serif;text-align:center;pointer-events:none;opacity:.9}@media (max-width:640px){.pv-banner{position:static;transform:none;margin:16px;border-radius:12px;opacity:1}}</style>
+<div class="pv-banner" role="note">Preview build · lens chart values are sample data, not VIPOK’s chart</div>

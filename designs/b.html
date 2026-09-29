@@ -99,6 +99,7 @@ p{margin:0}
   .shell{grid-template-columns:1fr}
   .topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.7rem 16px;background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
   .topbar .logo{width:120px}
+  [id^="home-"]{scroll-margin-top:4.5rem}
   .side{display:none;position:fixed;inset:0;top:0;height:100%;z-index:30;border-right:0}
   .side.open{display:flex}
   .side .close{display:inline-flex!important}
@@ -489,4 +490,5 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
 </body>
 </html>
 
-<div style="position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:9999;max-width:calc(100% - 32px);padding:6px 14px;border-radius:999px;background:#1d2a33;color:#fff;font:500 12px/1.4 system-ui,sans-serif;text-align:center;pointer-events:none;opacity:.9">Preview build · lens chart values are sample data, not VIPOK’s chart</div>
+<style>.pv-banner{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:9999;max-width:calc(100% - 32px);padding:6px 14px;border-radius:999px;background:#1d2a33;color:#fff;font:500 12px/1.4 system-ui,sans-serif;text-align:center;pointer-events:none;opacity:.9}@media (max-width:640px){.pv-banner{position:static;transform:none;margin:16px;border-radius:12px;opacity:1}}</style>
+<div class="pv-banner" role="note">Preview build · lens chart values are sample data, not VIPOK’s chart</div>

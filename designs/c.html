@@ -288,12 +288,12 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
       <a href="#home" class="logo" aria-label="VIPOK Inc. home"></a>
       <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="links">Menu</button>
       <nav class="links" id="links" aria-label="Main">
-        <a href="#home">Ortho-k system</a>
-        <a href="#home">Lenses</a>
-        <a href="#home">Literature</a>
-        <a href="#home">Certification</a>
+        <a href="#home-system">Ortho-k system</a>
+        <a href="#home-lenses">Lenses</a>
+        <a href="#home-literature">Literature</a>
+        <a href="#home-cert">Certification</a>
         <a href="#patients">For patients</a>
-        <a href="#home">About</a>
+        <a href="../index.html#about" target="_top">About</a>
       </nav>
       <a href="#portal" class="btn btn-lime cta">Become a VIPOK doctor</a>
     </div>
@@ -344,12 +344,12 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
       </div>
     </div>
 
-    <div class="wrap section">
+    <div class="wrap section" id="home-system">
       <div class="section-head">
         <div><p class="label">The VIPOK system</p><h2>Everything a fitting practice needs</h2></div>
       </div>
       <div class="bento">
-        <article class="tile s4">
+        <article id="home-literature" class="tile s4">
           <div class="section-head" style="margin:0"><div><p class="label">Literature</p><h3>Advanced Inventory Orthokeratology System</h3></div><span class="tag">Case report</span></div>
           <p class="rx">Harris DH. "Advanced Inventory Orthokeratology System." Contact Lens Spectrum, July 2003.</p>
           <p>A practitioner's report of five cases (ages 14–39) selected from his first 50 patients fitted with the VIPOK inventory system. It is a case report, not a controlled study; individual results vary. The article states no financial disclosures.</p>
@@ -367,7 +367,7 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
           </ul>
         </article>
 
-        <article class="tile s2">
+        <article id="home-lenses" class="tile s2">
           <p class="label">Lens family</p>
           <div class="family">
             <div><b>VIPOK™</b><span>Four-curve double reverse geometry</span></div>
@@ -386,7 +386,7 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
           </table>
         </article>
 
-        <article class="tile s2">
+        <article id="home-cert" class="tile s2">
           <p class="label">Certification</p>
           <span class="big-num">45–60<small style="font-size:.9rem;color:var(--muted)"> min</small></span>
           <h3>Online fitting course</h3>
@@ -561,9 +561,11 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
     home.hidden = isPortal; portal.hidden = !isPortal;
     if (!isPortal) selectTab(r === "patients" ? 1 : 0);
     document.querySelectorAll(".links a").forEach(a =>
-      a.getAttribute("href") === "#patients" && r === "patients" ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
+      a.getAttribute("href") === "#" + r ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
     $("links").classList.remove("open"); $("menu-btn").setAttribute("aria-expanded", "false");
-    window.scrollTo(0, 0);
+    // #home-<section> shows the professionals tab and scrolls to that section.
+    const target = r.startsWith("home-") && document.getElementById(r);
+    if (target) target.scrollIntoView(); else window.scrollTo(0, 0);
   }
   tabs.forEach((t, i) => {
     t.addEventListener("click", () => { location.hash = i ? "patients" : "home"; });
@@ -656,4 +658,5 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
 </body>
 </html>
 
-<div style="position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:9999;max-width:calc(100% - 32px);padding:6px 14px;border-radius:999px;background:#1d2a33;color:#fff;font:500 12px/1.4 system-ui,sans-serif;text-align:center;pointer-events:none;opacity:.9">Preview build · lens chart values are sample data, not VIPOK’s chart</div>
+<style>.pv-banner{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:9999;max-width:calc(100% - 32px);padding:6px 14px;border-radius:999px;background:#1d2a33;color:#fff;font:500 12px/1.4 system-ui,sans-serif;text-align:center;pointer-events:none;opacity:.9}@media (max-width:640px){.pv-banner{position:static;transform:none;margin:16px;border-radius:12px;opacity:1}}</style>
+<div class="pv-banner" role="note">Preview build · lens chart values are sample data, not VIPOK’s chart</div>
