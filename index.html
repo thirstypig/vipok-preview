@@ -1618,35 +1618,47 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   // Single-letter rows use a two-digit column (2A01); two-letter rows use one digit (2ZA1).
   const code = (row, col) => "2" + row + (row.length === 1 ? "0" : "") + (col + 1);
 
+  // Chart limits, read from the chart so the preview's sample data works too.
+  const K_MIN = +ROWS[0][0], K_MAX = +ROWS[ROWS.length - 1][1];
+  const SE_WEAKEST = Math.max(...COLS), SE_STRONGEST = Math.min(...COLS);
+
   const chart = document.getElementById("chart");
   chart.innerHTML =
     "<thead><tr><th scope=\"col\">Mean K (D)</th>" + COLS.map(c => `<th scope="col">${c.toFixed(2)}</th>`).join("") + "</tr></thead><tbody>" +
     ROWS.map(([lo, hi, r], ri) => `<tr data-r="${ri}"><th scope="row"><b>${r}</b>${lo}–${hi}</th>` +
       COLS.map((_, ci) => `<td data-c="${ci}">${code(r, ci)}</td>`).join("") + "</tr>").join("") +
-    `<tr class="custom"><th scope="row"><b>—</b>over 47.53</th><td colspan="8">Custom made</td></tr></tbody>`;
+    `<tr class="custom"><th scope="row"><b>—</b>over ${K_MAX.toFixed(2)}</th><td colspan="8">Custom made</td></tr></tbody>`;
 
   const rowFor = km => ROWS.findIndex(([lo, hi]) => km >= +lo && km <= +hi);
   // "Final selection based on rounding down": −3.49 → −3.00 column, −3.50 → −3.50.
+  // Plus (hyperopic) S.E. never selects a column: the chart is for myopia only.
   const colFor = se => {
+    if (se > SE_WEAKEST) return -1;
     const step = Math.floor((Math.abs(se) + 1e-9) / 0.5) * 0.5;
     return COLS.findIndex(c => Math.abs(c) === step);
   };
 
   /**
-   * Guidance when the inputs fall outside the stock chart.
-   * Return a short message for the doctor, or null to fall through to the
-   * generic "outside the stock chart" text.
-   *
-   * The legacy fitting guide covers some of this (Mean K over 47.53 → custom
-   * made; subjective refraction beyond −5.50 → use inventory lenses as trial
-   * lenses, over-refract, then order custom; nightwear-only → column 08
-   * dispensed directly). It says nothing about S.E. weaker than −1.50, Mean K
-   * under 39.74, or S.E. between −5.00 and −5.50.
-   *
-   * TODO(you): decide how the selector should advise in those cases.
+   * Guidance when the inputs fall outside the stock chart, one sentence per
+   * problem. Two cases come from the legacy fitting guide (Mean K above the
+   * chart → custom; beyond the strongest column → trial-fit, over-refract,
+   * order custom). The rest are proposed wording that VIPOK's fitters must
+   * confirm (to-do #3), so the note says so. Returns null when in range.
    */
+  const PROPOSED = " [Proposed wording; VIPOK fitters to confirm.]";
   function outOfRangeGuidance(meanK, se) {
-    return null;
+    // Values no eye produces are almost always typing errors, so say that first.
+    if (meanK < 35 || meanK > 52 || se < -15 || se > 10)
+      return "Check the readings: these values are outside what the selector expects." + PROPOSED;
+    const notes = [];
+    let proposed = false;
+    if (meanK > K_MAX) notes.push(`Mean K over ${K_MAX.toFixed(2)} D: order custom-made lenses.`);
+    else if (meanK < K_MIN) { notes.push(`Mean K under ${K_MIN.toFixed(2)} D is flatter than the stock chart: contact a VIPOK consultant about a custom lens.`); proposed = true; }
+    if (se > 0) { notes.push("The S.E. is not myopic. The reference chart covers myopia only."); proposed = true; }
+    else if (se > SE_WEAKEST) { notes.push(`S.E. weaker than ${fmt(SE_WEAKEST)} D is below the chart’s lowest column: contact a VIPOK consultant before fitting.`); proposed = true; }
+    else if (se <= SE_STRONGEST - 0.5) notes.push(`S.E. beyond ${fmt(SE_STRONGEST)} D: use inventory lenses from the Mean K row as trial lenses, over-refract, then order custom lenses.`);
+    if (!notes.length) return null;
+    return notes.join(" ") + (proposed ? PROPOSED : "");
   }
 
   const $ = id => document.getElementById(id);
@@ -1679,10 +1691,8 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       const wrap = $("chart-wrap"), wr = wrap.getBoundingClientRect(), cr = cell.getBoundingClientRect();
       if (wr.height) wrap.scrollTop += cr.top - wr.top - wrap.clientHeight / 2 + cr.height / 2;
     } else {
-      $("sel-code").textContent = km > 47.53 ? "Custom" : "—";
-      $("sel-note").textContent = outOfRangeGuidance(km, se) ||
-        (km > 47.53 ? "Mean K over 47.53 D: order custom-made lenses."
-          : "Outside the stock chart. Contact VIPOK for a custom lens.");
+      $("sel-code").textContent = km > K_MAX ? "Custom" : "—";
+      $("sel-note").textContent = outOfRangeGuidance(km, se) || "Outside the stock chart. Contact VIPOK for a custom lens.";
     }
   }
   ["k-flat", "k-steep", "sphere"].forEach(id => $(id).addEventListener("input", calc));
