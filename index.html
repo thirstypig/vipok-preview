@@ -323,6 +323,21 @@ a.tile:hover{border-color:var(--brand);color:var(--ink)}
 /* Claims and placeholders */
 .review{display:inline-block;vertical-align:middle;font:500 .66rem/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--hi-ink);background:var(--hi);border-radius:4px;padding:.28rem .4rem;margin-left:.15rem;white-space:nowrap}
 .tbd{color:var(--muted);font-style:italic}
+.site-foot .foot-legal{grid-template-columns:1fr;padding-top:0;gap:.6rem}
+.site-foot .foot-legal nav{justify-content:flex-start}
+.rx-only{max-width:90ch}
+.callout.warn{border-left-color:#d97706}
+.cite a{font-weight:600}
+.cite-note{color:var(--muted);font-size:.92rem}
+.ph-photo{display:grid;place-items:center;min-height:160px;border:2px dashed var(--line);border-radius:12px;color:var(--muted);font-size:.9rem;text-align:center;padding:1rem;margin:0}
+.form-fine{font-size:.85rem;color:var(--muted)}
+.legal .prose{max-width:72ch}
+.legal .prose h2{font-size:1.15rem;margin-top:1.2rem}
+.legal .callout{margin-bottom:1.2rem}
+.qlist{display:grid;gap:1rem;max-width:80ch;padding-left:1.4rem}
+.qlist i{color:var(--muted)}
+.changes{display:grid;gap:.4rem;max-width:80ch}
+
 .spec tbody th{font:600 .88rem var(--body);text-transform:none;letter-spacing:0;color:var(--ink);background:transparent;white-space:nowrap}
 
 /* Admin */
@@ -389,7 +404,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
 }
 </style>
 
-<div class="notice" role="note"><div class="wrap"><strong>Mockup.</strong><span>All copy and images come from the legacy vipok.com (c. 2003). Claims, prices and availability still need verification.</span></div></div>
+<div class="notice" role="note"><div class="wrap"><strong>Design preview, not the official VIPOK website.</strong><span>Content from the legacy vipok.com (c. 2003) is under legal and regulatory review; do not rely on it for medical or ordering decisions.</span></div></div>
 <div class="demo-bar" role="group" aria-label="Mockup: view the site as">
   <div class="wrap">
     <span class="eyebrow">Mockup · view as</span>
@@ -407,7 +422,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     <nav class="nav" id="nav" aria-label="Main">
       <a href="#system">The system</a>
       <a href="#lenses">Lenses &amp; specs</a>
-      <a href="#clinical">Clinical results</a>
+      <a href="#clinical">Clinical literature</a>
       <a href="#certify">Get certified</a>
       <a href="#patients">For patients</a>
       <a href="#about">About</a>
@@ -432,7 +447,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       <div class="hero-copy">
         <p class="eyebrow">For optometrists and ophthalmologists</p>
         <h1>Ortho-k fitted from stock, <em>adjusted chairside.</em></h1>
-        <p class="lede">VIPOK® four-curve, double reverse geometry lenses and a simple reference chart let you select, dispense and fine-tune ortho-k lenses in your own practice, with no lab calculations and no waiting on reorders.</p>
+        <p class="lede">VIPOK™ four-curve, double reverse geometry lenses and a simple reference chart let you select, dispense and fine-tune ortho-k lenses in your own practice, with no lab calculations and no waiting on reorders.</p>
         <div class="hero-ctas">
           <a href="#signup" class="btn btn-lime">Become a VIPOK doctor</a>
           <a href="#selector" class="btn btn-ghost">Open the lens selector</a>
@@ -458,7 +473,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     <div class="wrap">
       <div class="fact"><b>31 × 8</b><span>Mean K rows × power columns in the VIPOK II reference chart</span></div>
       <div class="fact"><b>168</b><span>Lenses in the full inventory set, on your shelf for same-day dispensing</span></div>
-      <div class="fact"><b>2,000+</b><span>Eyes fitted while the design was developed</span></div>
+      <div class="fact"><b>24</b><span>Lenses in the smaller fitting set, for practices starting out</span></div>
       <div class="fact"><b>4-curve</b><span>Double reverse geometry lens design</span></div>
     </div>
   </div>
@@ -473,8 +488,8 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       </a>
       <a class="path" href="#patients">
         <span class="eyebrow">For patients and parents</span>
-        <h2>Clear vision without daytime lenses</h2>
-        <p>How overnight ortho-k works, what to expect, and how to find a VIPOK doctor.</p>
+        <h2>Overnight lenses, fitted by your eye doctor</h2>
+        <p>How ortho-k works, what to expect, its risks, and how to find a VIPOK doctor.</p>
         <span class="go">Learn about ortho-k →</span>
       </a>
     </div>
@@ -488,27 +503,20 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
         <div class="benefit"><h3>You control the fit</h3><p>Choose the lens and make adjustments yourself, chairside, instead of waiting on a lab to recalculate.</p></div>
         <div class="benefit"><h3>Dispense the same day</h3><p>An inventory set means lenses are on the shelf when the patient is in the chair.</p></div>
         <div class="benefit"><h3>Troubleshoot fast</h3><p>Step up or down one row of the chart to change the fit. Evaluation and adjustment follow one simple method.</p></div>
-        <div class="benefit"><h3>Predictable results</h3><p>Stock lenses are individually calculated for corneal changes from center to periphery, reducing reorders and trial fittings.</p></div>
-        <div class="benefit"><h3>Profitable to run</h3><p>Pricing is built so the practice earns more over time, not just on the first case.</p></div>
+        <div class="benefit"><h3>Individually calculated stock</h3><p>Each stock lens is calculated for corneal changes from center to periphery and for differences between flat and steep corneas.</p></div>
+        <div class="benefit"><h3>Flexible starting options</h3><p>Start with the full inventory set, a 24-lens fitting set, or order lens by lens for each case.</p></div>
         <div class="benefit"><h3>Support behind you</h3><p>Hands-on training and technical support from a team of optometrists, ophthalmologists and lens designers.</p></div>
       </div>
     </div>
 
     <div class="section">
       <div style="display:flex;justify-content:space-between;align-items:end;gap:1rem;flex-wrap:wrap">
-        <div style="display:grid;gap:.6rem"><p class="eyebrow">Clinical results</p><h2>−8.00 D to plano</h2></div>
-        <a href="#clinical">See both cases →</a>
+        <div style="display:grid;gap:.6rem"><p class="eyebrow">Published literature</p><h2>VIPOK in <i>Contact Lens Spectrum</i></h2></div>
+        <a href="#clinical">About the article →</a>
       </div>
-      <div class="case">
-        <div class="case-head"><h3>Case 1</h3><span class="eyebrow">Corneal topography · Optikon 2000</span></div>
-        <figure>
-          <button class="zoom" data-group="home-case" data-caption="Case 1 · Before ortho-k · R −8.00, L −7.75 / cyl −0.75" data-src="assets/case1-topography-before.gif"><img src="assets/case1-topography-before.gif" alt="Case 1 corneal topography before ortho-k, both eyes" width="261" height="118"></button>
-          <figcaption><b>Before</b></figcaption>
-        </figure>
-        <figure>
-          <button class="zoom" data-group="home-case" data-caption="Case 1 · After ortho-k · both eyes plano" data-src="assets/case1-topography-after.gif"><img src="assets/case1-topography-after.gif" alt="Case 1 corneal topography after ortho-k, showing central flattening in both eyes" width="263" height="117"></button>
-          <figcaption><b>After</b>: both eyes plano</figcaption>
-        </figure>
+      <div class="callout cite">
+        <p>Harris DH. <a href="https://www.clspectrum.com/issues/2003/july/advanced-inventory-orthokeratology-system/" target="_blank" rel="noopener">“Advanced Inventory Orthokeratology System.”</a> <i>Contact Lens Spectrum</i>, July 2003.</p>
+        <p class="cite-note">A practitioner’s report of five cases (ages 14–39) selected from his first 50 patients fitted with the VIPOK inventory system. It is a case report, not a controlled study; individual results vary. The article states no financial disclosures.</p>
       </div>
     </div>
 
@@ -516,9 +524,9 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       <p class="eyebrow">Getting started</p>
       <h2>Choose your starting inventory</h2>
       <div class="grid-3">
-        <div class="option recommended"><span class="tag">Recommended</span><span class="count">168</span><h3>Full inventory set</h3><p>The entire fitting system in your office. Fits 85% of ortho-k cases <span class="review">Claim under review</span>, adjust immediately, and get the best package pricing.</p></div>
+        <div class="option recommended"><span class="tag">Recommended</span><span class="count">168</span><h3>Full inventory set</h3><p>The entire fitting system in your office. Adjust immediately from your own shelf, with package pricing.</p></div>
         <div class="option"><span class="count">24</span><h3>Fitting set</h3><p>Try the VIPOK system with a smaller investment. Fine-tune the initial fit, but expect more chair time and visits for adjustments.</p></div>
-        <div class="option"><span class="count">1</span><h3>Order per case</h3><p>No inventory. Initial selection is about 80% accurate <span class="review">Claim under review</span>. The most costly route over time; most doctors move to an inventory set.</p></div>
+        <div class="option"><span class="count">1</span><h3>Order per case</h3><p>No inventory. Each lens is ordered for the patient in the chair. The most costly route over time.</p></div>
       </div>
     </div>
 
@@ -535,25 +543,17 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     <header class="page-head">
       <p class="eyebrow">The system</p>
       <h1>What orthokeratology is, and where VIPOK fits</h1>
-      <p class="lede">Orthokeratology reduces refractive error and improves unaided vision by using rigid gas permeable (RGP) lenses to gradually reshape the cornea. Today it is also a tool for controlling myopia progression.</p>
+      <p class="lede">Orthokeratology reduces refractive error and improves unaided vision by using rigid gas permeable (RGP) lenses to gradually reshape the cornea. The effect is temporary: the cornea returns toward its original shape when lens wear stops.</p>
     </header>
 
     <div class="section">
-      <h2>Four levels of ortho-k design</h2>
-      <p class="lede">Since the 1960s, ortho-k lens designs have advanced in four steps. Each reaches further, and each needs more understanding to fit and troubleshoot.</p>
-      <div class="levels" role="list">
-        <div class="level" role="listitem"><div class="level-name"><h3>Traditional</h3><small>Flatter-than-base-curve fit</small></div><div class="bar-track"><div class="bar" style="width:15%">low</div></div></div>
-        <div class="level" role="listitem"><div class="level-name"><h3>Accelerated</h3><small>Three-curve designs</small></div><div class="bar-track"><div class="bar" style="width:30%">≤ 3 D</div></div></div>
-        <div class="level" role="listitem"><div class="level-name"><h3>Advanced</h3><small>Four-curve designs</small></div><div class="bar-track"><div class="bar" style="width:60%">≤ 6 D</div></div></div>
-        <div class="level" role="listitem"><div class="level-name"><h3>Xtreme · VIPOK® XC</h3><small><span class="review">Claim under review</span></small></div><div class="bar-track"><div class="bar xtreme" style="width:100%">≤ 10 D</div></div></div>
-        <div class="axis" aria-hidden="true"><span></span><div class="axis-ticks"><span>0 D</span><span>2.5</span><span>5</span><span>7.5</span><span>10 D</span></div></div>
-      </div>
-      <p style="font-size:.85rem;color:var(--muted)">The source gives no figure for traditional designs beyond "lower powers"; its bar is illustrative.</p>
+      <h2>How ortho-k designs have evolved</h2>
+      <p class="lede">Since the 1960s, ortho-k lens designs have moved from traditional fits flatter than the cornea to multi-curve reverse geometry designs. VIPOK lenses use a four-curve, double reverse geometry design. Each generation needs more understanding to fit and troubleshoot.</p>
     </div>
 
     <div class="section">
       <h2>Lens geometry</h2>
-      <p class="lede">VIPOK® and VIPOK® II are four-curve, double reverse geometry lenses: an optic zone (OZ), reverse curve (RC), alignment curve (AC) and peripheral curve (PC).</p>
+      <p class="lede">VIPOK™ and VIPOK™ II are four-curve, double reverse geometry lenses: an optic zone (OZ), reverse curve (RC), alignment curve (AC) and peripheral curve (PC).</p>
       <div class="fig-row">
         <figure><button class="zoom" data-group="geometry" data-caption="Geometric graph of a four-curve lens: zones PC, AC, RC and OZ with cross-section" data-src="assets/diagram-lens-zones-cross-section.gif"><img src="assets/diagram-lens-zones-cross-section.gif" alt="Diagram of four-curve lens zones with a cross-section" width="300" height="137"></button><figcaption><b>Lens zones</b> and cross-section</figcaption></figure>
         <figure><button class="zoom" data-group="geometry" data-caption="Double reverse four-curve lens" data-src="assets/diagram-double-reverse-4-curve-lens.gif"><img src="assets/diagram-double-reverse-4-curve-lens.gif" alt="Double reverse four-curve lens diagram" width="300" height="144"></button><figcaption><b>Double reverse</b> four-curve lens</figcaption></figure>
@@ -571,11 +571,11 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     </div>
 
     <div class="section">
-      <h2>Ortho-k and laser correction are not competitors</h2>
+      <h2>Ortho-k and laser vision correction</h2>
       <div class="prose">
-        <p>Both change the cornea to change refraction, but they serve different patients. Laser vision correction should only be performed on adults. Ortho-k's benefits to children are substantial.</p>
-        <p>A myopic child can start with ortho-k for myopia control and later choose laser correction for a more permanent change. It is up to eye care providers to offer that path.</p>
-        <p>Published studies from university research groups show orthokeratology is safe and effective. Success depends on training: practitioners need proper instruction before fitting, and patients need to learn lens care and keep up with follow-up visits.</p>
+        <p>Both change the shape of the cornea to change refraction, in different ways. Laser vision correction is surgery and its effect is permanent. Ortho-k’s effect is temporary and reverses when lens wear stops.</p>
+        <p>Which option suits a patient is a clinical decision for the eye care practitioner, within each device’s approved indications.</p>
+        <p>Success depends on training: practitioners need proper instruction before fitting, and patients need to learn lens care and keep up with follow-up visits. Overnight lens wear carries risks, including serious eye infection; see <a href="#safety">Important Safety Information</a>.</p>
       </div>
     </div>
   </div>
@@ -587,23 +587,23 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     <header class="page-head">
       <p class="eyebrow">Lenses and supplies</p>
       <h1>Lenses and specifications</h1>
-      <p class="lede">Available directly from VIPOK or through authorized distributors. Availability depends on each country's regulations.</p>
+      <p class="lede">Available only to licensed eye care practitioners, directly from VIPOK or through authorized distributors. Availability depends on regulatory approval in each country. Contact VIPOK to confirm availability where you practice.</p>
     </header>
 
     <div class="section">
       <div class="grid-3">
-        <div class="option"><span class="tag">Four-curve</span><h3>VIPOK®</h3><p>Double reverse geometry lens for accelerated orthokeratology, selected with the VIPOK reference chart.</p></div>
-        <div class="option"><span class="tag">Four-curve</span><h3>VIPOK® II</h3><p>The chart-based system in its current form: 31 Mean K rows × 8 power columns, from 39.74 to 47.53 D.</p><a href="#selector">Open the lens selector →</a></div>
-        <div class="option recommended"><span class="tag">Xtreme ortho-k</span><h3>VIPOK® XC</h3><p>Designed for changes up to −10.00 D of myopia with a single pair of lenses. <span class="review">Claim under review</span></p></div>
+        <div class="option"><span class="tag">Four-curve</span><h3>VIPOK™</h3><p>Double reverse geometry lens for accelerated orthokeratology, selected with the VIPOK reference chart.</p></div>
+        <div class="option"><span class="tag">Four-curve</span><h3>VIPOK™ II</h3><p>The chart-based system in its current form: 31 Mean K rows × 8 power columns, from 39.74 to 47.53 D.</p><a href="#selector">Open the lens selector →</a></div>
+        <div class="option"><span class="tag">Details pending</span><h3>VIPOK™ XC</h3><p>Details, indications and regulatory status to be confirmed by VIPOK.</p></div>
       </div>
     </div>
 
     <div class="section">
       <h2>Inventory options</h2>
       <div class="grid-3">
-        <div class="option recommended"><span class="tag">Recommended</span><span class="count">168</span><h3>Full inventory set</h3><p>Access to the entire fitting system. Fits 85% of ortho-k cases <span class="review">Claim under review</span>. Initial package pricing.</p></div>
+        <div class="option recommended"><span class="tag">Recommended</span><span class="count">168</span><h3>Full inventory set</h3><p>Access to the entire fitting system. Initial package pricing.</p></div>
         <div class="option"><span class="count">24</span><h3>Fitting set</h3><p>Smaller capital investment. Fine-tune the initial fit; adjustments need more chair time and visits.</p></div>
-        <div class="option"><span class="count">1</span><h3>Order per case</h3><p>About 80% first-selection accuracy <span class="review">Claim under review</span>. The most time-consuming and costly option.</p></div>
+        <div class="option"><span class="count">1</span><h3>Order per case</h3><p>No inventory; each lens is ordered per case. The most time-consuming and costly option.</p></div>
       </div>
     </div>
 
@@ -611,7 +611,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       <h2>Accessories and solutions</h2>
       <div class="grid-2">
         <div class="prose"><h3>Lens care</h3><ul><li>RGP storage and disinfecting solution</li><li>RGP daily cleaner</li><li>RGP protein remover</li><li>Rewetting drops</li></ul></div>
-        <div class="prose"><h3>Practice supplies</h3><ul><li>Contact lens cases</li><li>Suction cups</li><li>VIPOK® patient brochure</li><li>VIPOK® clinic and hospital poster</li></ul></div>
+        <div class="prose"><h3>Practice supplies</h3><ul><li>Contact lens cases</li><li>Suction cups</li><li>VIPOK™ patient brochure</li><li>VIPOK™ clinic and hospital poster</li></ul></div>
       </div>
     </div>
 
@@ -620,15 +620,16 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       <p class="lede">Doctors compare lenses on material, oxygen permeability and parameter ranges before they fit. None of these appeared on the legacy site.</p>
       <div class="table-wrap">
         <table class="data spec">
-          <thead><tr><th scope="col"></th><th scope="col">VIPOK®</th><th scope="col">VIPOK® II</th><th scope="col">VIPOK® XC</th></tr></thead>
+          <thead><tr><th scope="col"></th><th scope="col">VIPOK™</th><th scope="col">VIPOK™ II</th><th scope="col">VIPOK™ XC</th></tr></thead>
           <tbody>
-            <tr><th scope="row">Design</th><td>4-curve double reverse geometry</td><td>4-curve double reverse geometry</td><td>Xtreme ortho-k design</td></tr>
+            <tr><th scope="row">Design</th><td>4-curve double reverse geometry</td><td>4-curve double reverse geometry</td><td class="tbd">[VIPOK to supply]</td></tr>
             <tr><th scope="row">Fitting method</th><td>Reference chart</td><td>Reference chart, 31 × 8 grid</td><td class="tbd">[VIPOK to supply]</td></tr>
             <tr><th scope="row">Material</th><td class="tbd">[VIPOK to supply]</td><td class="tbd">[VIPOK to supply]</td><td class="tbd">[VIPOK to supply]</td></tr>
             <tr><th scope="row">Oxygen permeability (Dk)</th><td class="tbd">[VIPOK to supply]</td><td class="tbd">[VIPOK to supply]</td><td class="tbd">[VIPOK to supply]</td></tr>
             <tr><th scope="row">Diameter</th><td class="tbd">[VIPOK to supply]</td><td class="tbd">[VIPOK to supply]</td><td class="tbd">[VIPOK to supply]</td></tr>
             <tr><th scope="row">Mean K range</th><td class="tbd">[VIPOK to supply]</td><td class="mono">39.74–47.53 D</td><td class="tbd">[VIPOK to supply]</td></tr>
-            <tr><th scope="row">Target correction</th><td class="tbd">[VIPOK to supply]</td><td class="mono">−1.50 to −5.00 D</td><td>Up to −10.00 D <span class="review">Claim under review</span></td></tr>
+            <tr><th scope="row">Chart power columns</th><td class="tbd">[VIPOK to supply]</td><td class="mono">−1.50 to −5.00 D</td><td class="tbd">[VIPOK to supply]</td></tr>
+            <tr><th scope="row">Approved indications</th><td class="tbd">[From the package insert]</td><td class="tbd">[From the package insert]</td><td class="tbd">[From the package insert]</td></tr>
             <tr><th scope="row">Wear schedule</th><td class="tbd">[VIPOK to supply]</td><td class="tbd">[VIPOK to supply]</td><td class="tbd">[VIPOK to supply]</td></tr>
             <tr><th scope="row">Regulatory status</th><td class="tbd">[US FDA / Taiwan TFDA license no.]</td><td class="tbd">[US FDA / Taiwan TFDA license no.]</td><td class="tbd">[US FDA / Taiwan TFDA license no.]</td></tr>
           </tbody>
@@ -661,38 +662,40 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
 <section class="page" data-route="clinical" hidden>
   <div class="wrap">
     <header class="page-head">
-      <p class="eyebrow">Clinical results</p>
-      <h1>High myopia, corrected overnight</h1>
-      <p class="lede">Two cases from the VIPOK program, with corneal topography before and after treatment. Click any map to enlarge it.</p>
+      <p class="eyebrow">Published literature</p>
+      <h1>VIPOK in the clinical literature</h1>
+      <p class="lede">Published reports on the VIPOK inventory orthokeratology system. Individual results vary; ortho-k is not right for everyone, and its effect is temporary.</p>
     </header>
 
     <div class="section">
-      <div class="case">
-        <div class="case-head"><h3>Case 1</h3><span class="eyebrow">Optikon 2000 topography</span></div>
-        <figure><button class="zoom" data-group="clinical" data-caption="Case 1 · Before ortho-k · R −8.00, L −7.75 / cyl −0.75" data-src="assets/case1-topography-before.gif"><img src="assets/case1-topography-before.gif" alt="Case 1 topography before ortho-k" width="261" height="118"></button><figcaption><b>Before</b></figcaption></figure>
-        <figure><button class="zoom" data-group="clinical" data-caption="Case 1 · After ortho-k · both eyes plano" data-src="assets/case1-topography-after.gif"><img src="assets/case1-topography-after.gif" alt="Case 1 topography after ortho-k" width="263" height="117"></button><figcaption><b>After</b></figcaption></figure>
-        <table class="rx"><thead><tr><th>Eye</th><th>Original refraction</th><th>After ortho-k</th></tr></thead>
-          <tbody><tr><td>Right</td><td class="mono">−8.00</td><td class="mono good">plano</td></tr><tr><td>Left</td><td class="mono">−7.75 / cyl −0.75</td><td class="mono good">plano</td></tr></tbody></table>
-      </div>
+      <article class="panel cite">
+        <span class="eyebrow">Case report · 2003</span>
+        <h2 style="font-size:1.3rem">Advanced Inventory Orthokeratology System</h2>
+        <p>Harris DH. <a href="https://www.clspectrum.com/issues/2003/july/advanced-inventory-orthokeratology-system/" target="_blank" rel="noopener">“Advanced Inventory Orthokeratology System.”</a> <i>Contact Lens Spectrum</i>, July 2003.</p>
+        <p class="cite-note">Donald H. Harris, OD, MS, FAAO, in private practice in Newport Beach, California, describes five cases (ages 14–39) selected from his first 50 patients fitted with the VIPOK inventory system. It is a practitioner’s case report, not a controlled clinical study; individual results vary. The article states no financial disclosures. Read the full article, including its figures, at <i>Contact Lens Spectrum</i>.</p>
+      </article>
     </div>
 
     <div class="section">
-      <div class="case">
-        <div class="case-head"><h3>Case 2</h3><span class="eyebrow">Optikon 2000 topography</span></div>
-        <figure><button class="zoom" data-group="clinical" data-caption="Case 2 · Before ortho-k · R −7.00 / cyl −1.25, L −7.50 / cyl −1.75" data-src="assets/case2-topography-before.gif"><img src="assets/case2-topography-before.gif" alt="Case 2 topography before ortho-k" width="271" height="122"></button><figcaption><b>Before</b></figcaption></figure>
-        <figure><button class="zoom" data-group="clinical" data-caption="Case 2 · After ortho-k · R −0.50, L plano" data-src="assets/case2-topography-after.gif"><img src="assets/case2-topography-after.gif" alt="Case 2 topography after ortho-k" width="271" height="122"></button><figcaption><b>After</b></figcaption></figure>
-        <table class="rx"><thead><tr><th>Eye</th><th>Original refraction</th><th>After ortho-k</th></tr></thead>
-          <tbody><tr><td>Right</td><td class="mono">−7.00 / cyl −1.25</td><td class="mono good">−0.50</td></tr><tr><td>Left</td><td class="mono">−7.50 / cyl −1.75</td><td class="mono good">plano</td></tr></tbody></table>
-      </div>
+      <div class="callout"><strong>For practitioners.</strong> Case reports from VIPOK’s own program are shown to approved doctors in the <a href="#cases">doctor portal</a>.</div>
     </div>
+  </div>
+</section>
 
-    <div class="section">
-      <h2>SSVIP follow-up</h2>
-      <div class="split">
-        <figure><button class="zoom" data-group="clinical" data-caption="SSVIP topography. Right: initial K 40.875 / 41.625, −8.00 · Left: initial K 40.125 / 41.625, −7.75 −1.75 × 175 · Final P1.10, hours off (1 month)" data-src="assets/ssvip-topography-with-data.gif"><img src="assets/ssvip-topography-with-data.gif" alt="SSVIP topography maps for right and left eyes with initial K and power data" width="300" height="180"></button></figure>
-        <table class="rx"><thead><tr><th>Eye</th><th>Initial K</th><th>Power</th></tr></thead>
-          <tbody><tr><td>Right</td><td class="mono">40.875, 41.625</td><td class="mono">−8.00</td></tr><tr><td>Left</td><td class="mono">40.125, 41.625</td><td class="mono">−7.75 −1.75 × 175</td></tr></tbody></table>
-      </div>
+<!-- ============ CASES (doctor portal) ============ -->
+<section class="page" data-route="cases" hidden>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Doctor portal · Case reports</p>
+      <h1>Case reports from the VIPOK program</h1>
+    </header>
+    <div class="locked" id="cases-lock">
+      <h2>For approved VIPOK doctors</h2>
+      <p>Case reports are available to licensed optometrists and ophthalmologists with an approved VIPOK account.</p>
+      <div class="hero-ctas"><a href="#signin" class="btn btn-primary">Sign in</a><a href="#signup" class="btn btn-ghost">Create a doctor account</a></div>
+    </div>
+    <div id="cases-body">
+<p class="auth-alt">Not included in the public preview. See the private mockup.</p>
     </div>
   </div>
 </section>
@@ -701,7 +704,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
 <section class="page" data-route="selector" hidden>
   <div class="wrap">
     <header class="page-head">
-      <p class="eyebrow">Doctor portal · VIPOK® II</p>
+      <p class="eyebrow">Doctor portal · VIPOK™ II</p>
       <h1>Lens selector</h1>
       <p class="lede">Enter keratometry and the subjective sphere. The selector applies the VIPOK reference-chart method and highlights the lens code. It opens on the worked example from the fitting guide.</p>
     </header>
@@ -727,7 +730,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       </form>
       <div style="display:grid;gap:.75rem">
         <div class="chart-wrap" id="chart-wrap"><table class="chart" id="chart"></table></div>
-        <p style="font-size:.85rem;color:var(--muted)">Rows run from A (flattest) to ZE (steepest). Moving up or down a row within a column adjusts the fit; fluorescein changes usually show only after two or more rows. If only the nightwear option is used, column 08 lenses can be dispensed directly without power adjustment. US Patent No. 6,361,169 (status to confirm).</p>
+        <p style="font-size:.85rem;color:var(--muted)">Rows run from A (flattest) to ZE (steepest). Moving up or down a row within a column adjusts the fit; fluorescein changes usually show only after two or more rows. If only the nightwear option is used, column 08 lenses can be dispensed directly without power adjustment.</p>
       </div>
     </div>
   </div>
@@ -738,11 +741,12 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   <div class="wrap">
     <header class="page-head"><p class="eyebrow">For practitioners</p><h1>Frequently asked questions</h1></header>
     <div class="faq">
-      <details open><summary>What is different about the VIPOK™ design and system?</summary><p>Three things. First, a reference chart and inventory system for efficient fitting and dispensing. Second, the design can be fitted for day or night wear and worn more than 12 hours without tightening. <span class="review">Claim under review</span> Third, the pricing structure makes the practice more profitable over time.</p></details>
-      <details><summary>Where is the VIPOK™ design available?</summary><p>In the United States, China, Taiwan, Malaysia and Hong Kong. The design came from fitting more than two thousand eyes, in collaboration between optometrists and ophthalmologists.</p></details>
+      <details open><summary>What is different about the VIPOK™ design and system?</summary><p>Two things. First, a reference chart and inventory system for fitting and dispensing from stock. Second, the practitioner selects and adjusts the lens chairside, instead of waiting on a lab to recalculate.</p></details>
+      <details><summary>Where is the VIPOK™ design available?</summary><p>Availability depends on regulatory approval in each country. Contact VIPOK to confirm availability where you practice.</p></details>
       <details><summary>How much office space does VIPOK™ ortho-k need?</summary><p>The same as normal contact lens fitting and dispensing: an examination room, a teaching room, and a waiting and file storage area.</p></details>
-      <details><summary>If VIPOK™ uses stock inventory lenses, can it really be precise?</summary><p>Yes. Each stock lens is individually calculated for how corneas change from center to periphery, and for the subtle differences between flat and steep corneas. Fitting accuracy is higher than most custom designs, with fewer reorders and trial fittings. It also removes errors from data transfer, calculation and measurement differences.</p></details>
-      <details><summary>How do patients know they received genuine VIPOK® lenses?</summary><p>Every lens dispensed by a certified VIPOK doctor is individually shrink-wrapped. Patients can ask to see the original package before taking lenses home.</p></details>
+      <details><summary>If VIPOK™ uses stock inventory lenses, can it really be precise?</summary><p>Each stock lens is individually calculated for how corneas change from center to periphery, and for the differences between flat and steep corneas. Selecting from a fixed chart also avoids errors from transferring and recalculating fitting data. Fit is confirmed chairside with fluorescein evaluation.</p></details>
+      <details><summary>How do patients know they received genuine VIPOK™ lenses?</summary><p>Every lens dispensed by a certified VIPOK doctor is individually shrink-wrapped. Patients can ask to see the original package before taking lenses home.</p></details>
+      <details><summary>Where is the safety and prescribing information?</summary><p>See <a href="#safety">Important Safety Information</a>. The package insert for each lens is the authoritative source for indications, contraindications, warnings and adverse reactions. <span class="tbd">[Package inserts to be supplied by VIPOK]</span></p></details>
     </div>
   </div>
 </section>
@@ -752,15 +756,15 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   <div class="wrap">
     <header class="page-head">
       <p class="eyebrow">Share with your patients</p>
-      <h1>Wear them at night. See clearly all day.</h1>
-      <p class="lede">A page you can point patients and parents to. VIPOK patients are cared for by a certified, trained practitioner using lenses made from advanced gas permeable material. <span class="review">Claim under review</span></p>
+      <h1>Overnight lenses, fitted by your eye doctor.</h1>
+      <p class="lede">A page you can point patients and parents to. Ortho-k lenses are worn overnight to temporarily reshape the cornea. Many patients see without glasses or daytime contact lenses; results vary, the effect is temporary, and ortho-k is not right for everyone. Only your eye care practitioner can decide if it suits you.</p>
     </header>
 
     <div class="section">
-      <h2>Look how easy it is</h2>
+      <h2>How it works</h2>
       <div class="how">
         <figure><span class="step">Night</span><button class="zoom" data-group="patients" data-caption="At night: put on the VIPOK lenses" data-src="assets/cartoon-night-put-on-lenses.gif"><img src="assets/cartoon-night-put-on-lenses.gif" alt="Cartoon of a child putting in lenses at bedtime" width="218" height="180"></button><figcaption><b>Put on the VIPOK lenses</b> before sleep</figcaption></figure>
-        <figure><span class="step">Morning</span><button class="zoom" data-group="patients" data-caption="In the morning: remove them with improved vision" data-src="assets/cartoon-day-remove-lenses.gif"><img src="assets/cartoon-day-remove-lenses.gif" alt="Cartoon of a child removing lenses in the morning" width="218" height="199"></button><figcaption><b>Remove them</b> with improved vision</figcaption></figure>
+        <figure><span class="step">Morning</span><button class="zoom" data-group="patients" data-caption="In the morning: remove the lenses" data-src="assets/cartoon-day-remove-lenses.gif"><img src="assets/cartoon-day-remove-lenses.gif" alt="Cartoon of a child removing lenses in the morning" width="218" height="199"></button><figcaption><b>Remove them</b> in the morning</figcaption></figure>
       </div>
     </div>
 
@@ -769,14 +773,18 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
         <div class="prose">
           <h2>What patients can expect</h2>
           <ul>
-            <li>Care from a certified, well-trained practitioner</li>
-            <li>Replacement lenses right away or with shorter delays</li>
-            <li>Lenses made from advanced gas permeable material <span class="review">Claim under review</span></li>
-            <li>Overall cost comparable to or lower than similar lens designs</li>
-            <li>Each lens individually shrink-wrapped, so patients can confirm it is genuine</li>
+            <li>Care from a VIPOK-certified practitioner, with regular follow-up visits</li>
+            <li>Replacement lenses often available from your practitioner’s inventory</li>
+            <li>Lenses made from gas permeable material</li>
+                        <li>Each lens individually shrink-wrapped, so patients can confirm it is genuine</li>
           </ul>
         </div>
-        <figure><button class="zoom" data-group="patients" data-caption="What is orthokeratology? A procedure that reduces refractive error and improves unaided vision by using RGP contact lenses to gradually reshape the cornea. (Legacy home-page graphic.)" data-src="assets/hero-collage-what-is-ortho-k.jpg"><img src="assets/hero-collage-what-is-ortho-k.jpg" alt="Collage of children and adults with contact lenses, titled What is Orthokeratology?" width="563" height="389"></button><figcaption>Legacy home-page graphic. Stock photos; confirm licensing before production.</figcaption></figure>
+        <aside class="callout warn" aria-labelledby="pt-safety">
+          <h3 id="pt-safety">Important safety information</h3>
+          <p>Overnight contact lens wear carries risks, including serious eye infection (microbial keratitis) that can cause permanent vision loss. Follow your practitioner’s care instructions and keep every follow-up visit.</p>
+          <p><strong>Remove your lenses and call your eye doctor right away</strong> if you have eye pain, redness, discharge, light sensitivity or blurred vision.</p>
+          <p><a href="#safety">Read the full Important Safety Information →</a></p>
+        </aside>
       </div>
     </div>
   </div>
@@ -791,17 +799,14 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     </header>
     <div class="split">
       <div class="prose">
-        <p>VIPOK® Inc. is dedicated to the enhancement of vision care. Based in the United States, its team brings together ophthalmology and optometry professionals in contact lenses, vision therapy and myopia research, alongside contact lens manufacturing specialists, lens design experts and experienced clinical fitters.</p>
+        <p>VIPOK Inc. is dedicated to the enhancement of vision care. Based in the United States, its team brings together ophthalmology and optometry professionals in contact lenses, vision therapy and myopia research, alongside contact lens manufacturing specialists, lens design experts and experienced clinical fitters.</p>
         <p>The company focuses on the growing problem of myopia in Asia. A regional headquarters in Taiwan provides the same technical support and hands-on training to every VIPOK practitioner in the region.</p>
-        <p>VIPOK was the first to produce orthokeratology lenses for high myopic prescriptions of up to −10.00 D. <span class="review">Claim under review</span> Research continues into better techniques and designs for orthokeratology and other forms of myopia control.</p>
-        <h3 style="margin-top:.5rem">VIPOK providers</h3>
-        <ul class="regions" aria-label="Markets">
-          <li>United States</li><li>China</li><li>Hong Kong</li><li>Malaysia</li><li>Taiwan</li>
-          <li class="planned">Japan · planned</li><li class="planned">Singapore · planned</li><li class="planned">Korea · planned</li>
-        </ul>
-        <div class="callout" style="margin-top:.5rem"><span class="eyebrow">In the press</span><p style="margin-top:.35rem">"Advanced Inventory Orthokeratology System," by Donald H. Harris, OD, MS, FAAO. <i>Contact Lens Spectrum</i>, July issue.</p></div>
+        <p>Research continues into orthokeratology lens design and fitting techniques.</p>
+        <h3 style="margin-top:.5rem">Availability</h3>
+        <p>Availability depends on regulatory approval in each country. Contact VIPOK to confirm availability where you practice.</p>
+        <div class="callout cite" style="margin-top:.5rem"><span class="eyebrow">In the literature</span><p style="margin-top:.35rem">Harris DH. <a href="https://www.clspectrum.com/issues/2003/july/advanced-inventory-orthokeratology-system/" target="_blank" rel="noopener">“Advanced Inventory Orthokeratology System.”</a> <i>Contact Lens Spectrum</i>, July 2003. <a href="#clinical">About this case report</a></p></div>
       </div>
-      <figure><button class="zoom" data-group="about" data-caption="VIPOK practitioner examining a patient (legacy header photo)" data-src="assets/header-photo-doctor-exam.gif"><img src="assets/header-photo-doctor-exam.gif" alt="An eye care practitioner examining a patient" width="167" height="124"></button><figcaption>Legacy header photo, 167 × 124 px. Needs a high-resolution replacement.</figcaption></figure>
+      <figure class="ph-photo" role="img" aria-label="Photo placeholder"><span>Photo placeholder: a licensed or VIPOK-owned photo is needed here</span></figure>
     </div>
   </div>
 </section>
@@ -829,6 +834,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
         <div class="field"><label for="c-email">Email <i>*</i></label><input id="c-email" name="email" type="email" required autocomplete="email"></div>
         <div class="field full"><label for="c-comments">Tell us about your practice</label><textarea id="c-comments" name="comments" rows="5" placeholder="Current ortho-k volume, markets you serve, questions…"></textarea></div>
         <div class="full" style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap"><button class="btn btn-primary" type="submit">Send inquiry</button><span style="font-size:.85rem;color:var(--muted)"><i style="color:var(--brand);font-style:normal">*</i> Required</span></div>
+        <p class="full form-fine">VIPOK uses these details only to respond to your inquiry, as described in the <a href="#privacy">Privacy Policy</a>. Please don’t include patient names or other patient health information. <b>Preview: this form doesn’t send anything.</b></p>
         <p class="form-status" id="form-status" hidden></p>
       </form>
       <aside class="panel">
@@ -879,13 +885,13 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   <div class="wrap">
     <div class="locked admin-only-lock"><h2>VIPOK staff only</h2><p>Switch the mockup to "VIPOK admin" to read the research.</p></div>
     <div class="admin-only-body">
-      <nav class="admin-tabs" aria-label="Admin"><a href="#admin">Applications</a><a href="#admin-research" aria-current="page">Research</a><a href="#admin-designs">Design options</a><a href="#admin-todo">To-do</a></nav>
+      <nav class="admin-tabs" aria-label="Admin"><a href="#admin">Applications</a><a href="#admin-research" aria-current="page">Research</a><a href="#admin-designs">Design options</a><a href="#admin-legal">Legal review</a><a href="#admin-todo">To-do</a></nav>
       <header class="page-head">
         <p class="eyebrow">VIPOK admin · Research</p>
         <h1>Competitor websites</h1>
         <p class="lede">How ortho-k and myopia-control lens makers present themselves to doctors and patients, with recommendations for vipok.com. Researched 2026-09-25.</p>
       </header>
-      <article class="doc" id="research-doc" aria-busy="true"><p class="auth-alt">Loading the report…</p></article>
+      <p class="auth-alt">Not included in the public preview. See the private mockup.</p>
     </div>
   </div>
 </section>
@@ -895,7 +901,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   <div class="wrap">
     <div class="locked admin-only-lock"><h2>VIPOK staff only</h2><p>Switch the mockup to "VIPOK admin" to compare design options.</p></div>
     <div class="admin-only-body">
-      <nav class="admin-tabs" aria-label="Admin"><a href="#admin">Applications</a><a href="#admin-research">Research</a><a href="#admin-designs" aria-current="page">Design options</a><a href="#admin-todo">To-do</a></nav>
+      <nav class="admin-tabs" aria-label="Admin"><a href="#admin">Applications</a><a href="#admin-research">Research</a><a href="#admin-designs" aria-current="page">Design options</a><a href="#admin-legal">Legal review</a><a href="#admin-todo">To-do</a></nav>
       <header class="page-head">
         <p class="eyebrow">VIPOK admin · Design options</p>
         <h1>Three directions, one palette</h1>
@@ -908,7 +914,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
         </article>
         <article class="opt">
           <div class="opt-head"><div><span class="eyebrow">Option B</span><h2>Clinical editorial</h2></div><button class="btn btn-ghost btn-sm" type="button" data-design="designs/b.html" data-title="Option B · Clinical editorial">Open B full screen</button></div>
-          <p>Fixed left sidebar navigation. Opens with a split chooser for professionals and patients, then an asymmetric editorial layout led by a featured clinical case and a spec-sheet table.</p>
+          <p>Fixed left sidebar navigation. Opens with a split chooser for professionals and patients, then an asymmetric editorial layout led by a published-literature card and a spec-sheet table.</p>
           <iframe class="opt-frame" src="designs/b.html" title="Design option B preview" loading="lazy"></iframe>
         </article>
         <article class="opt">
@@ -926,7 +932,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   <div class="wrap">
     <div class="locked admin-only-lock"><h2>VIPOK staff only</h2><p>Switch the mockup to "VIPOK admin" to see the project to-do list.</p></div>
     <div class="admin-only-body">
-      <nav class="admin-tabs" aria-label="Admin"><a href="#admin">Applications</a><a href="#admin-research">Research</a><a href="#admin-designs">Design options</a><a href="#admin-todo" aria-current="page">To-do</a></nav>
+      <nav class="admin-tabs" aria-label="Admin"><a href="#admin">Applications</a><a href="#admin-research">Research</a><a href="#admin-designs">Design options</a><a href="#admin-legal">Legal review</a><a href="#admin-todo" aria-current="page">To-do</a></nav>
       <header class="page-head">
         <p class="eyebrow">VIPOK admin · Project</p>
         <div class="row-head"><h1>Rebuild to-do</h1><span class="pill wait" id="todo-count">Loading</span></div>
@@ -993,7 +999,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
         <div class="field"><label for="su-country">Country <i>*</i></label><input id="su-country" autocomplete="country-name" required></div>
         <div class="field full"><label for="su-phone">Office phone <i>*</i></label><input id="su-phone" type="tel" autocomplete="tel" required></div>
       </fieldset>
-      <label class="check"><input type="checkbox" id="su-terms" required><span>I confirm I am a licensed eye care practitioner and agree to the VIPOK practitioner terms. <i style="color:var(--muted);font-style:normal">(Terms to be written.)</i></span></label>
+      <label class="check"><input type="checkbox" id="su-terms" required><span>I confirm I am a licensed eye care practitioner and agree to the <a href="#practitioner-terms">Practitioner Terms</a> and <a href="#terms">Terms of Use</a>. VIPOK uses my license and practice details to verify my eligibility, as described in the <a href="#privacy">Privacy Policy</a>.</span></label>
       <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap"><button class="btn btn-primary" type="submit">Submit for review</button><span class="auth-alt">Already have an account? <a href="#signin">Sign in</a></span></div>
       <p class="form-status" id="signup-status" hidden></p>
     </form>
@@ -1035,7 +1041,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       </header>
       <div class="tiles">
         <a class="tile" href="#selector"><h3>Lens selector</h3><p>Enter K readings and sphere to get the VIPOK II lens code, with the full reference chart.</p><span class="go">Open →</span></a>
-        <a class="tile" href="#clinical"><h3>Clinical cases</h3><p>Before and after topography for high-myopia cases, with refraction data.</p><span class="go">View →</span></a>
+        <a class="tile" href="#cases"><h3>Case reports</h3><p>De-identified before and after topography from VIPOK’s program. Source and consent being confirmed.</p><span class="go">View →</span></a>
         <a class="tile" href="#system"><h3>Fitting guide</h3><p>Lens zones, fluorescein patterns and the ideal-fit criteria. A downloadable PDF is planned.</p><span class="go">Read →</span></a>
         <a class="tile" href="#certify"><h3>Certification</h3><p>Online course: 2 of 6 modules complete. Finish it to unlock ordering.</p><span class="go">Continue →</span></a>
         <a class="tile soon" href="#orders"><h3>Orders</h3><p>Order lenses and supplies, track shipments and reorder. Coming in phase 2.</p><span class="go">Preview →</span></a>
@@ -1083,7 +1089,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       <p>Switch the mockup to "VIPOK admin" to preview the approval queue.</p>
     </div>
     <div id="admin-body">
-      <nav class="admin-tabs" aria-label="Admin"><a href="#admin" aria-current="page">Applications</a><a href="#admin-research">Research</a><a href="#admin-designs">Design options</a><a href="#admin-todo">To-do</a></nav>
+      <nav class="admin-tabs" aria-label="Admin"><a href="#admin" aria-current="page">Applications</a><a href="#admin-research">Research</a><a href="#admin-designs">Design options</a><a href="#admin-legal">Legal review</a><a href="#admin-todo">To-do</a></nav>
       <header class="page-head">
         <p class="eyebrow">VIPOK admin</p>
         <div class="row-head"><h1>Doctor applications</h1><span class="pill wait" id="queue-count">3 pending</span></div>
@@ -1104,14 +1110,170 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   </div>
 </section>
 
+<!-- ============ LEGAL: safety ============ -->
+<section class="page" data-route="safety" hidden>
+  <div class="wrap legal">
+    <header class="page-head"><p class="eyebrow">Legal</p><h1>Important Safety Information</h1></header>
+    <div class="callout warn"><strong>Draft.</strong> Written from standard orthokeratology labeling. Before launch, VIPOK must replace it with the approved package-insert text for each lens. <span class="tbd">[Package inserts to be supplied by VIPOK]</span></div>
+    <div class="prose">
+      <p><b>Rx only.</b> Caution: US federal law restricts this device to sale by or on the order of a licensed practitioner. VIPOK lenses must be fitted and followed by a licensed eye care practitioner.</p>
+      <h2>Indications</h2>
+      <p>See the package insert for each lens’s approved indications, including the range of refractive error, astigmatism, wearing schedule and patient age. <span class="tbd">[From the package insert]</span></p>
+      <h2>Results are temporary and vary</h2>
+      <p>Orthokeratology temporarily reshapes the cornea. Vision gradually returns toward its original level if the lenses are not worn as prescribed. Results vary from patient to patient, and not every patient reaches the same level of vision.</p>
+      <h2>Do not wear ortho-k lenses if you have</h2>
+      <p>Contraindications typically include the following; confirm against the package insert.</p>
+      <ul>
+        <li>An infection or inflammation of the eye, or any eye disease, injury or abnormality that affects the cornea, conjunctiva or eyelids</li>
+        <li>Severe dry eye, or reduced corneal sensitivity</li>
+        <li>A systemic disease that may affect the eye or be made worse by contact lens wear</li>
+        <li>An allergy to any ingredient in the lens care solutions</li>
+        <li>Any condition that prevents you from following the wearing, care and follow-up instructions</li>
+      </ul>
+      <h2>Warnings</h2>
+      <ul>
+        <li>Wearing contact lenses, especially overnight, can cause serious eye infection (microbial keratitis) that may lead to permanent vision loss.</li>
+        <li><b>Remove your lenses and contact your eye care practitioner right away</b> if you have eye pain, redness, discharge, light sensitivity, blurred vision or any other problem.</li>
+        <li>Never rinse or store lenses in tap water, and never use saliva. Clean, disinfect and store lenses only as your practitioner directs.</li>
+        <li>Keep every follow-up visit, even when your vision seems good.</li>
+      </ul>
+      <h2>Possible side effects</h2>
+      <p>These may include eye discomfort, redness, tearing, dryness, glare or halos around lights, fluctuating vision, corneal staining or abrasion, and eye infection.</p>
+      <h2>Report a problem</h2>
+      <p>Tell your eye care practitioner and VIPOK at customer_service@vipok.com. You can also report serious problems to the FDA MedWatch program at <a href="https://www.fda.gov/medwatch" target="_blank" rel="noopener">fda.gov/medwatch</a> or 1-800-FDA-1088.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEGAL: privacy ============ -->
+<section class="page" data-route="privacy" hidden>
+  <div class="wrap legal">
+    <header class="page-head"><p class="eyebrow">Legal</p><h1>Privacy Policy</h1><p class="lede">Effective date: <span class="tbd">[to be set]</span></p></header>
+    <div class="callout warn"><strong>Draft for review by VIPOK’s legal counsel. Not in effect.</strong> Bracketed items need VIPOK’s answers.</div>
+    <div class="prose">
+      <p>This policy explains how VIPOK Inc. (“VIPOK”, “we”) collects, uses and shares personal information through this website and the VIPOK doctor portal. Contact us at customer_service@vipok.com or <span class="tbd">[mailing address]</span>.</p>
+      <h2>Information we collect</h2>
+      <ul>
+        <li><b>Inquiries:</b> the name, credentials, practice, address, phone, email and message you send through the contact form.</li>
+        <li><b>Doctor accounts:</b> your email, password (stored only in hashed form by our sign-in provider), name, professional credentials, license number and issuing state or country, NPI number if you give it, and practice details.</li>
+        <li><b>Orders</b> (planned): what you order and where it ships. Orders identify patients only by your own reference number. Please do not send us patient names or other patient health information.</li>
+        <li><b>Technical information:</b> our hosting provider records standard server logs, such as IP address, browser type and pages requested. The site loads fonts from Google Fonts and scripts from cdnjs (Cloudflare), which receive your IP address when your browser requests them. We do not use advertising cookies. <span class="tbd">[Confirm whether any analytics will be used.]</span></li>
+      </ul>
+      <h2>How we use it</h2>
+      <p>To answer inquiries; to verify practitioner licenses with the issuing licensing boards and, for US practitioners, the NPPES NPI Registry; to run the doctor portal, certification and orders; to keep the site secure; and to meet legal and regulatory obligations, including medical device reporting.</p>
+      <h2>How we share it</h2>
+      <p>We do not sell personal information, and we do not share it for cross-context behavioral advertising. We share it only with service providers that run the site for us (hosting, sign-in and database, email delivery) <span class="tbd">[list providers]</span>; with authorized VIPOK distributors when needed to fulfill an order in your region <span class="tbd">[confirm]</span>; when the law requires it; or as part of a merger or sale of the business.</p>
+      <h2>How long we keep it</h2>
+      <p><span class="tbd">[VIPOK to set retention periods, for example for inquiries, rejected applications, closed accounts and order records.]</span></p>
+      <h2>Your rights and choices</h2>
+      <p>You can ask to see, correct or delete your personal information, and close your doctor account, by emailing us. Depending on where you live (for example California or other US states, the EU, Taiwan, Malaysia or mainland China), you may have additional rights under local law. We will respond within the time the law requires and will not treat you differently for using these rights.</p>
+      <h2>Patient health information</h2>
+      <p>This site is not designed to receive patient health information. Please don’t send it through forms or email. <span class="tbd">[Counsel to confirm VIPOK’s status under HIPAA.]</span></p>
+      <h2>Children</h2>
+      <p>This site is intended for eye care practitioners and adults, including parents. It is not directed to children under 13, and we do not knowingly collect personal information from them.</p>
+      <h2>Security and international transfers</h2>
+      <p>We use reasonable safeguards, but no method of transmission or storage is completely secure. Information is processed in the United States <span class="tbd">[confirm]</span>, which may have different data protection rules than your country.</p>
+      <h2>Changes</h2>
+      <p>We will post any changes here and update the effective date.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEGAL: terms ============ -->
+<section class="page" data-route="terms" hidden>
+  <div class="wrap legal">
+    <header class="page-head"><p class="eyebrow">Legal</p><h1>Terms of Use</h1><p class="lede">Effective date: <span class="tbd">[to be set]</span></p></header>
+    <div class="callout warn"><strong>Draft for review by VIPOK’s legal counsel. Not in effect.</strong></div>
+    <div class="prose">
+      <p>By using this website you agree to these terms. If you do not agree, please do not use the site.</p>
+      <h2>Not medical advice</h2>
+      <p>Content on this site is general information. It is not medical advice and does not replace an examination by a licensed eye care practitioner. VIPOK lenses are prescription devices and are available only through licensed practitioners.</p>
+      <h2>Professional content</h2>
+      <p>Sections for practitioners, including the doctor portal, reference chart and lens selector, are for licensed eye care practitioners only. The <a href="#practitioner-terms">Practitioner Terms</a> also apply to doctor accounts.</p>
+      <h2>Acceptable use</h2>
+      <p>Do not misuse the site: no attempts to gain unauthorized access, to copy or scrape protected content, to interfere with its operation, or to submit false information.</p>
+      <h2>Intellectual property</h2>
+      <p>VIPOK is a trademark of VIPOK Inc. Site content, including text, graphics and the reference chart, belongs to VIPOK or its licensors and may not be copied or reused without permission.</p>
+      <h2>Links to other sites</h2>
+      <p>Links to third-party sites, such as published articles, are provided for reference. VIPOK does not control and is not responsible for their content.</p>
+      <h2>Disclaimers and limitation of liability</h2>
+      <p>The site is provided “as is” without warranties of any kind, to the fullest extent the law allows. VIPOK is not liable for indirect or consequential damages arising from use of the site. Some jurisdictions do not allow these limits, so they may not apply to you.</p>
+      <h2>Governing law</h2>
+      <p>These terms are governed by the laws of <span class="tbd">[state to be set]</span>, United States.</p>
+      <h2>Changes and contact</h2>
+      <p>We may update these terms and will post changes here. Questions: customer_service@vipok.com.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEGAL: practitioner terms ============ -->
+<section class="page" data-route="practitioner-terms" hidden>
+  <div class="wrap legal">
+    <header class="page-head"><p class="eyebrow">Legal</p><h1>Practitioner Terms</h1><p class="lede">For VIPOK doctor accounts. Effective date: <span class="tbd">[to be set]</span></p></header>
+    <div class="callout warn"><strong>Draft for review by VIPOK’s legal counsel. Not in effect.</strong> Commercial terms are placeholders.</div>
+    <div class="prose">
+      <h2>Eligibility</h2>
+      <p>Accounts are for optometrists and ophthalmologists holding a current license in good standing. You agree to give accurate license information and to tell VIPOK promptly if your license status changes.</p>
+      <h2>Confidential materials</h2>
+      <p>The reference chart, lens selector, fitting guide and case reports are confidential and for your own clinical use. Do not share your login or distribute these materials.</p>
+      <h2>Clinical responsibility</h2>
+      <p>You are responsible for patient selection, fitting and follow-up, using your own clinical judgment, within each lens’s approved indications and the laws where you practice. The chart and selector are aids, not a substitute for clinical evaluation.</p>
+      <h2>Certification</h2>
+      <p>Complete the VIPOK certification course before placing your first order.</p>
+      <h2>Patient information</h2>
+      <p>Identify patients on orders only by your own reference number. Do not send VIPOK patient names or other patient health information.</p>
+      <h2>Adverse events and complaints</h2>
+      <p>Report adverse events and product complaints to VIPOK promptly at customer_service@vipok.com. You may also report to the FDA MedWatch program. <span class="tbd">[VIPOK to set its complaint-handling procedure]</span></p>
+      <h2>Orders, pricing and exchanges</h2>
+      <p><span class="tbd">[VIPOK to set pricing, payment, shipping, warranty and exchange terms.]</span></p>
+      <h2>Suspension</h2>
+      <p>VIPOK may suspend or close an account if license status cannot be verified or these terms are not followed.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEGAL: accessibility ============ -->
+<section class="page" data-route="accessibility" hidden>
+  <div class="wrap legal">
+    <header class="page-head"><p class="eyebrow">Legal</p><h1>Accessibility</h1></header>
+    <div class="prose">
+      <p>VIPOK wants this site to be usable by everyone. We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.2, level AA.</p>
+      <h2>Known limitations</h2>
+      <p>Some legacy images, such as corneal topography maps and fluorescein photos, are low resolution and carry information that is only partly described in text. We are replacing them with higher-resolution versions and fuller descriptions.</p>
+      <h2>Feedback</h2>
+      <p>If something on the site is hard to use, email customer_service@vipok.com and tell us the page and the problem. We will work with you to provide the information in another way.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ADMIN: legal review ============ -->
+<section class="page" data-route="admin-legal" data-admin hidden>
+  <div class="wrap">
+    <div class="locked admin-only-lock"><h2>VIPOK staff only</h2><p>Switch the mockup to "VIPOK admin" to see the legal review.</p></div>
+    <div class="admin-only-body">
+      <nav class="admin-tabs" aria-label="Admin"><a href="#admin">Applications</a><a href="#admin-research">Research</a><a href="#admin-designs">Design options</a><a href="#admin-legal" aria-current="page">Legal review</a><a href="#admin-todo">To-do</a></nav>
+      <header class="page-head">
+        <p class="eyebrow">VIPOK admin · Legal review</p>
+        <h1>Legal and regulatory review</h1>
+        <p class="lede">Red-team review of the site copy on 2026-09-28. Anything that raised a legal flag was changed or removed right away, erring on the safe side. The questions below need VIPOK’s answers before anything removed can come back. This is not legal advice; VIPOK’s counsel should review the final site.</p>
+      </header>
+<p class="auth-alt">Not included in the public preview. See the private mockup.</p>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-foot">
   <div class="wrap">
-    <div style="display:grid;gap:.6rem"><span class="logo" role="img" aria-label="VIPOK Inc."></span><span>© VIPOK Inc.</span></div>
+    <div style="display:grid;gap:.6rem"><span class="logo" role="img" aria-label="VIPOK Inc."></span><span>© VIPOK Inc. VIPOK is a trademark of VIPOK Inc.</span></div>
     <nav aria-label="Footer">
-      <a href="#system">The system</a><a href="#lenses">Lenses</a><a href="#clinical">Clinical results</a><a href="#portal">Doctor portal</a><a href="#certify">Get certified</a><a href="#faq">FAQ</a><a href="#patients">For patients</a><a href="#about">About</a><a href="#contact">Contact</a>
+      <a href="#system">The system</a><a href="#lenses">Lenses</a><a href="#clinical">Clinical literature</a><a href="#portal">Doctor portal</a><a href="#certify">Get certified</a><a href="#faq">FAQ</a><a href="#patients">For patients</a><a href="#about">About</a><a href="#contact">Contact</a>
     </nav>
+  </div>
+  <div class="wrap foot-legal">
+    <p class="rx-only"><b>Rx only.</b> Caution: US federal law restricts this device to sale by or on the order of a licensed practitioner. Ortho-k lenses are medical devices; read the <a href="#safety">Important Safety Information</a> and the package insert.</p>
+    <nav aria-label="Legal"><a href="#safety">Important Safety Information</a><a href="#privacy">Privacy Policy</a><a href="#terms">Terms of Use</a><a href="#practitioner-terms">Practitioner Terms</a><a href="#accessibility">Accessibility</a></nav>
   </div>
 </footer>
 
@@ -1181,6 +1343,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     gate("selector-lock", "selector-tool", canSeePortal());
     gate("portal-lock", "portal-body", canSeePortal());
     gate("orders-lock", "orders-body", canSeePortal());
+    gate("cases-lock", "cases-body", canSeePortal());
     gate("admin-lock", "admin-body", role === "admin");
     document.querySelectorAll("[data-admin]").forEach(s => {
       s.querySelector(".admin-only-lock").hidden = role === "admin";
@@ -1252,6 +1415,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     if (researchLoaded) return;
     researchLoaded = true;
     const out = byId("research-doc");
+    if (!out) return;
     try {
       const res = await fetch("docs/research/competitor-websites.md");
       if (!res.ok) throw new Error(`HTTP ${res.status}`);

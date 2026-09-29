@@ -245,6 +245,9 @@ p{margin:0}
 footer{background:var(--band);color:var(--band-muted);font-size:.85rem}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;padding-block:1.6rem}
 footer .logo{width:100px}
+footer a{color:var(--band-ink)}
+.rx-only,.foot-links{flex-basis:100%}
+.foot-links{display:flex;gap:.4rem 1.2rem;flex-wrap:wrap}
 
 /* ---------- Lightbox ---------- */
 dialog.lb{border:0;padding:0;background:transparent;max-width:100vw;max-height:100vh;width:100%;height:100%}
@@ -266,7 +269,7 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
 </head>
 <body>
 
-<div class="notice" role="note"><div class="wrap"><strong>Design option C · Mockup.</strong><span>Instrument-first layout. Copy and images from the legacy vipok.com; claims pending review.</span></div></div>
+<div class="notice" role="note"><div class="wrap"><strong>Design option C.</strong><span>Design preview, not the official VIPOK website. Content from the legacy vipok.com (c. 2003) is under legal and regulatory review; do not rely on it for medical or ordering decisions.</span></div></div>
 
 <div class="band">
   <div class="utility">
@@ -287,7 +290,7 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
       <nav class="links" id="links" aria-label="Main">
         <a href="#home">Ortho-k system</a>
         <a href="#home">Lenses</a>
-        <a href="#home">Clinical results</a>
+        <a href="#home">Literature</a>
         <a href="#home">Certification</a>
         <a href="#patients">For patients</a>
         <a href="#home">About</a>
@@ -316,7 +319,7 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
         <div class="hero-copy">
           <p class="label">For optometrists and ophthalmologists</p>
           <h1>Fit ortho-k from stock. <em>Adjust chairside.</em></h1>
-          <p class="lede">VIPOK® four-curve double reverse geometry lenses are selected from two measurements, K readings and sphere, then dispensed from an inventory set in your office. Change the fit by moving one row on the chart.</p>
+          <p class="lede">VIPOK™ four-curve double reverse geometry lenses are selected from two measurements, K readings and sphere, then dispensed from an inventory set in your office. Change the fit by moving one row on the chart.</p>
           <div class="ctas">
             <a href="#portal" class="btn btn-lime">Become a VIPOK doctor</a>
             <a href="#portal" class="btn btn-line">Doctor sign in</a>
@@ -347,12 +350,10 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
       </div>
       <div class="bento">
         <article class="tile s4">
-          <div class="section-head" style="margin:0"><div><p class="label">Clinical results · Case 1</p><h3>−8.00 D to plano, both eyes</h3></div><span class="tag lime">Optikon 2000</span></div>
-          <div class="pair thumbs">
-            <figure><button class="zoom" data-cap="Case 1 · Before ortho-k · R −8.00, L −7.75 / cyl −0.75" data-src="../assets/case1-topography-before.gif"><img src="../assets/case1-topography-before.gif" alt="Case 1 corneal topography before ortho-k" width="261" height="118"></button><figcaption>Before</figcaption></figure>
-            <figure><button class="zoom" data-cap="Case 1 · After ortho-k · both eyes plano" data-src="../assets/case1-topography-after.gif"><img src="../assets/case1-topography-after.gif" alt="Case 1 corneal topography after ortho-k" width="263" height="117"></button><figcaption>After</figcaption></figure>
-          </div>
-          <p class="rx">R −8.00 → <b>plano</b> · L −7.75 / cyl −0.75 → <b>plano</b></p>
+          <div class="section-head" style="margin:0"><div><p class="label">Literature</p><h3>Advanced Inventory Orthokeratology System</h3></div><span class="tag">Case report</span></div>
+          <p class="rx">Harris DH. "Advanced Inventory Orthokeratology System." Contact Lens Spectrum, July 2003.</p>
+          <p>A practitioner's report of five cases (ages 14–39) selected from his first 50 patients fitted with the VIPOK inventory system. It is a case report, not a controlled study; individual results vary. The article states no financial disclosures.</p>
+          <a href="https://www.clspectrum.com/issues/2003/july/advanced-inventory-orthokeratology-system/" target="_blank" rel="noopener">Read the article in Contact Lens Spectrum →</a>
         </article>
 
         <article class="tile s2 feature">
@@ -361,7 +362,7 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
             <li>You choose the lens and adjust it yourself</li>
             <li>Dispense the same day from inventory</li>
             <li>One method for evaluation and troubleshooting</li>
-            <li>Fewer reorders and trial fittings</li>
+            <li>Stock lenses individually calculated for corneal shape</li>
             <li>Training and support from ODs and MDs</li>
           </ul>
         </article>
@@ -369,9 +370,9 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
         <article class="tile s2">
           <p class="label">Lens family</p>
           <div class="family">
-            <div><b>VIPOK®</b><span>Four-curve double reverse geometry</span></div>
-            <div><b>VIPOK® II</b><span>Chart-based stock fitting, 31 × 8 grid</span></div>
-            <div><b>VIPOK® XC</b><span>High myopia, up to −10.00 D <span class="tag">Claim under review</span></span></div>
+            <div><b>VIPOK™</b><span>Four-curve double reverse geometry</span></div>
+            <div><b>VIPOK™ II</b><span>Chart-based stock fitting, 31 × 8 grid</span></div>
+            <div><b>VIPOK™ XC</b><span>Details, indications and regulatory status to be confirmed by VIPOK.</span></div>
           </div>
         </article>
 
@@ -380,7 +381,7 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
           <table class="specs">
             <tr><th>Material</th><td><span class="ph">[VIPOK to supply]</span></td></tr>
             <tr><th>Oxygen permeability (Dk)</th><td><span class="ph">[VIPOK to supply]</span></td></tr>
-            <tr><th>Parameters</th><td>Mean K 39.74–47.53 D · S.E. −1.50 to −5.00 D <span class="ph">[confirm]</span></td></tr>
+            <tr><th>VIPOK™ II chart ranges</th><td>Chart rows: mean K 39.74–47.53 D · Chart columns: S.E. −1.50 to −5.00 D <span class="ph">[confirm]</span></td></tr>
             <tr><th>Regulatory status</th><td><span class="ph">[VIPOK to supply]</span></td></tr>
           </table>
         </article>
@@ -420,12 +421,12 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
       <div class="wrap">
         <div>
           <p class="label" style="color:var(--band-muted)">For patients and parents</p>
-          <h1>Wear them at night. See clearly all day.</h1>
-          <p>Ortho-k lenses gently reshape the cornea while you sleep. Take them out in the morning and see without glasses or daytime contacts.</p>
+          <h1>Overnight lenses, fitted by your eye doctor.</h1>
+          <p>Ortho-k lenses are worn overnight to temporarily reshape the cornea. Many patients see without glasses or daytime contact lenses; results vary, the effect is temporary, and ortho-k is not right for everyone. Only your eye care practitioner can decide if it suits you.</p>
         </div>
         <div class="steps2">
           <figure><span class="n">1 · Night</span><button class="zoom" data-cap="At night: put on the VIPOK lenses" data-src="../assets/cartoon-night-put-on-lenses.gif"><img src="../assets/cartoon-night-put-on-lenses.gif" alt="Cartoon of a child putting in lenses at bedtime" width="218" height="180"></button>Put on the lenses before sleep</figure>
-          <figure><span class="n">2 · Morning</span><button class="zoom" data-cap="In the morning: remove them with improved vision" data-src="../assets/cartoon-day-remove-lenses.gif"><img src="../assets/cartoon-day-remove-lenses.gif" alt="Cartoon of a child removing lenses in the morning" width="218" height="199"></button>Remove them with improved vision</figure>
+          <figure><span class="n">2 · Morning</span><button class="zoom" data-cap="In the morning: remove the lenses" data-src="../assets/cartoon-day-remove-lenses.gif"><img src="../assets/cartoon-day-remove-lenses.gif" alt="Cartoon of a child removing lenses in the morning" width="218" height="199"></button>Remove them in the morning</figure>
         </div>
       </div>
     </div>
@@ -436,16 +437,15 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
           <ul class="benefits">
             <li>Care from a certified, trained practitioner</li>
             <li>Replacement lenses right away or with short delays</li>
-            <li>Gas permeable lens material <span class="ph">[regulatory wording TBD]</span></li>
-            <li>Cost comparable to similar lens designs</li>
+            <li>Gas permeable lens material</li>
           </ul>
         </article>
         <article class="tile s4">
-          <div class="section-head" style="margin:0"><div><p class="label">Find a VIPOK doctor</p><h3>Practices near you</h3></div><span class="tag">Example</span></div>
+          <div class="section-head" style="margin:0"><div><p class="label">Find a VIPOK doctor</p><h3>Practices near you</h3></div><span class="tag">Example data</span></div>
           <div class="finder">
             <div class="search">
               <label class="sr" for="f-country" hidden>Country</label>
-              <select id="f-country" aria-label="Country"><option>United States</option><option>Taiwan</option><option>Hong Kong</option><option>Malaysia</option><option>China</option></select>
+              <select id="f-country" aria-label="Country"><option>Select a country</option></select>
               <input id="f-city" aria-label="City or postal code" placeholder="City or postal code">
             </div>
             <ul class="loc">
@@ -453,14 +453,15 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
               <li><strong>Example Vision Clinic</strong><small>Taipei, TW</small><span class="mono">Certified</span></li>
               <li><strong>Example Optometry</strong><small>Kuala Lumpur, MY</small><span class="mono">Certified</span></li>
             </ul>
+            <p>Example data for design review only; these are not real practices. Availability depends on regulatory approval in each country. Contact VIPOK to confirm availability where you practice.</p>
           </div>
         </article>
         <article class="tile s6">
           <p class="label">Questions</p>
           <div class="faq">
-            <details open><summary>What makes VIPOK lenses different?</summary><p>Each VIPOK practitioner controls the fit, so your doctor can fine-tune and adjust for the right fit. That means better results, fewer complications and more comfort.</p></details>
+            <details open><summary>What makes VIPOK lenses different?</summary><p>Each VIPOK practitioner controls the fit, so your doctor can fine-tune and adjust it.</p></details>
             <details><summary>How do I know my doctor is giving me genuine VIPOK lenses?</summary><p>Every lens dispensed by a certified VIPOK doctor is individually shrink-wrapped. Ask to see the original package before you take your lenses home.</p></details>
-            <details><summary>Is ortho-k safe?</summary><p>Safety depends on proper fitting, lens care and follow-up visits with your eye doctor. <span class="ph">[Safety and warning language to be supplied by VIPOK regulatory]</span></p></details>
+            <details><summary>Is ortho-k safe?</summary><p>Overnight contact lens wear carries risks, including serious eye infection (microbial keratitis) that can cause permanent vision loss. Follow your practitioner's care instructions, keep every follow-up visit, and remove your lenses and call your eye doctor right away if you have pain, redness, discharge, light sensitivity or blurred vision. See <a href="../index.html#safety" target="_top">Important Safety Information</a>.</p></details>
           </div>
         </article>
       </div>
@@ -524,7 +525,10 @@ dialog.lb::backdrop{background:rgba(6,10,28,.9)}
 </main>
 
 <footer>
-  <div class="wrap"><span class="logo" role="img" aria-label="VIPOK Inc."></span><span>© VIPOK Inc. · Design option C</span></div>
+  <div class="wrap"><span class="logo" role="img" aria-label="VIPOK Inc."></span><span>© VIPOK Inc. · Design option C</span>
+    <p class="rx-only">Rx only. Caution: US federal law restricts this device to sale by or on the order of a licensed practitioner.</p>
+    <nav class="foot-links" aria-label="Legal"><a href="../index.html#safety" target="_top">Important Safety Information</a><a href="../index.html#privacy" target="_top">Privacy Policy</a><a href="../index.html#terms" target="_top">Terms of Use</a><a href="../index.html#practitioner-terms" target="_top">Practitioner Terms</a><a href="../index.html#accessibility" target="_top">Accessibility</a></nav>
+  </div>
 </footer>
 
 <dialog class="lb" id="lb" aria-label="Image viewer">
