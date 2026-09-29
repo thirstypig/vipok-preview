@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>VIPOK Design B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f5f7fc; --surface:#ffffff; --sunk:#eaeef8;
+  --ink:#0f1a44; --muted:#4e5b86; --line:#d6dcec;
+  --brand:#1b39ad; --brand-hover:#13287d; --on-brand:#ffffff;
+  --panel:#1b39ad; --panel-ink:#ffffff; --panel-muted:#c9d3ff;
+  --lime:#64c800; --lime-ink:#2f6500; --lime-soft:#eaf7dc;
+  --hi:#fff2b3; --hi-ink:#3a2c00;
+  --logo:#1b39ad;
+  --shadow:0 1px 2px rgba(15,26,68,.06),0 8px 24px rgba(15,26,68,.08);
+  --display:"Archivo","Arial Black","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --side:260px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#090e22; --surface:#10183a; --sunk:#0c1330;
+    --ink:#e6eaf7; --muted:#9aa6cc; --line:#243059;
+    --brand:#7b93ff; --brand-hover:#9aadff; --on-brand:#08102e;
+    --panel:#142a80; --panel-ink:#ffffff; --panel-muted:#b9c6ff;
+    --lime:#8dd744; --lime-ink:#b4ec7c; --lime-soft:#1b2d12;
+    --hi:#4a3d00; --hi-ink:#ffe48a;
+    --logo:#ffffff;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#090e22; --surface:#10183a; --sunk:#0c1330;
+  --ink:#e6eaf7; --muted:#9aa6cc; --line:#243059;
+  --brand:#7b93ff; --brand-hover:#9aadff; --on-brand:#08102e;
+  --panel:#142a80; --panel-ink:#ffffff; --panel-muted:#b9c6ff;
+  --lime:#8dd744; --lime-ink:#b4ec7c; --lime-soft:#1b2d12;
+  --hi:#4a3d00; --hi-ink:#ffe48a;
+  --logo:#ffffff;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+[hidden]{display:none!important}
+a{color:var(--brand)}
+a:hover{color:var(--brand-hover)}
+:focus-visible{outline:3px solid var(--lime);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);font-stretch:112%;line-height:1.08;text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:850}
+h2{font-size:clamp(1.5rem,2.6vw,2.1rem);font-weight:800}
+h3{font-size:1.1rem;font-weight:750;font-stretch:105%}
+p{margin:0}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.eyebrow{font:500 .76rem/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:1.1rem;color:var(--muted);max-width:60ch}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font:600 .95rem/1 var(--body);padding:.8rem 1.15rem;border-radius:8px;text-decoration:none;border:1.5px solid transparent;cursor:pointer}
+.btn-primary{background:var(--brand);color:var(--on-brand)}
+.btn-primary:hover{background:var(--brand-hover);color:var(--on-brand)}
+.btn-lime{background:var(--lime);color:#0b1a00}
+.btn-lime:hover{filter:brightness(1.07);color:#0b1a00}
+.btn-ghost{border-color:currentColor;background:transparent;color:inherit}
+.tag{display:inline-block;font:500 .7rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:.3rem .45rem;border-radius:4px;background:var(--hi);color:var(--hi-ink);vertical-align:middle}
+.tag.ok{background:var(--lime-soft);color:var(--lime-ink)}
+.tbd{color:var(--muted);font-style:italic}
+
+/* Notice */
+.notice{background:var(--lime-soft);color:var(--lime-ink);font-size:.8rem;padding:.35rem 16px;text-align:center;border-bottom:1px solid var(--line)}
+
+/* Sidebar shell */
+.shell{display:grid;grid-template-columns:var(--side) minmax(0,1fr);min-height:100vh}
+.side{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:1.5rem;padding:1.6rem 1.4rem;background:var(--surface);border-right:1px solid var(--line);overflow-y:auto}
+.logo{display:block;width:150px;aspect-ratio:211/63;background:var(--logo);
+  -webkit-mask:url(../assets/vipok-logo.svg) no-repeat left center/contain;mask:url(../assets/vipok-logo.svg) no-repeat left center/contain;flex:none}
+.side nav{display:grid;gap:.1rem}
+.side nav .group{margin:1rem 0 .3rem;padding-left:.7rem}
+.side nav a{display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--ink);font-weight:500;font-size:.95rem;padding:.5rem .7rem;border-radius:6px}
+.side nav a:hover{background:var(--sunk);color:var(--ink)}
+.side nav a[aria-current="page"]{background:var(--sunk);color:var(--brand);box-shadow:inset 3px 0 0 var(--brand)}
+.side-foot{margin-top:auto;display:grid;gap:.8rem}
+.lang{display:flex;gap:.3rem;flex-wrap:wrap}
+.lang button{font:500 .8rem var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:.3rem .65rem;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.lang-note{font-size:.8rem;color:var(--muted)}
+.signin{font-weight:600;text-decoration:none}
+.topbar{display:none}
+.menu-btn{background:none;border:1.5px solid var(--line);color:var(--ink);border-radius:8px;padding:.45rem .8rem;font:600 .9rem var(--body);cursor:pointer}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.7rem 16px;background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+  .topbar .logo{width:120px}
+  .side{display:none;position:fixed;inset:0;top:0;height:100%;z-index:30;border-right:0}
+  .side.open{display:flex}
+  .side .close{display:inline-flex!important}
+}
+.side .close{display:none;align-self:flex-end}
+
+/* Main */
+main{min-width:0}
+.pad{padding-inline:clamp(16px,4vw,48px)}
+.page{padding-bottom:4rem}
+section.block{padding-block:3rem;border-bottom:1px solid var(--line)}
+section.block:last-child{border-bottom:0}
+.block-head{display:grid;gap:.6rem;margin-bottom:1.8rem;max-width:62ch}
+
+/* Audience split */
+.split{display:grid;grid-template-columns:1fr 1fr;min-height:min(78vh,640px)}
+.aud{display:flex;flex-direction:column;justify-content:flex-end;gap:1rem;padding:clamp(1.5rem,4vw,3.2rem);position:relative;overflow:hidden}
+.aud h1,.aud h2{font-size:clamp(1.8rem,3.4vw,2.9rem)}
+.aud p{max-width:36ch;font-size:1.05rem}
+.aud.pro{background:var(--panel);color:var(--panel-ink)}
+.aud.pro p,.aud.pro .eyebrow{color:var(--panel-muted)}
+.aud.pat{background:var(--sunk)}
+.aud.pat p{color:var(--muted)}
+.aud .ring{position:absolute;right:-60px;top:-60px;width:300px;height:300px;border-radius:50%;border:2px solid rgba(255,255,255,.18);box-shadow:0 0 0 38px rgba(255,255,255,.04),0 0 0 76px rgba(255,255,255,.03)}
+.aud.pat .art{position:absolute;right:clamp(1rem,3vw,2.5rem);top:clamp(1rem,3vw,2.5rem);display:flex;gap:.6rem;width:min(56%,300px)}
+.aud.pat .art img{border-radius:10px;border:1px solid var(--line);background:#fff;width:50%;height:auto}
+.aud .btn{align-self:flex-start}
+@media (max-width:700px){.split{grid-template-columns:1fr;min-height:0}.aud{min-height:320px}}
+
+/* Featured case */
+.feature{display:grid;grid-template-columns:1.6fr 1fr;gap:clamp(1.5rem,3vw,2.5rem);align-items:start}
+@media (max-width:1100px){.feature{grid-template-columns:1fr}}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media (max-width:560px){.pair{grid-template-columns:1fr}}
+.pair figure{margin:0;display:grid;gap:.4rem}
+figcaption{font-size:.85rem;color:var(--muted)}
+figcaption b{color:var(--ink);font-weight:600}
+.zoom{all:unset;cursor:zoom-in;display:block;border-radius:8px;overflow:hidden;background:#fff;border:1px solid var(--line);position:relative}
+.zoom img{display:block;width:100%;height:auto}
+.zoom:hover{border-color:var(--brand)}
+.zoom:focus-visible{outline:3px solid var(--lime);outline-offset:2px}
+.zoom::after{content:"⤢";position:absolute;right:.5rem;top:.5rem;width:1.8rem;height:1.8rem;display:grid;place-items:center;border-radius:6px;background:rgba(15,26,68,.72);color:#fff;font-size:.9rem}
+.aside-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.4rem;display:grid;gap:1rem}
+.big-num{font:600 clamp(1.5rem,2.4vw,2rem)/1.15 var(--mono);color:var(--brand);white-space:nowrap}
+.rx{width:100%;border-collapse:collapse;font-size:.92rem}
+.rx th,.rx td{text-align:left;padding:.5rem .4rem;border-bottom:1px solid var(--line)}
+.rx th{font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rx .good{color:var(--lime-ink);font-weight:600}
+
+/* Steps band */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
+.step{padding:1.5rem;display:grid;gap:.5rem;align-content:start;position:relative}
+.step + .step{border-left:1px solid var(--line)}
+.step .n{font:600 .85rem var(--mono);color:var(--brand)}
+.step p{color:var(--muted);font-size:.95rem}
+.step .unit{font:500 .8rem var(--mono);color:var(--ink);background:var(--sunk);border-radius:4px;padding:.25rem .45rem;justify-self:start}
+@media (max-width:760px){.steps{grid-template-columns:1fr}.step + .step{border-left:0;border-top:1px solid var(--line)}}
+
+/* Spec sheet */
+.spec-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.spec{width:100%;min-width:640px;border-collapse:collapse;font-size:.93rem}
+.spec th,.spec td{padding:.85rem 1rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.spec thead th{font:750 1.05rem var(--display);font-stretch:108%;background:var(--sunk);border-bottom:2px solid var(--line)}
+.spec tbody th{font:500 .74rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);width:11rem}
+.spec tr:last-child th,.spec tr:last-child td{border-bottom:0}
+
+/* Certification band + consultant */
+.duo{display:grid;grid-template-columns:1.4fr 1fr;gap:1.5rem}
+@media (max-width:900px){.duo{grid-template-columns:1fr}}
+.cert{background:var(--panel);color:var(--panel-ink);border-radius:14px;padding:clamp(1.5rem,3vw,2.2rem);display:grid;gap:1rem;align-content:start}
+.cert p{color:var(--panel-muted);max-width:52ch}
+.cert ol{margin:0;padding-left:1.2rem;display:grid;gap:.35rem;color:var(--panel-muted)}
+.cert .btn{justify-self:start}
+.consult{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.5rem;display:grid;gap:.9rem;align-content:start}
+.consult dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.5rem 1rem;font-size:.95rem}
+.consult dt{font:500 .74rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:.2rem}
+.consult dd{margin:0}
+.consult code{font:500 .95rem var(--mono);background:var(--sunk);padding:.2rem .45rem;border-radius:5px;user-select:all;word-break:break-all}
+
+/* Fit trio */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.trio figure{margin:0;display:grid;gap:.4rem}
+@media (max-width:640px){.trio{grid-template-columns:1fr 1fr}}
+.callout{border-left:4px solid var(--lime);background:var(--surface);padding:.9rem 1.1rem;border-radius:0 8px 8px 0;max-width:68ch;margin-bottom:1.5rem}
+
+/* Portal */
+.portal-head{padding-block:3rem 2rem;border-bottom:1px solid var(--line);display:grid;gap:.7rem}
+.portal-grid{display:grid;grid-template-columns:300px minmax(0,1fr);gap:2rem;padding-block:2rem;align-items:start}
+@media (max-width:1100px){.portal-grid{grid-template-columns:1fr}}
+.checklist{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.3rem;display:grid;gap:.2rem}
+.checklist h3{margin-bottom:.6rem}
+.check-row{display:grid;grid-template-columns:1.6rem 1fr;gap:.6rem;padding:.7rem 0;border-top:1px solid var(--line);align-items:start}
+.check-row:first-of-type{border-top:0}
+.check-row .ic{width:1.6rem;height:1.6rem;border-radius:50%;display:grid;place-items:center;font:600 .8rem var(--mono)}
+.ic.done{background:var(--lime);color:#0b1a00}
+.ic.prog{border:2px solid var(--brand);color:var(--brand)}
+.ic.info{background:var(--sunk);color:var(--brand)}
+.check-row small{display:block;color:var(--muted);font-size:.84rem}
+.tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
+@media (max-width:640px){.tools{grid-template-columns:1fr}}
+.tool{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.4rem;display:grid;gap:.55rem;align-content:start;text-decoration:none;color:var(--ink)}
+a.tool:hover{border-color:var(--brand);color:var(--ink)}
+.tool p{color:var(--muted);font-size:.93rem}
+.tool .go{color:var(--brand);font-weight:600;font-size:.9rem}
+.tool.soon{border-style:dashed}
+.tool .code{font:600 1.6rem var(--mono);color:var(--brand)}
+
+/* Footer */
+.foot{border-top:1px solid var(--line);padding-block:2rem;font-size:.86rem;color:var(--muted);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+/* Lightbox */
+dialog.lightbox{border:0;padding:0;background:transparent;max-width:100vw;max-height:100vh;width:100%;height:100%;color:#fff}
+dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
+.lb{height:100%;display:grid;grid-template-rows:auto 1fr auto;gap:.75rem;padding:16px}
+.lb-top{display:flex;justify-content:space-between;align-items:center;font:500 .85rem var(--mono);color:#c9d3ff}
+.lb-stage{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.75rem;min-height:0}
+.lb-stage figure{margin:0;display:grid;justify-items:center;align-content:center;min-height:0;height:100%}
+.lb-stage img{background:#fff;border-radius:6px;max-width:min(92vw,1100px);max-height:72vh;width:auto;height:auto;object-fit:contain}
+.lb-btn{all:unset;cursor:pointer;width:2.8rem;height:2.8rem;display:grid;place-items:center;border-radius:999px;background:rgba(255,255,255,.12);color:#fff;font-size:1.2rem}
+.lb-btn:hover{background:rgba(255,255,255,.22)}
+.lb-btn:focus-visible{outline:3px solid var(--lime)}
+.lb-btn[disabled]{opacity:.25;cursor:default}
+.lb-cap{text-align:center;max-width:70ch;margin:0 auto;font-size:.95rem;color:#e6eaf7}
+@media (max-width:640px){.lb-stage{grid-template-columns:1fr}.lb-stage .lb-btn{display:none}}
+
+@media (prefers-reduced-motion:no-preference){
+  .page:not([hidden]){animation:fade .3s ease-out}
+  @keyframes fade{from{opacity:.7}to{opacity:1}}
+}
+</style>
+</head>
+<body>
+
+<div class="notice" role="note"><strong>Design option B · Mockup.</strong> Clinical editorial layout. Copy and images from the legacy vipok.com; claims pending regulatory review.</div>
+
+<div class="topbar">
+  <a href="#home" class="logo" aria-label="VIPOK Inc. home"></a>
+  <button class="menu-btn" id="menu-open" aria-expanded="false" aria-controls="side">Menu</button>
+</div>
+
+<div class="shell">
+  <aside class="side" id="side" aria-label="Site">
+    <button class="menu-btn close" id="menu-close" type="button">Close</button>
+    <a href="#home" class="logo" aria-label="VIPOK Inc. home"></a>
+    <nav aria-label="Main">
+      <a href="#home">Home</a>
+      <span class="eyebrow group">Eye care professionals</span>
+      <a href="#home-system">How the system works</a>
+      <a href="#home-lenses">Lens specifications</a>
+      <a href="#home-clinical">Clinical results</a>
+      <a href="#home-cert">Certification</a>
+      <a href="#portal">Doctor portal <span class="tag ok">Login</span></a>
+      <span class="eyebrow group">Patients and parents</span>
+      <a href="#home-patients">What is ortho-k?</a>
+      <a href="#home-fit">Reading the fit</a>
+      <span class="eyebrow group">Company</span>
+      <a href="#home-consult">Contact a consultant</a>
+    </nav>
+    <div class="side-foot">
+      <div>
+        <div class="lang" role="group" aria-label="Language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="zh-Hant" aria-pressed="false" lang="zh-Hant">繁中</button>
+          <button type="button" data-lang="zh-Hans" aria-pressed="false" lang="zh-Hans">简中</button>
+        </div>
+        <p class="lang-note" id="lang-note" hidden>Translation pending. Showing English.</p>
+      </div>
+      <a href="#portal" class="signin">Doctor sign in</a>
+      <a href="#portal" class="btn btn-lime">Become a VIPOK doctor</a>
+    </div>
+  </aside>
+
+  <main>
+
+  <!-- ================= HOME ================= -->
+  <div class="page" data-route="home">
+
+    <div class="split">
+      <div class="aud pro">
+        <span class="ring" aria-hidden="true"></span>
+        <span class="eyebrow">For eye care professionals</span>
+        <h1>Fit ortho-k from stock. Adjust it chairside.</h1>
+        <p>A 168-lens inventory set and a simple reference chart let you select, dispense and fine-tune VIPOK® lenses in your own practice.</p>
+        <a href="#home-system" class="btn btn-lime">See how it works</a>
+      </div>
+      <div class="aud pat">
+        <div class="art" aria-hidden="true">
+          <img src="../assets/cartoon-night-put-on-lenses.gif" alt="" width="218" height="180">
+          <img src="../assets/cartoon-day-remove-lenses.gif" alt="" width="218" height="199">
+        </div>
+        <span class="eyebrow">For patients and parents</span>
+        <h2>Wear them at night. See clearly all day.</h2>
+        <p>Orthokeratology gently reshapes the cornea while you sleep, so you can go without glasses during the day.</p>
+        <a href="#home-patients" class="btn btn-primary">What is ortho-k?</a>
+      </div>
+    </div>
+
+    <div class="pad">
+
+      <section class="block" id="home-clinical">
+        <div class="block-head"><span class="eyebrow">Featured case</span><h2>High myopia, reversed overnight</h2></div>
+        <div class="feature">
+          <div class="pair">
+            <figure><button class="zoom" data-group="case" data-caption="Case 1 · Before ortho-k · R −8.00, L −7.75 / cyl −0.75 · Optikon 2000 topography" data-src="../assets/case1-topography-before.gif"><img src="../assets/case1-topography-before.gif" alt="Case 1 corneal topography before ortho-k, both eyes" width="261" height="118"></button><figcaption><b>Before</b> · Optikon 2000 topography</figcaption></figure>
+            <figure><button class="zoom" data-group="case" data-caption="Case 1 · After ortho-k · both eyes plano" data-src="../assets/case1-topography-after.gif"><img src="../assets/case1-topography-after.gif" alt="Case 1 corneal topography after ortho-k, showing central flattening" width="263" height="117"></button><figcaption><b>After</b> · central flattening, both eyes</figcaption></figure>
+          </div>
+          <div class="aside-card">
+            <span class="eyebrow">Case 1</span>
+            <span class="big-num">−8.00 → plano</span>
+            <table class="rx">
+              <thead><tr><th>Eye</th><th>Before</th><th>After</th></tr></thead>
+              <tbody>
+                <tr><td>Right</td><td class="mono">−8.00</td><td class="mono good">plano</td></tr>
+                <tr><td>Left</td><td class="mono">−7.75 / cyl −0.75</td><td class="mono good">plano</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:.88rem;color:var(--muted)">One of two published program cases. Case 2 went from −7.00 / −7.50 to −0.50 / plano. <span class="tag">Claim under review</span></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="home-system">
+        <div class="block-head"><span class="eyebrow">How the system works</span><h2>Three steps, one chart</h2><p class="lede">No lab calculations and no waiting on reorders. The reference chart turns two measurements into a lens code.</p></div>
+        <div class="steps">
+          <div class="step"><span class="n">01</span><h3>Measure K</h3><p>Take flat and steep K. Mean K picks the chart row, from A (flattest) to ZE (steepest).</p><span class="unit">Mean K = (flat + steep) / 2</span></div>
+          <div class="step"><span class="n">02</span><h3>Select from the chart</h3><p>Spherical equivalent picks the column, rounded down. The row and column give the lens code.</p><span class="unit">Example: 43.56 D, −4.44 D → 2O06</span></div>
+          <div class="step"><span class="n">03</span><h3>Dispense and fine-tune</h3><p>Dispense from your inventory set. To adjust the fit, move up or down rows in the same column.</p><span class="unit">Target: bullseye pattern</span></div>
+        </div>
+      </section>
+
+      <section class="block" id="home-lenses">
+        <div class="block-head"><span class="eyebrow">Lens specifications</span><h2>The VIPOK lens family</h2><p class="lede">Values the legacy site never published are marked for VIPOK to supply.</p></div>
+        <div class="spec-wrap">
+          <table class="spec">
+            <thead><tr><th scope="col"><span class="eyebrow">Spec</span></th><th scope="col">VIPOK®</th><th scope="col">VIPOK® II</th><th scope="col">VIPOK® XC <span class="tag">Claim under review</span></th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Design</th><td>Four-curve, double reverse geometry</td><td>Four-curve, double reverse geometry; reference-chart fitting</td><td>Patented high-myopia design</td></tr>
+              <tr><th scope="row">Fitting</th><td>Reference chart</td><td>31 Mean K rows × 8 power columns, 39.74–47.53 D</td><td class="tbd">[VIPOK to supply]</td></tr>
+              <tr><th scope="row">Material</th><td class="tbd">[VIPOK to supply]</td><td class="tbd">[VIPOK to supply]</td><td class="tbd">[VIPOK to supply]</td></tr>
+              <tr><th scope="row">Dk</th><td class="tbd">[VIPOK to supply]</td><td class="tbd">[VIPOK to supply]</td><td class="tbd">[VIPOK to supply]</td></tr>
+              <tr><th scope="row">Parameters</th><td class="tbd">[VIPOK to supply]</td><td>Power columns −1.50 to −5.00 D; custom over 47.53 D</td><td class="tbd">[VIPOK to supply]</td></tr>
+              <tr><th scope="row">Regulatory status</th><td class="tbd">[VIPOK to supply]</td><td class="tbd">[VIPOK to supply]</td><td class="tbd">[VIPOK to supply]</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block" id="home-cert">
+        <div class="duo">
+          <div class="cert">
+            <span class="eyebrow" style="color:var(--panel-muted)">Get certified</span>
+            <h2>Online course, about 45–60 minutes</h2>
+            <p>Certification comes before your first order. You'll learn the reference chart, fit evaluation and troubleshooting, then pass a short assessment.</p>
+            <ol><li>Create a doctor account</li><li>License verification by VIPOK</li><li>Complete the course <span class="tag">Placeholder</span></li><li>Order your inventory set</li></ol>
+            <a href="#portal" class="btn btn-lime">Start your application</a>
+          </div>
+          <div class="consult" id="home-consult">
+            <span class="eyebrow">Fitting consultant</span>
+            <h3>Talk a fit through with us</h3>
+            <p style="color:var(--muted);font-size:.95rem">Send topography and refraction for a second opinion before you order, or when a fit needs troubleshooting.</p>
+            <dl>
+              <dt>Email</dt><dd><code>customer_service@vipok.com</code></dd>
+              <dt>Phone</dt><dd class="tbd">[TBD]</dd>
+              <dt>Hours</dt><dd class="tbd">[TBD]</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="home-fit">
+        <div class="block-head"><span class="eyebrow">Reading the fit</span><h2>Tight, loose, optimal</h2></div>
+        <p class="callout"><strong>Ideal VIPOK fit</strong> = bullseye fluorescein pattern + good centration + 0.1 mm movement with the blink.</p>
+        <div class="trio">
+          <figure><button class="zoom" data-group="fit" data-caption="Fluorescein pattern: tight fit" data-src="../assets/fluorescein-fit-tight.gif"><img src="../assets/fluorescein-fit-tight.gif" alt="Fluorescein pattern of a tight fit" width="194" height="144"></button><figcaption><b>Tight</b></figcaption></figure>
+          <figure><button class="zoom" data-group="fit" data-caption="Fluorescein pattern: loose fit" data-src="../assets/fluorescein-fit-loose.gif"><img src="../assets/fluorescein-fit-loose.gif" alt="Fluorescein pattern of a loose fit" width="195" height="144"></button><figcaption><b>Loose</b></figcaption></figure>
+          <figure><button class="zoom" data-group="fit" data-caption="Fluorescein pattern: optimal bullseye fit" data-src="../assets/fluorescein-fit-optimal.gif"><img src="../assets/fluorescein-fit-optimal.gif" alt="Fluorescein pattern of an optimal bullseye fit" width="194" height="144"></button><figcaption><b>Optimal</b> · bullseye</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="block" id="home-patients">
+        <div class="feature">
+          <div class="block-head" style="margin-bottom:0">
+            <span class="eyebrow">For patients and parents</span>
+            <h2>What is orthokeratology?</h2>
+            <p class="lede">Ortho-k uses rigid gas permeable lenses, worn overnight, to gradually reshape the cornea. You take them out in the morning and see clearly without glasses or daytime contacts.</p>
+            <p class="lede">VIPOK patients are cared for by certified, trained practitioners. Every lens is individually shrink-wrapped; ask to see the original package before you take lenses home.</p>
+          </div>
+          <figure style="margin:0"><button class="zoom" data-group="pat" data-caption="What is orthokeratology? Legacy home-page graphic (stock photos; licensing to confirm)" data-src="../assets/hero-collage-what-is-ortho-k.jpg"><img src="../assets/hero-collage-what-is-ortho-k.jpg" alt="Collage of children and adults, titled What is Orthokeratology?" width="563" height="389"></button><figcaption>Legacy graphic. Stock photos; confirm licensing.</figcaption></figure>
+        </div>
+      </section>
+
+      <footer class="foot"><span>© VIPOK Inc.</span><span>Design option B · layout study</span></footer>
+    </div>
+  </div>
+
+  <!-- ================= PORTAL ================= -->
+  <div class="page" data-route="portal" hidden>
+    <div class="pad">
+      <header class="portal-head">
+        <span class="eyebrow">Doctor portal</span>
+        <h1>Good morning, Dr. Example</h1>
+        <p class="lede">Example Eye Care · Optometrist (OD) <span class="tag">Example account</span></p>
+      </header>
+      <div class="portal-grid">
+        <div class="checklist">
+          <h3>Your account</h3>
+          <div class="check-row"><span class="ic done" aria-hidden="true">✓</span><div><strong>License verified</strong><small>CA-000000 · NPI on file</small></div></div>
+          <div class="check-row"><span class="ic prog" aria-hidden="true">½</span><div><strong>Certification course</strong><small>In progress · module 3 of 5</small></div></div>
+          <div class="check-row"><span class="ic info" aria-hidden="true">#</span><div><strong>Inventory set</strong><small class="mono">168 lenses · VIPOK II</small></div></div>
+          <div class="check-row"><span class="ic info" aria-hidden="true">@</span><div><strong>Consultant</strong><small><code style="font-family:var(--mono)">customer_service@vipok.com</code></small></div></div>
+        </div>
+        <div class="tools">
+          <a class="tool" href="#portal"><span class="eyebrow">Tool</span><h3>Lens selector</h3><p>Enter K readings and sphere. Last result:</p><span class="code">2O06</span><span class="go">Open →</span></a>
+          <a class="tool" href="#portal"><span class="eyebrow">Reference</span><h3>Reference chart</h3><p>All 31 Mean K rows × 8 power columns, with custom-order guidance.</p><span class="go">View →</span></a>
+          <div class="tool soon"><span class="eyebrow">Document</span><h3>Fitting guide PDF</h3><p>Lens zones, fit evaluation and troubleshooting.</p><span class="tag">To be supplied</span></div>
+          <div class="tool soon"><span class="eyebrow">Phase 2</span><h3>Orders</h3><p>Order lenses and supplies, track shipments, reorder and exchange.</p><span class="tag">Coming later</span></div>
+        </div>
+      </div>
+      <footer class="foot"><span>© VIPOK Inc.</span><span>Design option B · layout study</span></footer>
+    </div>
+  </div>
+
+  </main>
+</div>
+
+<dialog class="lightbox" id="lightbox" aria-label="Image viewer">
+  <div class="lb">
+    <div class="lb-top"><span id="lb-count"></span><button class="lb-btn" id="lb-close" aria-label="Close">✕</button></div>
+    <div class="lb-stage">
+      <button class="lb-btn" id="lb-prev" aria-label="Previous image">←</button>
+      <figure><img id="lb-img" alt=""></figure>
+      <button class="lb-btn" id="lb-next" aria-label="Next image">→</button>
+    </div>
+    <p class="lb-cap" id="lb-cap"></p>
+  </div>
+</dialog>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+
+  /* Router: #portal shows the dashboard; #home and #home-<section> show home. */
+  const pages = [...document.querySelectorAll(".page")];
+  const links = [...document.querySelectorAll(".side nav a")];
+  function route() {
+    const hash = location.hash.slice(1) || "home";
+    const page = hash === "portal" ? "portal" : "home";
+    pages.forEach(p => { p.hidden = p.dataset.route !== page; });
+    links.forEach(a => {
+      if (a.getAttribute("href") === "#" + hash) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    closeMenu();
+    const target = hash.startsWith("home-") && document.getElementById(hash);
+    if (target) target.scrollIntoView(); else window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", route);
+
+  /* Mobile menu */
+  const side = $("side"), openBtn = $("menu-open");
+  function closeMenu() { side.classList.remove("open"); openBtn.setAttribute("aria-expanded", "false"); }
+  openBtn.addEventListener("click", () => { side.classList.add("open"); openBtn.setAttribute("aria-expanded", "true"); });
+  $("menu-close").addEventListener("click", closeMenu);
+
+  /* Language switcher (mockup: English only) */
+  document.querySelector(".lang").addEventListener("click", e => {
+    const b = e.target.closest("button[data-lang]"); if (!b) return;
+    document.querySelectorAll(".lang button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    $("lang-note").hidden = b.dataset.lang === "en";
+  });
+
+  /* Lightbox */
+  const lb = $("lightbox"), img = $("lb-img"), cap = $("lb-cap"), count = $("lb-count"), prev = $("lb-prev"), next = $("lb-next");
+  let items = [], i = 0, opener = null;
+  function render() {
+    const el = items[i];
+    img.onload = () => { img.style.width = Math.round(img.naturalWidth * 2.5) + "px"; };
+    img.src = el.dataset.src;
+    img.alt = el.querySelector("img").alt;
+    cap.textContent = el.dataset.caption || "";
+    count.textContent = items.length > 1 ? `${i + 1} / ${items.length}` : "";
+    prev.disabled = i === 0; next.disabled = i === items.length - 1;
+  }
+  document.addEventListener("click", e => {
+    const z = e.target.closest(".zoom"); if (!z) return;
+    items = [...document.querySelectorAll(`.zoom[data-group="${z.dataset.group}"]`)];
+    i = items.indexOf(z); opener = z; render(); lb.showModal();
+  });
+  prev.addEventListener("click", () => { if (i > 0) { i--; render(); } });
+  next.addEventListener("click", () => { if (i < items.length - 1) { i++; render(); } });
+  $("lb-close").addEventListener("click", () => lb.close());
+  lb.addEventListener("click", e => { if (e.target.matches("dialog, .lb, .lb-stage, .lb-stage figure")) lb.close(); });
+  lb.addEventListener("keydown", e => { if (e.key === "ArrowLeft") prev.click(); if (e.key === "ArrowRight") next.click(); });
+  lb.addEventListener("close", () => opener && opener.focus());
+
+  route();
+})();
+</script>
+</body>
+</html>
+
+<div style="position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:9999;max-width:calc(100% - 32px);padding:6px 14px;border-radius:999px;background:#1d2a33;color:#fff;font:500 12px/1.4 system-ui,sans-serif;text-align:center;pointer-events:none;opacity:.9">Preview build · lens chart values are sample data, not VIPOK’s chart</div>
