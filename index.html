@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f5f7fc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#090e22" media="(prefers-color-scheme: dark)">
 <meta name="robots" content="noindex, nofollow">
 <title>VIPOK Orthokeratology</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,6 +83,12 @@ p{margin:0}
 .zone-bar a{font:600 .8rem var(--body);color:var(--muted);text-decoration:none;padding:.45rem .7rem;border-bottom:2px solid transparent}
 .zone-bar a:hover{color:var(--ink)}
 .zone-bar a[aria-current="true"]{color:var(--brand);border-bottom-color:var(--brand)}
+.zone-bar .wrap{display:flex;align-items:center;gap:.5rem}
+.theme-btn{margin-left:auto;display:inline-flex;align-items:center;gap:.4rem;background:none;border:0;color:var(--muted);font:600 .8rem var(--body);padding:.45rem .2rem .45rem .6rem;cursor:pointer;white-space:nowrap}
+.theme-btn:hover{color:var(--ink)}
+.theme-btn[aria-pressed="true"]{color:var(--brand)}
+.notice .short,.zone-bar .short{display:none}
+.zone-bar a{white-space:nowrap}
 .site-head .wrap{display:flex;align-items:center;gap:1.25rem;padding-block:.7rem}
 .logo{display:block;width:132px;aspect-ratio:214/68;background:var(--logo);
   -webkit-mask:url(assets/vipok-logo.svg) no-repeat center/contain;mask:url(assets/vipok-logo.svg) no-repeat center/contain;flex:none}
@@ -412,9 +420,23 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   .page:not([hidden]){animation:rise .35s ease-out}
   @keyframes rise{from{opacity:.6;transform:translateY(6px)}to{opacity:1;transform:none}}
 }
+
+/* Phones (kept last so it overrides the component rules above): shorter top stack, one-row "view as" bar, finger-sized tap targets */
+@media (max-width:640px){
+  .notice .long,.zone-bar .long{display:none}
+  .notice .short,.zone-bar .short{display:inline}
+  .demo-bar .wrap{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .demo-bar .wrap::-webkit-scrollbar{display:none}
+  .demo-bar button,.demo-bar .eyebrow{flex:none;white-space:nowrap}
+  .demo-bar button{min-height:36px}
+  .zone-bar a,.theme-btn{min-height:44px;display:inline-flex;align-items:center}
+  .site-foot nav a{display:inline-flex;align-items:center;min-height:44px}
+  .site-foot nav{gap:0 1.1rem}
+}
+@media (max-width:980px){.lang button{min-height:44px;padding:.5rem .8rem}}
 </style>
 
-<div class="notice" role="note"><div class="wrap"><strong>Design preview, not the official VIPOK website.</strong><span>Content from the legacy vipok.com (c. 2003) is under legal and regulatory review; do not rely on it for medical or ordering decisions.</span></div></div>
+<div class="notice" role="note"><div class="wrap"><strong>Design preview, not the official VIPOK website.</strong><span class="long">Content from the legacy vipok.com (c. 2003) is under legal and regulatory review; do not rely on it for medical or ordering decisions.</span><span class="short">Under legal review; don’t rely on it.</span></div></div>
 <div class="demo-bar" role="group" aria-label="Mockup: view the site as">
   <div class="wrap">
     <span class="eyebrow">Mockup · view as</span>
@@ -425,10 +447,12 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   </div>
 </div>
 
+<div class="zone-bar"><div class="wrap"><nav aria-label="Audience">
+    <a href="#home" data-zone="pro"><span class="long">Eye care professionals</span><span class="short">Professionals</span></a><a href="#patients" data-zone="patients"><span class="long">Patients &amp; parents</span><span class="short">Patients</span></a>
+  </nav>
+  <button type="button" class="theme-btn" id="theme-btn" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="currentColor"/></svg><span>Dark mode</span></button>
+</div></div>
 <header class="site-head">
-  <div class="zone-bar"><div class="wrap"><nav aria-label="Audience">
-    <a href="#home" data-zone="pro">Eye care professionals</a><a href="#patients" data-zone="patients">Patients &amp; parents</a>
-  </nav></div></div>
   <div class="wrap">
     <a href="#home" class="logo" aria-label="VIPOK Inc. home"></a>
     <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
@@ -1545,6 +1569,26 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     db.collection("todos").onSnapshot(snap => { todoDocs = snap.docs; renderTodos(); },
       () => todoStatus("The to-do list stopped updating. Reload the page to reconnect."));
   })();
+
+  /* ---------- Light / dark mode ----------
+     Follows the device setting until the viewer picks; the pick is kept in
+     this browser only (a per-viewer convenience, so storage may be absent). */
+  const THEME_KEY = "vipok-theme", systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const themeBtn = byId("theme-btn");
+  const savedTheme = () => { try { return localStorage.getItem(THEME_KEY); } catch { return null; } };
+  function applyTheme(choice) {
+    const root = document.documentElement;
+    if (choice === "light" || choice === "dark") root.dataset.theme = choice; else delete root.dataset.theme;
+    const dark = choice === "dark" || (choice !== "light" && systemDark.matches);
+    themeBtn.setAttribute("aria-pressed", String(dark));
+  }
+  themeBtn.addEventListener("click", () => {
+    const next = themeBtn.getAttribute("aria-pressed") === "true" ? "light" : "dark";
+    try { localStorage.setItem(THEME_KEY, next); } catch {}
+    applyTheme(next);
+  });
+  systemDark.addEventListener("change", () => applyTheme(savedTheme()));
+  applyTheme(savedTheme());
 
   /* ---------- Language switcher (mockup) ----------
      Only English exists. The other languages show a notice until a
