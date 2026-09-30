@@ -42,9 +42,13 @@
 #vr-tab,#vr-panel,#vr-pins,#vr-hint{--vr-bg:var(--surface,#fff);--vr-ink:var(--ink,#0f1a44);--vr-muted:var(--muted,#4e5b86);
   --vr-line:var(--line,#d6dcec);--vr-brand:var(--brand,#1b39ad);--vr-on-brand:var(--on-brand,#fff);--vr-sunk:var(--sunk,#eaeef8);
   font:14px/1.5 var(--body,system-ui,sans-serif);color:var(--vr-ink)}
+/* Sticky-note yellow in both themes: a color the site never uses, so the tab
+   reads as a review tool and stays visible on the blue hero. Ink on it is ~13:1. */
 #vr-tab{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:2147483000;writing-mode:vertical-rl;
-  padding:14px 8px;border:1px solid var(--vr-line);border-right:0;border-radius:10px 0 0 10px;cursor:pointer;
-  background:var(--vr-brand);color:var(--vr-on-brand);font-weight:600;box-shadow:var(--shadow,0 4px 12px rgba(0,0,0,.15))}
+  padding:16px 10px;border:1px solid #c9a400;border-right:0;border-radius:10px 0 0 10px;cursor:pointer;
+  background:#ffd84d;color:#1d1600;font-weight:700;font-size:15px;letter-spacing:.02em;
+  box-shadow:0 2px 4px rgba(0,0,0,.25),0 8px 20px rgba(0,0,0,.3)}
+#vr-tab:hover{background:#ffe27a}
 #vr-panel{position:fixed;top:0;right:0;bottom:0;z-index:2147483001;width:min(360px,100vw);display:flex;flex-direction:column;
   gap:10px;padding:14px;overflow:auto;background:var(--vr-bg);border-left:1px solid var(--vr-line);
   box-shadow:var(--shadow,0 8px 24px rgba(0,0,0,.15));box-sizing:border-box}
