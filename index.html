@@ -108,6 +108,8 @@ p{margin:0}
 .nav a{font-size:.9rem;font-weight:500;color:var(--ink);text-decoration:none;padding:.45rem .6rem;border-radius:6px}
 .nav a:hover{background:var(--sunk);color:var(--ink)}
 .nav a[aria-current="page"]{color:var(--brand);background:var(--sunk)}
+.nav-set{display:contents}
+.page [id]{scroll-margin-top:5rem}
 .btn{display:inline-flex;align-items:center;gap:.5rem;font:600 .95rem/1 var(--body);padding:.8rem 1.15rem;border-radius:8px;text-decoration:none;border:1.5px solid transparent;cursor:pointer}
 .btn-primary{background:var(--brand);color:var(--on-brand)}
 .btn-primary:hover{background:var(--brand-hover);color:var(--on-brand)}
@@ -518,18 +520,27 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     <a href="#home" class="logo" aria-label="VIPOK Inc. home"></a>
     <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
-      <a href="#system">The system</a>
-      <a href="#lenses">Lenses</a>
-      <a href="#clinical">Literature</a>
-      <a href="#certify">Get certified</a>
-      <a href="#about">About</a>
+      <div class="nav-set" data-set="pro">
+        <a href="#system">The system</a>
+        <a href="#lenses">Lenses</a>
+        <a href="#clinical">Literature</a>
+        <a href="#certify">Get certified</a>
+        <a href="#about">About</a>
+      </div>
+      <div class="nav-set" data-set="patients" hidden>
+        <a href="#patients">How Ortho-K works</a>
+        <a href="#patients" data-scroll="parents">For parents</a>
+        <a href="#safety">Safety</a>
+        <a href="#about">About</a>
+        <a href="#patients" data-scroll="pt-questions" class="btn btn-primary">Ask your eye doctor</a>
+      </div>
       <div class="lang" role="group" aria-label="Language" hidden>
         <button type="button" lang="en" aria-pressed="true">EN</button>
         <button type="button" lang="zh-Hant" aria-pressed="false">繁中</button>
         <button type="button" lang="zh-Hans" aria-pressed="false">简中</button>
       </div>
       <a href="#signin" id="nav-account" class="nav-account" hidden>Doctor sign in</a>
-      <a href="#interest" class="btn btn-primary" id="nav-cta">Doctor interest form</a>
+      <a href="#interest" class="btn btn-primary" id="nav-cta" data-set="pro">Doctor interest form</a>
     </nav>
   </div>
 </header>
@@ -944,7 +955,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
           </ul>
         </div>
         <div class="prose">
-          <h2>Questions to ask your eye doctor</h2>
+          <h2 id="pt-questions">Questions to ask your eye doctor</h2>
           <ul>
             <li>Is Ortho-K suitable for my eyes, or my child’s?</li>
             <li>What results can I realistically expect, and how long do they last?</li>
@@ -1731,7 +1742,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     role = isStaffRoute(route) ? "admin" : "visitor";
     pages.forEach(p => { p.hidden = p.dataset.route !== route; });
     navLinks.forEach(a => {
-      if (a.getAttribute("href") === "#" + route) a.setAttribute("aria-current", "page");
+      if (a.getAttribute("href") === "#" + route && !a.dataset.scroll && !a.classList.contains("btn")) a.setAttribute("aria-current", "page");
       else a.removeAttribute("aria-current");
     });
     nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false");
@@ -1740,11 +1751,25 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     // The shared pages (home, site map) belong to neither zone.
     const zone = PATIENT_ROUTES.includes(route) ? "patients" : level.lv === "all" ? "" : "pro";
     document.querySelectorAll(".zone-bar a").forEach(a => a.setAttribute("aria-current", String(a.dataset.zone === zone)));
+    // The main menu follows the audience. Shared pages (home, about, legal)
+    // keep whichever menu the visitor last saw, professional first.
+    if (zone) menuZone = zone;
+    document.querySelectorAll("#nav [data-set]").forEach(s => { s.hidden = s.dataset.set !== menuZone; });
     document.getElementById("level-strip").className = "level-strip lv-" + level.lv;
     document.getElementById("level-text").textContent = level.text;
     applyRole();
-    window.scrollTo(0, 0);
+    const target = scrollTarget && document.getElementById(scrollTarget);
+    scrollTarget = null;
+    if (target) target.scrollIntoView(); else window.scrollTo(0, 0);
   }
+  // Menu links into a part of a page (data-scroll) keep the page's bare
+  // #route, so the router and the review pins still see one page.
+  let menuZone = "pro", scrollTarget = null;
+  document.addEventListener("click", e => {
+    const a = e.target.closest("a[data-scroll]"); if (!a) return;
+    scrollTarget = a.dataset.scroll;
+    if (location.hash === a.getAttribute("href")) { e.preventDefault(); show(location.hash.slice(1)); }
+  });
 
   /* ---------- Mockup roles ----------
      There is no backend yet: the "view as" bar stands in for a signed-in
