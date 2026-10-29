@@ -293,6 +293,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--brand);outline:none;b
 @media (max-width:640px){.auth fieldset{grid-template-columns:1fr}}
 .check{display:flex;gap:.6rem;align-items:flex-start;font-size:.92rem}
 .check input{width:auto;margin-top:.3rem}
+.field .check{font-weight:400;font-size:.92rem}
+.field .label{font-weight:600;font-size:.9rem}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .auth-alt{font-size:.92rem;color:var(--muted)}
 .pill{display:inline-flex;align-items:center;gap:.35rem;font:500 .75rem/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:.35rem .55rem;border-radius:999px;white-space:nowrap}
 .pill::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:currentColor}
@@ -453,7 +456,8 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
 .steps-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;list-style:none;margin:0;padding:0}
 .steps-flow li{background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--lv);border-radius:10px;padding:1rem;display:grid;gap:.45rem;align-content:start}
 .steps-flow p{color:var(--muted);font-size:.9rem}
-@media (max-width:820px){.steps-flow{grid-template-columns:1fr 1fr}}
+.steps-flow.three{grid-template-columns:repeat(3,1fr)}
+@media (max-width:820px){.steps-flow,.steps-flow.three{grid-template-columns:1fr 1fr}}
 
 /* Site map */
 .sitemap{display:grid;gap:1.25rem}
@@ -486,7 +490,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   .zone-bar a,.theme-btn{min-height:44px;display:inline-flex;align-items:center}
   .site-foot nav a{display:inline-flex;align-items:center;min-height:44px}
   .site-foot nav{gap:0 1.1rem}
-  .steps-flow{grid-template-columns:1fr}
+  .steps-flow,.steps-flow.three{grid-template-columns:1fr}
   #level-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
   .level-strip a{min-height:44px;display:inline-flex;align-items:center}
 }
@@ -494,7 +498,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
 </style>
 
 <div class="notice" role="note"><div class="wrap"><strong>Design preview, not the official VIPOK website.</strong><span class="long">Content from the legacy vipok.com (c. 2003) is under legal and regulatory review; do not rely on it for medical or ordering decisions.</span><span class="short">Under legal review; don’t rely on it.</span></div></div>
-<div class="demo-bar" role="group" aria-label="Mockup: view the site as">
+<div class="demo-bar" role="group" aria-label="Mockup: view the site as" hidden>
   <div class="wrap">
     <span class="eyebrow">Mockup · view as</span>
     <button type="button" class="lv-pro" data-role="visitor" aria-pressed="true">Public visitor</button>
@@ -519,18 +523,18 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       <a href="#clinical">Literature</a>
       <a href="#certify">Get certified</a>
       <a href="#about">About</a>
-      <div class="lang" role="group" aria-label="Language">
+      <div class="lang" role="group" aria-label="Language" hidden>
         <button type="button" lang="en" aria-pressed="true">EN</button>
         <button type="button" lang="zh-Hant" aria-pressed="false">繁中</button>
         <button type="button" lang="zh-Hans" aria-pressed="false">简中</button>
       </div>
-      <a href="#signin" id="nav-account" class="nav-account">Doctor sign in</a>
-      <a href="#signup" class="btn btn-primary" id="nav-cta">Create an account</a>
+      <a href="#signin" id="nav-account" class="nav-account" hidden>Doctor sign in</a>
+      <a href="#interest" class="btn btn-primary" id="nav-cta">Doctor interest form</a>
     </nav>
   </div>
 </header>
 <div class="lang-note" id="lang-note" role="status" hidden><div class="wrap"><p></p></div></div>
-<div class="level-strip lv-all" id="level-strip"><div class="wrap"><span class="lv-dot"></span><span id="level-text"></span><a href="#sitemap">Site map</a></div></div>
+<div class="level-strip lv-all" id="level-strip" hidden><div class="wrap"><span class="lv-dot"></span><span id="level-text"></span><a href="#sitemap">Site map</a></div></div>
 
 <main>
 
@@ -581,12 +585,11 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
 
     <div class="section">
       <p class="eyebrow">Eye care professionals</p>
-      <h2>From first look to first order</h2>
-      <ol class="steps-flow">
-        <li class="lv-pro"><span class="lv-badge">1 · Public</span><h3>Read about the system</h3><p>The system, the lenses and the published literature are open to everyone.</p><a href="#pro">For professionals →</a></li>
-        <li class="lv-reg"><span class="lv-badge">2 · Registered</span><h3>Create an account</h3><p>A short sign-up unlocks detailed specifications, why practices choose VIPOK, and practice materials.</p><a href="#signup">Create an account →</a></li>
-        <li class="lv-reg"><span class="lv-badge">3 · Apply</span><h3>Apply to become a VIPOK doctor</h3><p>Send your license and practice details. VIPOK verifies every license.</p><a href="#apply">About the application →</a></li>
-        <li class="lv-appr"><span class="lv-badge">4 · Approved</span><h3>Fit and order</h3><p>The lens selector, reference chart and case reports unlock, and you order lenses by email.</p><a href="#portal">Doctor portal →</a></li>
+      <h2>Interested in fitting VIPOK?</h2>
+      <ol class="steps-flow three">
+        <li class="lv-pro"><span class="lv-badge">1 · Read</span><h3>Read about the system</h3><p>The system, the lenses and the published literature.</p><a href="#pro">For professionals →</a></li>
+        <li class="lv-pro"><span class="lv-badge">2 · Ask</span><h3>Send an interest form</h3><p>Tell us about your practice. There’s no account to create.</p><a href="#interest">Doctor interest form →</a></li>
+        <li class="lv-pro"><span class="lv-badge">3 · Talk</span><h3>VIPOK follows up</h3><p>A VIPOK consultant contacts you about fitting sets, training and next steps.</p><a href="#certify">About certification →</a></li>
       </ol>
     </div>
   </div>
@@ -601,8 +604,8 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
         <h1>Ortho-K fitted from stock, <em>adjusted chairside.</em></h1>
         <p class="lede">VIPOK™ four-curve, double reverse geometry lenses and a simple reference chart let you select, dispense and fine-tune Ortho-K lenses in your own practice, with no lab calculations and no waiting on reorders.</p>
         <div class="hero-ctas">
-          <a href="#signup" class="btn btn-lime">Become a VIPOK doctor</a>
-          <a href="#selector" class="btn btn-ghost">Open the lens selector</a>
+          <a href="#interest" class="btn btn-lime">Send an interest form</a>
+          <a href="#lenses" class="btn btn-ghost">See the lenses</a>
         </div>
       </div>
       <svg class="zones" viewBox="0 0 320 348" role="img" aria-label="Diagram of a four-curve Ortho-K lens: optic zone, reverse curve, alignment curve and peripheral curve">
@@ -664,8 +667,8 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     </div>
 
     <div class="cta-band">
-      <div><h2>Bring VIPOK to your practice</h2><p>Create an account for detailed specifications and practice materials, then apply to become a VIPOK doctor.</p></div>
-      <a href="#signup" class="btn btn-lime">Create an account</a>
+      <div><h2>Bring VIPOK to your practice</h2><p>Tell us about your practice, and a VIPOK consultant will follow up about fitting sets and training.</p></div>
+      <a href="#interest" class="btn btn-lime">Doctor interest form</a>
     </div>
   </div>
 </section>
@@ -726,7 +729,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     <div class="section">
       <div class="grid-3">
         <div class="option"><span class="tag">Four-curve</span><h3>VIPOK™</h3><p>Double reverse geometry lens for accelerated orthokeratology, selected with the VIPOK reference chart.</p></div>
-        <div class="option"><span class="tag">Four-curve</span><h3>VIPOK™ II</h3><p>The chart-based system in its current form: 31 Mean K rows × 8 power columns, from 39.74 to 47.53 D.</p><a href="#selector">Open the lens selector →</a></div>
+        <div class="option"><span class="tag">Four-curve</span><h3>VIPOK™ II</h3><p>The chart-based system in its current form: 31 Mean K rows × 8 power columns, from 39.74 to 47.53 D.</p><a href="#interest">Ask about fitting VIPOK™ II →</a></div>
         <div class="option"><span class="tag">Details pending</span><h3>VIPOK™ XC</h3><p>Details, indications and regulatory status to be confirmed by VIPOK.</p></div>
       </div>
     </div>
@@ -751,10 +754,9 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     <div class="section" id="specs">
       <div class="row-head"><h2>Specifications</h2><span class="example">Values to be supplied by VIPOK</span></div>
       <div class="locked" data-lock="reg">
-        <span class="lv-badge lv-reg">Registered doctors</span>
         <h2>Detailed specifications</h2>
-        <p>The full specification table, package inserts and fitting guide are for signed-in eye care professionals.</p>
-        <div class="hero-ctas"><a href="#signup" class="btn btn-primary">Create an account</a><a href="#signin" class="btn btn-ghost">Sign in</a></div>
+        <p>The full specification table, package inserts and fitting guide are available to eye care professionals on request.</p>
+        <div class="hero-ctas"><a href="#interest" class="btn btn-primary">Doctor interest form</a></div>
       </div>
       <div data-body="reg" style="display:grid;gap:1.5rem">
       <p class="lede">Doctors compare lenses on material, oxygen permeability and parameter ranges before they fit. None of these appeared on the legacy site.</p>
@@ -818,7 +820,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     </div>
 
     <div class="section">
-      <div class="callout"><strong>For practitioners.</strong> Case reports from VIPOK’s own program are shown to approved doctors in the <a href="#cases">doctor portal</a>.</div>
+      <div class="callout"><strong>For practitioners.</strong> Case reports from VIPOK’s own program are available to eye care professionals; ask through the <a href="#interest">doctor interest form</a>.</div>
     </div>
   </div>
 </section>
@@ -983,7 +985,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     <header class="page-head">
       <p class="eyebrow">Contact</p>
       <h1>Get in touch</h1>
-      <p class="lede">Questions about VIPOK lenses, distribution in your country, or training? Send us a note. Doctors who want portal access should <a href="#signup">create an account</a> instead.</p>
+      <p class="lede">Questions about VIPOK lenses, distribution in your country, or training? Send us a note. Doctors interested in fitting VIPOK can send the <a href="#interest">doctor interest form</a> instead.</p>
     </header>
     <div class="split">
       <form class="form" id="contact-form">
@@ -1013,14 +1015,14 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     <header class="page-head">
       <p class="eyebrow">Get certified</p>
       <h1>VIPOK fitter certification</h1>
-      <p class="lede">A short online course for approved doctors, completed before your first order. It covers everything you need to fit from the reference chart with confidence. <span class="tbd">[Course length and format to be confirmed; competitors run 45–60 minutes online.]</span></p>
+      <p class="lede">A short online course for doctors who fit VIPOK, completed before your first order. It covers everything you need to fit from the reference chart with confidence. <span class="tbd">[Course length and format to be confirmed; competitors run 45–60 minutes online.]</span></p>
     </header>
     <div class="section" style="padding-top:0">
       <h2>How it works</h2>
       <ol class="timeline">
-        <li><span class="dot">1</span><div><h3>Create an account, then apply</h3><p>The application asks for your license, NPI (US) and practice details. VIPOK verifies your license.</p></div></li>
-        <li><span class="dot">2</span><div><h3>Take the online course</h3><p>Self-paced modules in the doctor portal, with a short assessment.</p></div></li>
-        <li><span class="dot">3</span><div><h3>Get your certificate</h3><p>Your portal unlocks ordering, and you appear in the VIPOK doctor locator if you choose.</p></div></li>
+        <li><span class="dot">1</span><div><h3>Send an interest form</h3><p>A VIPOK consultant follows up and verifies your license.</p></div></li>
+        <li><span class="dot">2</span><div><h3>Take the online course</h3><p>Self-paced online modules, with a short assessment.</p></div></li>
+        <li><span class="dot">3</span><div><h3>Get your certificate</h3><p>You can then order VIPOK lenses for your patients.</p></div></li>
       </ol>
     </div>
     <div class="section">
@@ -1035,8 +1037,8 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       </div>
     </div>
     <div class="cta-band">
-      <div><h2>Start with an account</h2><p>Certification opens in your portal once VIPOK approves your application.</p></div>
-      <a href="#signup" class="btn btn-lime">Create an account</a>
+      <div><h2>Interested in certification?</h2><p>Send an interest form, and VIPOK will tell you how the course works.</p></div>
+      <a href="#interest" class="btn btn-lime">Doctor interest form</a>
     </div>
   </div>
 </section>
@@ -1430,7 +1432,8 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       <h2>Information we collect</h2>
       <ul>
         <li><b>Inquiries:</b> the name, email, role, practice or company, country and message you send through the contact form.</li>
-        <li><b>Doctor accounts:</b> your email, password (stored only in hashed form by our sign-in provider), name, professional credentials, license number and issuing state or country, NPI number if you give it, and practice details.</li>
+        <li><b>Doctor interest forms:</b> the name, credentials, practice, location, email, phone and message you send. The form is delivered by email through FormSubmit (formsubmit.co), a form-to-email service.</li>
+        <li><b>Doctor accounts</b> (planned): your email, password (stored only in hashed form by our sign-in provider), name, professional credentials, license number and issuing state or country, NPI number if you give it, and practice details.</li>
         <li><b>Orders</b> (planned): what you order and where it ships. Orders identify patients only by your own reference number. Please do not send us patient names or other patient health information.</li>
         <li><b>Technical information:</b> our hosting provider records standard server logs, such as IP address, browser type and pages requested. The site loads fonts from Google Fonts and scripts from cdnjs (Cloudflare), which receive your IP address when your browser requests them. We do not use advertising cookies. <span class="tbd">[Confirm whether any analytics will be used.]</span></li>
       </ul>
@@ -1537,14 +1540,56 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   </div>
 </section>
 
+<!-- ============ DOCTOR INTEREST FORM ============ -->
+<section class="page" data-route="interest" hidden>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">For eye care professionals</p>
+      <h1>Doctor interest form</h1>
+      <p class="lede">Interested in fitting VIPOK™ lenses? Tell us about your practice, and a VIPOK consultant will follow up. No account needed.</p>
+    </header>
+    <form class="auth" id="interest-form">
+      <fieldset>
+        <legend>About you</legend>
+        <div class="field"><label for="in-first">First name <i>*</i></label><input id="in-first" name="First name" autocomplete="given-name" required></div>
+        <div class="field"><label for="in-last">Last name <i>*</i></label><input id="in-last" name="Last name" autocomplete="family-name" required></div>
+        <div class="field full"><label for="in-cred">I am a <i>*</i></label>
+          <select id="in-cred" name="Role" required><option value="">Select</option><option>Optometrist (OD)</option><option>Ophthalmologist (MD / DO)</option><option>Eye care practitioner outside the US</option><option>Practice staff</option><option>Other</option></select></div>
+        <div class="field"><label for="in-email">Email <i>*</i></label><input id="in-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="in-phone">Phone</label><input id="in-phone" name="Phone" type="tel" autocomplete="tel"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Your practice</legend>
+        <div class="field full"><label for="in-practice">Practice name <i>*</i></label><input id="in-practice" name="Practice" autocomplete="organization" required></div>
+        <div class="field"><label for="in-city">City <i>*</i></label><input id="in-city" name="City" autocomplete="address-level2" required></div>
+        <div class="field"><label for="in-state">State or province</label><input id="in-state" name="State" autocomplete="address-level1"></div>
+        <div class="field"><label for="in-country">Country <i>*</i></label><input id="in-country" name="Country" autocomplete="country-name" value="United States" required></div>
+        <div class="field"><label for="in-fits">Do you fit Ortho-K now?</label>
+          <select id="in-fits" name="Fits Ortho-K now"><option value="">Select</option><option>Yes, regularly</option><option>Occasionally</option><option>Not yet</option></select></div>
+        <div class="field full" role="group" aria-labelledby="in-topics-label"><span id="in-topics-label" class="label">I’d like to hear about</span>
+          <label class="check"><input type="checkbox" name="Interested in" value="Fitting set (24 lenses)"><span>The 24-lens fitting set</span></label>
+          <label class="check"><input type="checkbox" name="Interested in" value="Full inventory set (168 lenses)"><span>The 168-lens full inventory set</span></label>
+          <label class="check"><input type="checkbox" name="Interested in" value="Certification course"><span>The certification course</span></label>
+          <label class="check"><input type="checkbox" name="Interested in" value="Pricing"><span>Pricing</span></label></div>
+        <div class="field full"><label for="in-heard">How did you hear about VIPOK?</label><input id="in-heard" name="Heard about VIPOK"></div>
+        <div class="field full"><label for="in-msg">Anything else?</label><textarea id="in-msg" name="Message" rows="4"></textarea></div>
+        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      </fieldset>
+      <p class="form-fine">VIPOK uses these details only to follow up on your interest, as described in the <a href="#privacy">Privacy Policy</a>. Please don’t include patient names or other patient health information.</p>
+      <div><button class="btn btn-primary" type="submit" id="interest-send">Send</button></div>
+      <p class="form-status" id="interest-status" role="status" hidden></p>
+    </form>
+  </div>
+</section>
+
 <!-- ============ SITE MAP ============ -->
 <section class="page" data-route="sitemap" hidden>
   <div class="wrap">
     <header class="page-head">
       <p class="eyebrow">Site map</p>
-      <h1>Every page, by who can see it</h1>
-      <p class="lede">The site has four access levels. Each has its own color, which also appears in the strip under the menu on every page and in the “view as” bar at the top of this preview.</p>
-      <ul class="sm-key" aria-label="Color key">
+      <h1>Every page on the site</h1>
+      <p class="lede">The site has two sections: one for eye care professionals and one for patients and parents.</p>
+      <ul class="sm-key" aria-label="Color key" hidden>
         <li class="lv-pt"><span class="lv-dot"></span>Public · patients and parents</li>
         <li class="lv-pro"><span class="lv-dot"></span>Public · professionals</li>
         <li class="lv-reg"><span class="lv-dot"></span>Registered doctors</li>
@@ -1553,7 +1598,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       </ul>
     </header>
     <div class="sitemap" id="sitemap"></div>
-    <div class="section">
+    <div class="section" hidden>
       <h2>Languages</h2>
       <p class="lede">Every page will be published in three languages, chosen from the switch in the menu. Only English is written so far; the Chinese versions wait on professional translation of the final English copy.</p>
       <ul class="regions"><li>English</li><li class="planned" lang="zh-Hant">繁體中文 · Traditional Chinese (planned)</li><li class="planned" lang="zh-Hans">简体中文 · Simplified Chinese (planned)</li></ul>
@@ -1567,7 +1612,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   <div class="wrap">
     <div style="display:grid;gap:.6rem"><span class="logo" role="img" aria-label="VIPOK Inc."></span><span>© VIPOK Inc. VIPOK is a trademark of VIPOK Inc.</span></div>
     <nav aria-label="Footer">
-      <a href="#pro">For professionals</a><a href="#system">The system</a><a href="#lenses">Lenses</a><a href="#clinical">Clinical literature</a><a href="#portal">Doctor portal</a><a href="#certify">Get certified</a><a href="#faq">FAQ</a><a href="#patients">For patients</a><a href="#about">About</a><a href="#contact">Contact</a><a href="#sitemap">Site map</a>
+      <a href="#pro">For professionals</a><a href="#system">The system</a><a href="#lenses">Lenses</a><a href="#clinical">Clinical literature</a><a href="#interest">Doctor interest form</a><a href="#certify">Get certified</a><a href="#faq">FAQ</a><a href="#patients">For patients</a><a href="#about">About</a><a href="#contact">Contact</a><a href="#sitemap">Site map</a>
     </nav>
   </div>
   <div class="wrap foot-legal">
@@ -1605,9 +1650,11 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
 
   /* ---------- Access levels and site map ----------
      One list drives the site map page and the colored level strip under the
-     menu, so the two cannot disagree. Each entry: [route, label, note]. */
+     menu, so the two cannot disagree. Each entry: [route, label, note].
+     Levels marked hidden are left out of the simple marketing site
+     (2026-10-29): the site map skips them and their routes fall back to home. */
   const SITE = [
-    { lv: "all", badge: "Level 1 · Public", title: "Open to everyone", note: "No account needed. Patients and parents who see VIPOK at a clinic land here, and so do eye care professionals looking at the system for the first time.", cols: [
+    { lv: "all", badge: "Public", title: "Open to everyone", note: "No account needed. Patients and parents who see VIPOK at a clinic land here, and so do eye care professionals looking at the system for the first time.", cols: [
       { lv: "pt", title: "Patients and parents", items: [
         ["patients", "Patients and parents", "How Ortho-K works, what to expect, for parents"],
         ["safety", "Important Safety Information", "Risks and warnings"]] },
@@ -1618,8 +1665,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
         ["clinical", "Literature", "The published practitioner report"],
         ["certify", "Get certified", "The fitter course"],
         ["faq", "FAQ", ""],
-        ["signup", "Create an account", "Step 1 of 2"],
-        ["signin", "Sign in", ""]] },
+        ["interest", "Doctor interest form", "No account needed"]] },
       { lv: "all", title: "General", items: [
         ["home", "Home", "The shared front door"],
         ["about", "About VIPOK", ""],
@@ -1629,7 +1675,10 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
         ["terms", "Terms of Use", ""],
         ["practitioner-terms", "Practitioner Terms", ""],
         ["accessibility", "Accessibility", ""]] }] },
-    { lv: "reg", badge: "Level 2 · Registered", title: "Signed-in eye care professionals", note: "A short sign-up. Opens the detailed information and the application to become a VIPOK doctor.", cols: [
+    { lv: "reg", hidden: true, badge: "Level 2 · Registered", title: "Signed-in eye care professionals", note: "A short sign-up. Opens the detailed information and the application to become a VIPOK doctor.", cols: [
+      { lv: "reg", title: "Account", items: [
+        ["signup", "Create an account", "Step 1 of 2"],
+        ["signin", "Sign in", ""]] },
       { lv: "reg", title: "Professional resources", items: [
         ["members", "Professional resources", "The signed-in starting page"],
         ["lenses", "Detailed specifications", "The full table on the Lenses page"],
@@ -1638,13 +1687,13 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       { lv: "reg", title: "Becoming a VIPOK doctor", items: [
         ["apply", "Application", "Step 2 of 2: license and practice details"],
         ["pending", "Application status", "While VIPOK verifies the license"]] }] },
-    { lv: "appr", badge: "Level 3 · Approved", title: "Approved VIPOK doctors", note: "After VIPOK verifies the license. The lens chart is only ever shown at this level.", cols: [
+    { lv: "appr", hidden: true, badge: "Level 3 · Approved", title: "Approved VIPOK doctors", note: "After VIPOK verifies the license. The lens chart is only ever shown at this level.", cols: [
       { lv: "appr", title: "Doctor portal", items: [
         ["portal", "Doctor portal", "The approved doctor’s starting page"],
         ["selector", "Lens selector", "K readings to lens code, with the reference chart"],
         ["cases", "Case reports", "From VIPOK’s program"],
         ["orders", "Orders", "Order by email, and past orders"]] }] },
-    { lv: "adm", badge: "Level 4 · Admin", title: "VIPOK staff", note: "Not part of the public site.", cols: [
+    { lv: "adm", hidden: true, badge: "Level 4 · Admin", title: "VIPOK staff", note: "Not part of the public site.", cols: [
       { lv: "adm", title: "Staff tools", items: [
         ["admin", "Doctor applications", "Approve or reject"],
         ["admin-legal", "Legal review", ""],
@@ -1658,7 +1707,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   pages.forEach(p => { if (!LEVEL_OF[p.dataset.route]) console.warn("Route missing from the site map:", p.dataset.route); });
 
   const el = (tag, props, ...kids) => { const n = Object.assign(document.createElement(tag), props); n.append(...kids); return n; };
-  document.getElementById("sitemap").append(...SITE.map(level =>
+  document.getElementById("sitemap").append(...SITE.filter(level => !level.hidden).map(level =>
     el("section", { className: "sm-level lv-" + level.lv },
       el("div", { className: "sm-head" },
         el("span", { className: "lv-badge", textContent: level.badge }),
@@ -1671,8 +1720,15 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
             el("li", {}, el("a", { href: "#" + r, textContent: label }), ...(note ? [el("small", { textContent: note })] : []))))))))));
 
   const PATIENT_ROUTES = ["patients", "safety"];
+  // The staff area opens by URL in the private mockup only: #staff-build sits
+  // in a private block, which the public preview build strips.
+  const STAFF = !!document.getElementById("staff-build");
+  const isStaffRoute = r => r === "admin" || r.startsWith("admin-");
+  const isHidden = r => { const lv = SITE.find(l => l.cols.some(c => c.items.some(([x]) => x === r))); return !!(lv && lv.hidden); };
   function show(route) {
     if (!pages.some(p => p.dataset.route === route)) route = "home";
+    if (isHidden(route) && !(STAFF && isStaffRoute(route))) route = "home";
+    role = isStaffRoute(route) ? "admin" : "visitor";
     pages.forEach(p => { p.hidden = p.dataset.route !== route; });
     navLinks.forEach(a => {
       if (a.getAttribute("href") === "#" + route) a.setAttribute("aria-current", "page");
@@ -1712,7 +1768,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     const [label, href] = ACCOUNT_LINK[role];
     const acct = byId("nav-account"); acct.textContent = label; acct.setAttribute("href", href);
     const cta = byId("nav-cta");
-    if (role === "visitor") { cta.textContent = "Create an account"; cta.setAttribute("href", "#signup"); }
+    if (role === "visitor") { cta.textContent = "Doctor interest form"; cta.setAttribute("href", "#interest"); }
     else { cta.textContent = "Sign out"; cta.setAttribute("href", "#home"); }
 
     gate("selector-lock", "selector-tool", canSeePortal());
@@ -2118,6 +2174,41 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   ["k-flat", "k-steep", "sphere"].forEach(id => $(id).addEventListener("input", calc));
   $("sel-form").addEventListener("submit", e => e.preventDefault());
   calc();
+
+  /* ---------- Doctor interest form ----------
+     A static site can't send mail, so FormSubmit relays the form to VIPOK by
+     email. Its first submission sends the recipient an activation link; until
+     that is clicked, nothing is delivered and the reply says so. */
+  const INTEREST_URL = "https://formsubmit.co/ajax/doctorpaulwoo@gmail.com";
+  $("interest-form").addEventListener("submit", async e => {
+    e.preventDefault();
+    const form = e.currentTarget, status = $("interest-status"), send = $("interest-send");
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    const say = msg => { status.textContent = msg; status.hidden = false; };
+    const data = {};
+    for (const [k, v] of new FormData(form)) data[k] = data[k] ? data[k] + ", " + v : v;
+    if (data._honey) return; // a bot filled the hidden field
+    delete data._honey;
+    data._subject = "VIPOK doctor interest: " + data["First name"] + " " + data["Last name"] + ", " + data.Practice;
+    data._template = "table";
+    send.disabled = true;
+    try {
+      const res = await fetch(INTEREST_URL, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) });
+      const reply = await res.json().catch(() => ({}));
+      if (res.ok && String(reply.success) === "true") {
+        form.reset();
+        say("Thank you. Your details were sent to VIPOK, and a consultant will follow up by email.");
+      } else if (/activat/i.test(reply.message || "")) {
+        say("This form is waiting for VIPOK to activate it, so your details weren't sent. Please try again later.");
+      } else {
+        say("Your details weren't sent (" + (reply.message || "HTTP " + res.status) + "). Please try again, or write to us from the Contact page.");
+      }
+    } catch {
+      say("Your details weren't sent: the connection failed. Please try again, or write to us from the Contact page.");
+    } finally {
+      send.disabled = false;
+    }
+  });
 
   /* ---------- Contact form (mockup: nothing is sent) ---------- */
   $("contact-form").addEventListener("submit", e => {
