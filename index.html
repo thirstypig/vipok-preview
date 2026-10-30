@@ -1443,7 +1443,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       <h2>Information we collect</h2>
       <ul>
         <li><b>Inquiries:</b> the name, email, role, practice or company, country and message you send through the contact form.</li>
-        <li><b>Doctor interest forms:</b> the name, credentials, practice, location, email, phone and message you send. The form is delivered by email through FormSubmit (formsubmit.co), a form-to-email service.</li>
+        <li><b>Doctor interest forms:</b> the name, credentials, practice, location, email, phone and message you send. The form is delivered by email through Formspree (formspree.io), a form service that also keeps a copy of each form for VIPOK.</li>
         <li><b>Doctor accounts</b> (planned): your email, password (stored only in hashed form by our sign-in provider), name, professional credentials, license number and issuing state or country, NPI number if you give it, and practice details.</li>
         <li><b>Orders</b> (planned): what you order and where it ships. Orders identify patients only by your own reference number. Please do not send us patient names or other patient health information.</li>
         <li><b>Technical information:</b> our hosting provider records standard server logs, such as IP address, browser type and pages requested. The site loads fonts from Google Fonts and scripts from cdnjs (Cloudflare), which receive your IP address when your browser requests them. We do not use advertising cookies. <span class="tbd">[Confirm whether any analytics will be used.]</span></li>
@@ -1584,7 +1584,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
           <label class="check"><input type="checkbox" name="Interested in" value="Pricing"><span>Pricing</span></label></div>
         <div class="field full"><label for="in-heard">How did you hear about VIPOK?</label><input id="in-heard" name="Heard about VIPOK"></div>
         <div class="field full"><label for="in-msg">Anything else?</label><textarea id="in-msg" name="Message" rows="4"></textarea></div>
-        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       </fieldset>
       <p class="form-fine">VIPOK uses these details only to follow up on your interest, as described in the <a href="#privacy">Privacy Policy</a>. Please don’t include patient names or other patient health information.</p>
       <div><button class="btn btn-primary" type="submit" id="interest-send">Send</button></div>
@@ -2201,10 +2201,11 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   calc();
 
   /* ---------- Doctor interest form ----------
-     A static site can't send mail, so FormSubmit relays the form to VIPOK by
-     email. Its first submission sends the recipient an activation link; until
-     that is clicked, nothing is delivered and the reply says so. */
-  const INTEREST_URL = "https://formsubmit.co/ajax/drpaultwoo@gmail.com";
+     A static site can't send mail, so Formspree relays the form to VIPOK by
+     email and keeps a copy. If Formspree can't be reached, the doctor gets a
+     link that opens the same details as an email to FALLBACK_EMAIL. */
+  const INTEREST_URL = "https://formspree.io/f/meaazbel";
+  const FALLBACK_EMAIL = "customer_service@vipok.com";
   $("interest-form").addEventListener("submit", async e => {
     e.preventDefault();
     const form = e.currentTarget, status = $("interest-status"), send = $("interest-send");
@@ -2212,24 +2213,30 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     const say = msg => { status.textContent = msg; status.hidden = false; };
     const data = {};
     for (const [k, v] of new FormData(form)) data[k] = data[k] ? data[k] + ", " + v : v;
-    if (data._honey) return; // a bot filled the hidden field
-    delete data._honey;
-    data._subject = "VIPOK doctor interest: " + data["First name"] + " " + data["Last name"] + ", " + data.Practice;
-    data._template = "table";
+    if (data._gotcha) return; // a bot filled the hidden field
+    delete data._gotcha;
+    const subject = "VIPOK doctor interest: " + data["First name"] + " " + data["Last name"] + ", " + data.Practice;
+    const offerEmail = msg => {
+      say(msg + " ");
+      const body = Object.entries(data).filter(([, v]) => v).map(([k, v]) => k + ": " + v).join("\n");
+      const a = document.createElement("a");
+      a.href = "mailto:" + FALLBACK_EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      a.textContent = "Send it by email instead";
+      status.append(a, ".");
+    };
     send.disabled = true;
     try {
-      const res = await fetch(INTEREST_URL, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) });
+      const res = await fetch(INTEREST_URL, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify({ ...data, _subject: subject }) });
       const reply = await res.json().catch(() => ({}));
-      if (res.ok && String(reply.success) === "true") {
+      if (res.ok && reply.ok) {
         form.reset();
         say("Thank you. Your details were sent to VIPOK, and a consultant will follow up by email.");
-      } else if (/activat/i.test(reply.message || "")) {
-        say("This form is waiting for VIPOK to activate it, so your details weren't sent. Please try again later.");
       } else {
-        say("Your details weren't sent (" + (reply.message || "HTTP " + res.status) + "). Please try again, or write to us from the Contact page.");
+        const why = (reply.errors || []).map(x => x.message).join(" ") || reply.error || "HTTP " + res.status;
+        offerEmail("Your details weren't sent (" + why + ").");
       }
     } catch {
-      say("Your details weren't sent: the connection failed. Please try again, or write to us from the Contact page.");
+      offerEmail("Your details weren't sent: the connection failed.");
     } finally {
       send.disabled = false;
     }
