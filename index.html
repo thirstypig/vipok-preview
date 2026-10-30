@@ -1443,7 +1443,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       <h2>Information we collect</h2>
       <ul>
         <li><b>Inquiries:</b> the name, email, role, practice or company, country and message you send through the contact form.</li>
-        <li><b>Doctor interest forms:</b> the name, credentials, practice, location, email, phone and message you send. The form is delivered by email through Formspree (formspree.io), a form service that also keeps a copy of each form for VIPOK.</li>
+        <li><b>Doctor interest forms:</b> the name, credentials, practice, location, email, phone, the Ortho-K brands you fit, and the message you send. The form is delivered by email through Formspree (formspree.io), a form service that also keeps a copy of each form for VIPOK.</li>
         <li><b>Doctor accounts</b> (planned): your email, password (stored only in hashed form by our sign-in provider), name, professional credentials, license number and issuing state or country, NPI number if you give it, and practice details.</li>
         <li><b>Orders</b> (planned): what you order and where it ships. Orders identify patients only by your own reference number. Please do not send us patient names or other patient health information.</li>
         <li><b>Technical information:</b> our hosting provider records standard server logs, such as IP address, browser type and pages requested. The site loads fonts from Google Fonts and scripts from cdnjs (Cloudflare), which receive your IP address when your browser requests them. We do not use advertising cookies. <span class="tbd">[Confirm whether any analytics will be used.]</span></li>
@@ -1577,6 +1577,17 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
         <div class="field"><label for="in-country">Country <i>*</i></label><input id="in-country" name="Country" autocomplete="country-name" value="United States" required></div>
         <div class="field"><label for="in-fits">Do you fit Ortho-K now?</label>
           <select id="in-fits" name="Fits Ortho-K now"><option value="">Select</option><option>Yes, regularly</option><option>Occasionally</option><option>Not yet</option></select></div>
+        <div class="field full" role="group" aria-labelledby="in-brands-label" id="in-brands" hidden><span id="in-brands-label" class="label">Which Ortho-K brands do you fit now?</span>
+          <label class="check"><input type="checkbox" name="Brands fitted" value="Paragon CRT"><span>Paragon CRT</span></label>
+          <label class="check"><input type="checkbox" name="Brands fitted" value="Euclid"><span>Euclid</span></label>
+          <label class="check"><input type="checkbox" name="Brands fitted" value="DreamLens or other VST designs"><span>DreamLens or other VST designs</span></label>
+          <label class="check"><input type="checkbox" name="Brands fitted" value="Menicon Bloom Night"><span>Menicon Bloom Night</span></label>
+          <label class="check"><input type="checkbox" name="Brands fitted" value="MoonLens"><span>MoonLens</span></label>
+          <label class="check"><input type="checkbox" name="Brands fitted" value="Contex OK"><span>Contex OK</span></label>
+          <label class="check"><input type="checkbox" name="Brands fitted" value="WAVE"><span>WAVE</span></label>
+          <label class="check"><input type="checkbox" name="Brands fitted" value="GOV"><span>GOV</span></label>
+          <label class="check"><input type="checkbox" name="Brands fitted" value="VIPOK™"><span>VIPOK™</span></label>
+          <label for="in-brands-other" class="check">Other</label><input id="in-brands-other" name="Other brands" placeholder="Brand or design"></div>
         <div class="field full" role="group" aria-labelledby="in-topics-label"><span id="in-topics-label" class="label">I’d like to hear about</span>
           <label class="check"><input type="checkbox" name="Interested in" value="Fitting set (24 lenses)"><span>The 24-lens fitting set</span></label>
           <label class="check"><input type="checkbox" name="Interested in" value="Full inventory set (168 lenses)"><span>The 168-lens full inventory set</span></label>
@@ -2206,6 +2217,15 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
      link that opens the same details as an email to FALLBACK_EMAIL. */
   const INTEREST_URL = "https://formspree.io/f/meaazbel";
   const FALLBACK_EMAIL = "customer_service@vipok.com";
+  // Brands are asked only of doctors who fit Ortho-K now; disabled inputs stay out of the form data.
+  const syncBrands = () => {
+    const show = ["Yes, regularly", "Occasionally"].includes($("in-fits").value);
+    $("in-brands").hidden = !show;
+    $("in-brands").querySelectorAll("input").forEach(i => { i.disabled = !show; });
+  };
+  $("in-fits").addEventListener("change", syncBrands);
+  $("interest-form").addEventListener("reset", () => setTimeout(syncBrands));
+  syncBrands();
   $("interest-form").addEventListener("submit", async e => {
     e.preventDefault();
     const form = e.currentTarget, status = $("interest-status"), send = $("interest-send");
