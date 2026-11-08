@@ -1003,16 +1003,17 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     </header>
     <div class="split">
       <form class="form" id="contact-form">
-        <div class="field"><label for="c-first">First name <i>*</i></label><input id="c-first" name="firstname" required autocomplete="given-name"></div>
-        <div class="field"><label for="c-last">Last name <i>*</i></label><input id="c-last" name="lastname" required autocomplete="family-name"></div>
+        <div class="field"><label for="c-first">First name <i>*</i></label><input id="c-first" name="First name" required autocomplete="given-name"></div>
+        <div class="field"><label for="c-last">Last name <i>*</i></label><input id="c-last" name="Last name" required autocomplete="family-name"></div>
         <div class="field"><label for="c-email">Email <i>*</i></label><input id="c-email" name="email" type="email" required autocomplete="email"></div>
-        <div class="field"><label for="c-title">I am a</label><select id="c-title" name="title"><option value="">Select</option><option>Optometrist (OD)</option><option>Ophthalmologist (MD / DO)</option><option>Eye care practitioner outside the US</option><option>Practice staff</option><option>Distributor</option><option>Other</option></select></div>
-        <div class="field"><label for="c-practice">Practice or company</label><input id="c-practice" name="company" autocomplete="organization"></div>
-        <div class="field"><label for="c-country">Country <i>*</i></label><input id="c-country" name="country" required autocomplete="country-name"></div>
-        <div class="field full"><label for="c-comments">How can we help? <i>*</i></label><textarea id="c-comments" name="comments" rows="5" required placeholder="Questions about VIPOK lenses, distribution in your country, or training…"></textarea></div>
-        <div class="full" style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap"><button class="btn btn-primary" type="submit">Send inquiry</button><span style="font-size:.85rem;color:var(--muted)"><i style="color:var(--brand);font-style:normal">*</i> Required</span></div>
-        <p class="full form-fine">VIPOK uses these details only to respond to your inquiry, as described in the <a href="#privacy">Privacy Policy</a>. Please don’t include patient names or other patient health information. <b>Preview: this form doesn’t send anything.</b></p>
-        <p class="form-status" id="form-status" hidden></p>
+        <div class="field"><label for="c-title">I am a</label><select id="c-title" name="I am a"><option value="">Select</option><option>Optometrist (OD)</option><option>Ophthalmologist (MD / DO)</option><option>Eye care practitioner outside the US</option><option>Practice staff</option><option>Distributor</option><option>Other</option></select></div>
+        <div class="field"><label for="c-practice">Practice or company</label><input id="c-practice" name="Practice or company" autocomplete="organization"></div>
+        <div class="field"><label for="c-country">Country <i>*</i></label><input id="c-country" name="Country" required autocomplete="country-name"></div>
+        <div class="field full"><label for="c-comments">How can we help? <i>*</i></label><textarea id="c-comments" name="Message" rows="5" required placeholder="Questions about VIPOK lenses, distribution in your country, or training…"></textarea></div>
+        <div class="full" style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap"><button class="btn btn-primary" type="submit" id="contact-send">Send inquiry</button><span style="font-size:.85rem;color:var(--muted)"><i style="color:var(--brand);font-style:normal">*</i> Required</span></div>
+        <p class="full form-fine">VIPOK uses these details only to respond to your inquiry, as described in the <a href="#privacy">Privacy Policy</a>. Please don’t include patient names or other patient health information.</p>
+        <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p class="form-status" id="form-status" role="status" hidden></p>
       </form>
       <aside class="panel">
         <h3>Prefer email?</h3>
@@ -2221,31 +2222,21 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   $("sel-form").addEventListener("submit", e => e.preventDefault());
   calc();
 
-  /* ---------- Doctor interest form ----------
-     A static site can't send mail, so Formspree relays the form to VIPOK by
-     email and keeps a copy. If Formspree can't be reached, the doctor gets a
-     link that opens the same details as an email to FALLBACK_EMAIL. */
+  /* ---------- Forms: doctor interest and contact ----------
+     A static site can't send mail, so Formspree relays both forms to VIPOK by
+     email and keeps a copy (one form, meaazbel; the subject line says which).
+     If Formspree can't be reached, the visitor gets a link that opens the same
+     details as an email to FALLBACK_EMAIL. */
   const INTEREST_URL = "https://formspree.io/f/meaazbel";
   const FALLBACK_EMAIL = "customer_service@vipok.com";
-  // Brands are asked only of doctors who fit Ortho-K now; disabled inputs stay out of the form data.
-  const syncBrands = () => {
-    const show = ["Yes, regularly", "Occasionally"].includes($("in-fits").value);
-    $("in-brands").hidden = !show;
-    $("in-brands").querySelectorAll("input").forEach(i => { i.disabled = !show; });
-  };
-  $("in-fits").addEventListener("change", syncBrands);
-  $("interest-form").addEventListener("reset", () => setTimeout(syncBrands));
-  syncBrands();
-  $("interest-form").addEventListener("submit", async e => {
-    e.preventDefault();
-    const form = e.currentTarget, status = $("interest-status"), send = $("interest-send");
+  const relay = async (form, status, send, subjectOf, thanks) => {
     if (!form.checkValidity()) { form.reportValidity(); return; }
     const say = msg => { status.textContent = msg; status.hidden = false; };
     const data = {};
     for (const [k, v] of new FormData(form)) data[k] = data[k] ? data[k] + ", " + v : v;
     if (data._gotcha) return; // a bot filled the hidden field
     delete data._gotcha;
-    const subject = "VIPOK doctor interest: " + data["First name"] + " " + data["Last name"] + ", " + data.Practice;
+    const subject = subjectOf(data);
     const offerEmail = msg => {
       say(msg + " ");
       const body = Object.entries(data).filter(([, v]) => v).map(([k, v]) => k + ": " + v).join("\n");
@@ -2260,7 +2251,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       const reply = await res.json().catch(() => ({}));
       if (res.ok && reply.ok) {
         form.reset();
-        say("Thank you. Your details were sent to VIPOK, and a consultant will follow up by email.");
+        say(thanks);
       } else {
         const why = (reply.errors || []).map(x => x.message).join(" ") || reply.error || "HTTP " + res.status;
         offerEmail("Your details weren't sent (" + why + ").");
@@ -2270,15 +2261,28 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     } finally {
       send.disabled = false;
     }
-  });
+  };
 
-  /* ---------- Contact form (mockup: nothing is sent) ---------- */
+  // Brands are asked only of doctors who fit Ortho-K now; disabled inputs stay out of the form data.
+  const syncBrands = () => {
+    const show = ["Yes, regularly", "Occasionally"].includes($("in-fits").value);
+    $("in-brands").hidden = !show;
+    $("in-brands").querySelectorAll("input").forEach(i => { i.disabled = !show; });
+  };
+  $("in-fits").addEventListener("change", syncBrands);
+  $("interest-form").addEventListener("reset", () => setTimeout(syncBrands));
+  syncBrands();
+  $("interest-form").addEventListener("submit", e => {
+    e.preventDefault();
+    relay(e.currentTarget, $("interest-status"), $("interest-send"),
+      d => "VIPOK doctor interest: " + d["First name"] + " " + d["Last name"] + ", " + d.Practice,
+      "Thank you. Your details were sent to VIPOK, and a consultant will follow up by email.");
+  });
   $("contact-form").addEventListener("submit", e => {
     e.preventDefault();
-    const form = e.currentTarget, status = $("form-status");
-    if (!form.checkValidity()) { form.reportValidity(); return; }
-    status.textContent = "Mockup: this form isn't connected yet, so nothing was sent. In production it replaces the old sendmail.php form.";
-    status.hidden = false;
+    relay(e.currentTarget, $("form-status"), $("contact-send"),
+      d => "VIPOK contact: " + d["First name"] + " " + d["Last name"] + ", " + d.Country,
+      "Thank you. Your message was sent to VIPOK, and we'll reply by email.");
   });
   $("copy-email").addEventListener("click", async e => {
     const btn = e.currentTarget;
