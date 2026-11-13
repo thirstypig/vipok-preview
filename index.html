@@ -1460,7 +1460,8 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
         <li><b>Doctor interest forms:</b> the name, credentials, practice, location, email, phone, the Ortho-K brands you fit, and the message you send. The form is delivered by email through Formspree (formspree.io), a form service that also keeps a copy of each form for VIPOK.</li>
         <!-- preview-only:start --><li><b>Doctor accounts</b> (planned): your email, password (stored only in hashed form by our sign-in provider), name, professional credentials, license number and issuing state or country, NPI number if you give it, and practice details.</li>
         <li><b>Orders</b> (planned): what you order and where it ships. Orders identify patients only by your own reference number. Please do not send us patient names or other patient health information.</li><!-- preview-only:end -->
-        <li><b>Technical information:</b> our hosting provider records standard server logs, such as IP address, browser type and pages requested. The site loads fonts from Google Fonts and scripts from cdnjs (Cloudflare), which receive your IP address when your browser requests them. We do not use advertising cookies. <span class="tbd">[Confirm whether any analytics will be used.]</span></li>
+        <li><b>Technical information:</b> our hosting provider records standard server logs, such as IP address, browser type and pages requested. The site loads fonts from Google Fonts and scripts from cdnjs (Cloudflare), which receive your IP address when your browser requests them. We do not use advertising cookies.</li>
+        <li><b>Analytics, only if you agree:</b> if you choose Accept in the cookie banner, vipok.com uses Google Analytics 4 to count visits and see which pages and forms are used. Google Analytics sets cookies (names starting with <code>_ga</code>) and receives your IP address and browser details; it does not store IP addresses. We keep analytics data for 14 months and do not use Google signals or advertising features. If you choose Decline, or don’t choose, Google Analytics is not loaded. You can change your choice at any time with “Cookie settings” at the bottom of the page.</li>
       </ul>
       <h2>How we use it</h2>
       <p>To answer inquiries; to verify practitioner licenses with the issuing licensing boards and, for US practitioners, the NPPES NPI Registry; to run the doctor portal, certification and orders; to keep the site secure; and to meet legal and regulatory obligations, including medical device reporting.</p>
@@ -1786,6 +1787,8 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     const target = scrollTarget && document.getElementById(scrollTarget);
     scrollTarget = null;
     if (target) target.scrollIntoView(); else window.scrollTo(0, 0);
+    // vipok.com only: the site build defines vipokAnalytics (GA4, after consent). A no-op here.
+    window.vipokAnalytics?.page(route);
   }
   // Menu links into a part of a page (data-scroll) keep the page's bare
   // #route, so the router and the review pins still see one page.
@@ -2253,6 +2256,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       const res = await fetch(INTEREST_URL, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify({ ...data, _subject: subject }) });
       const reply = await res.json().catch(() => ({}));
       if (res.ok && reply.ok) {
+        window.vipokAnalytics?.event("generate_lead", { form_id: form.id });
         form.reset();
         say(thanks);
       } else {
