@@ -159,6 +159,8 @@ p{margin:0}
 
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem 2.5rem}
+/* A row that lost a card on vipok.com (preview-only content removed) closes the gap. */
+@media (min-width:821px){.grid-3:has(>:last-child:nth-child(2)){grid-template-columns:repeat(2,1fr)}}
 @media (max-width:820px){.grid-3,.grid-2{grid-template-columns:1fr}}
 .benefit{display:grid;gap:.4rem;padding-top:1rem;border-top:2px solid var(--brand)}
 .benefit p{color:var(--muted);font-size:.95rem}
@@ -246,6 +248,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--brand);outline:none;b
 .how figure .zoom{background:#fff}
 .how .step{font:500 .75rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--brand)}
 .split{display:grid;grid-template-columns:1.1fr .9fr;gap:2.5rem;align-items:start}
+.split:not(:has(>:nth-child(2))){grid-template-columns:1fr}
 @media (max-width:820px){.split{grid-template-columns:1fr}.how{grid-template-columns:1fr 1fr}}
 .regions{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;padding:0;margin:0}
 .regions li{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:.3rem .8rem;font-size:.88rem}
@@ -741,7 +744,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       <div class="grid-3">
         <div class="option"><span class="tag">Four-curve</span><h3>VIPOK®</h3><p>Double reverse geometry lens for accelerated orthokeratology, selected with the VIPOK reference chart.</p></div>
         <div class="option"><span class="tag">Four-curve</span><h3>VIPOK® II</h3><p>The chart-based system in its current form: 31 Mean K rows × 8 power columns, from 39.74 to 47.53 D.</p><a href="#interest">Ask about fitting VIPOK® II →</a></div>
-        <div class="option"><span class="tag">Details pending</span><h3>VIPOK® XC</h3><p>Details, indications and regulatory status to be confirmed by VIPOK.</p></div>
+        <!-- preview-only:start --><div class="option"><span class="tag">Details pending</span><h3>VIPOK® XC</h3><p>Details, indications and regulatory status to be confirmed by VIPOK.</p></div><!-- preview-only:end -->
       </div>
     </div>
 
@@ -763,7 +766,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     </div>
 
     <div class="section" id="specs">
-      <div class="row-head"><h2>Specifications</h2><span class="example">VIPOK® values from the package insert; VIPOK® II and XC to be confirmed</span></div>
+      <div class="row-head"><h2>Specifications</h2><!-- preview-only:start --><span class="example">VIPOK® values from the package insert; VIPOK® II and XC to be confirmed</span><!-- preview-only:end --></div>
       <div class="locked" data-lock="reg">
         <h2>Detailed specifications</h2>
         <p>The full specification table, package inserts and fitting guide are available to eye care professionals on request.</p>
@@ -988,7 +991,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
         <p>Availability depends on regulatory approval in each country. Contact VIPOK to confirm availability where you practice.</p>
         <div class="callout cite" style="margin-top:.5rem"><span class="eyebrow">In the literature</span><p style="margin-top:.35rem">Harris DH. <a href="https://www.clspectrum.com/issues/2003/july/advanced-inventory-orthokeratology-system/" target="_blank" rel="noopener">“Advanced Inventory Orthokeratology System.”</a> <i>Contact Lens Spectrum</i>, July 2003. <a href="#clinical">About this case report</a></p></div>
       </div>
-      <figure class="ph-photo" role="img" aria-label="Photo placeholder"><span>Photo placeholder: a licensed or VIPOK-owned photo is needed here</span></figure>
+      <!-- preview-only:start --><figure class="ph-photo" role="img" aria-label="Photo placeholder"><span>Photo placeholder: a licensed or VIPOK-owned photo is needed here</span></figure><!-- preview-only:end -->
     </div>
   </div>
 </section>
@@ -1455,8 +1458,8 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
       <ul>
         <li><b>Inquiries:</b> the name, email, role, practice or company, country and message you send through the contact form.</li>
         <li><b>Doctor interest forms:</b> the name, credentials, practice, location, email, phone, the Ortho-K brands you fit, and the message you send. The form is delivered by email through Formspree (formspree.io), a form service that also keeps a copy of each form for VIPOK.</li>
-        <li><b>Doctor accounts</b> (planned): your email, password (stored only in hashed form by our sign-in provider), name, professional credentials, license number and issuing state or country, NPI number if you give it, and practice details.</li>
-        <li><b>Orders</b> (planned): what you order and where it ships. Orders identify patients only by your own reference number. Please do not send us patient names or other patient health information.</li>
+        <!-- preview-only:start --><li><b>Doctor accounts</b> (planned): your email, password (stored only in hashed form by our sign-in provider), name, professional credentials, license number and issuing state or country, NPI number if you give it, and practice details.</li>
+        <li><b>Orders</b> (planned): what you order and where it ships. Orders identify patients only by your own reference number. Please do not send us patient names or other patient health information.</li><!-- preview-only:end -->
         <li><b>Technical information:</b> our hosting provider records standard server logs, such as IP address, browser type and pages requested. The site loads fonts from Google Fonts and scripts from cdnjs (Cloudflare), which receive your IP address when your browser requests them. We do not use advertising cookies. <span class="tbd">[Confirm whether any analytics will be used.]</span></li>
       </ul>
       <h2>How we use it</h2>
