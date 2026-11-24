@@ -77,6 +77,23 @@ input[type=text]:focus,textarea:focus,.opt:focus-within{outline:2px solid var(--
 a{color:var(--brand)}
 .linkbtn{font:inherit;color:var(--brand);background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
 .files li{margin:.35rem 0;display:grid;gap:.35rem}
+.refs{margin:0;font-size:.93rem;border:1px dashed var(--line);border-radius:10px;padding:.6rem .8rem}
+.refs .files{padding-left:1.1rem}
+.sw{flex:0 0 auto;width:28px;height:28px;border-radius:8px;border:1px solid var(--line);margin-top:-.1rem}
+.sw.none{background:repeating-linear-gradient(45deg,var(--surface) 0 5px,var(--sunk) 5px 10px)}
+.hex{margin-left:auto;font:400 .8rem/1.6 var(--mono);color:var(--muted)}
+.cprev{display:grid;gap:.6rem}
+.chead{margin:0;font-size:.93rem}
+.chead .low{color:var(--err);font-weight:600}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.ctile{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.cbanner{padding:.9rem 1rem;display:grid;gap:.5rem;justify-items:start}
+.cbanner p{margin:0;font:800 1.15rem/1.15 var(--display);font-stretch:105%}
+.cbanner em{font-style:normal}
+.cmode{font:500 .7rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+.cpill,.cbtn{display:inline-block;font:600 .82rem/1 var(--body);padding:.5rem .8rem;border-radius:999px}
+.cbody{padding:.8rem 1rem;display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:center}
+.clink{font-size:.88rem;font-weight:600;text-decoration:underline}
 .chips{display:flex;flex-wrap:wrap;gap:.4rem}
 .chip{display:inline-flex;align-items:center;min-height:40px;padding:.4rem .9rem;border-radius:999px;border:1px solid var(--brand);
   background:var(--surface);color:var(--brand);font:600 .9rem/1 var(--body);text-decoration:none;cursor:pointer}
@@ -102,6 +119,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
   dialog#doc{width:100%;height:100%;max-width:none;max-height:none;margin:0;border:0;border-radius:0}
   .doc-head{padding:.6rem .8rem calc(.6rem) ;padding-top:calc(.6rem + env(safe-area-inset-top))}
   .doc-head b{flex-basis:100%;font-size:.95rem}
+  .cgrid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -135,7 +153,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
     <button type="button" class="chip" id="doc-close">Close</button></span>
   </div>
   <iframe id="doc-frame" title="Document preview" src="about:blank"></iframe>
-  <p class="doc-note">Shown from Google Drive. If it stays blank, sign in to Google with the account Jimmy shared the files with, or use “Open in new tab”.</p>
+  <p class="doc-note" id="doc-note"></p>
 </dialog>
 
 <div class="bar"><div class="in">
@@ -152,181 +170,216 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
 
   // pre: index of the selected option. own: true when it is Paul's own earlier answer, false when it is our suggestion.
   // pre: null leaves the question blank. Options marked {other:true} show a text box.
+  // References shown under a question. site(): a vipok.com page, opened in the pop-up.
+  // doc(): a file in Jimmy's Google Drive, shared view-only with Paul. ext(): an outside source, new tab only.
+  const site = (label, route) => ({ kind: "site", label, url: "https://vipok.com/#" + route });
+  const doc = (label, drive) => ({ kind: "doc", label, drive });
+  const ext = (label, url) => ({ kind: "ext", label, url });
+  const D = {
+    tm: doc("Trademark section 8 & 9 renewal (PDF)", "1zKaKTwNMinIZJJKgMLrWb8Oq5GBJCI_b"),
+    fda: doc("FDA listing printout, January 6, 2017 (photo)", "1kL2LwybqRtzbw17pfmJtd_G1MAPnLdYe"),
+    insert: doc("VIPOK package insert (Word)", "1puMDfpH6gf9P4DgmmL4GrZ5ybNC1Puvy"),
+  };
+  const X = {
+    tsdr: ext("USPTO record for registration 2,489,161", "https://tsdr.uspto.gov/#caseNumber=2489161&caseType=US_REGISTRATION_NO&searchType=statusSearch"),
+    patent: ext("US Patent 6,361,169 (Google Patents)", "https://patents.google.com/patent/US6361169B1/en"),
+    s043: ext("FDA summary of P870024/S043 (2002 overnight approval)", "https://webharvest.gov/peth04/20041117135654/http://www.fda.gov/cdrh/mda/docs/p870024s043.html"),
+    pma: ext("FDA PMA database: P870024", "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpma/pma.cfm?id=P870024"),
+    r807: ext("21 CFR 807.20: who must register and list", "https://www.ecfr.gov/current/title-21/chapter-I/subchapter-H/part-807/subpart-B/section-807.20"),
+    r803: ext("21 CFR 803: Medical Device Reporting", "https://www.ecfr.gov/current/title-21/chapter-I/subchapter-H/part-803"),
+    r352: ext("21 U.S.C. 352: misbranding, incl. (q) and (r) on restricted-device ads", "https://www.law.cornell.edu/uscode/text/21/352"),
+    r255: ext("16 CFR 255: FTC Endorsement Guides", "https://www.ecfr.gov/current/title-16/chapter-I/subchapter-B/part-255"),
+    jj: ext("J&J’s 2021 announcement of Abiliti’s FDA approval", "https://www.prnewswire.com/news-releases/johnson--johnson-vision-announces-fda-approval-of-acuvue-abiliti-overnight-therapeutic-lenses-for-myopia-management-301445946.html"),
+    healio: ext("Healio: FDA approves Acuvue Ortho-K lenses for myopia control", "https://cm.healio.com/news/optometry/20210512/fda-approves-acuvue-orthok-lenses-for-myopia-control"),
+    cls: ext("Harris 2003 article in Contact Lens Spectrum", "https://www.clspectrum.com/issues/2003/july/advanced-inventory-orthokeratology-system/"),
+    arch: ext("archive.org copies of the old member.htm", "https://web.archive.org/web/2002/http://www.vipok.com/member.htm"),
+    old: ext("The old vipok.com home page (archive.org, 2003)", "https://web.archive.org/web/2003/http://www.vipok.com/"),
+    ccpa: ext("California Attorney General: CCPA overview", "https://oag.ca.gov/privacy/ccpa"),
+  };
+  const LEGAL = [site("Privacy Policy", "privacy"), site("Terms of Use", "terms"), site("Practitioner Terms", "practitioner-terms"),
+                 site("Important Safety Information", "safety"), site("Accessibility", "accessibility")];
+
   const SECTIONS = [
     { title: "Part 1 · Confirm what you told us on November 23", qs: [
-      { id: "trademark", t: "Trademark: the site uses “VIPOK®”",
+      { id: "trademark", refs: [D.tm, X.tsdr], t: "Trademark: the site uses “VIPOK®”",
         ctx: "USPTO registration 2,489,161 (VIPOK, contact lenses), renewed in 2022, next renewal due September 11, 2031. The site never puts ® on “XTREME CONTOUR” or “XC” (that registration was cancelled in 2013) or on “VIPOK Inc.”.",
-        prev: "“Trademark is valid. Sent you sect 8&9 renewal.”", files: [{ label: "Trademark section 8 & 9 renewal (PDF)", drive: "1zKaKTwNMinIZJJKgMLrWb8Oq5GBJCI_b" }],
+        prev: "“Trademark is valid. Sent you sect 8&9 renewal.”",
         opts: ["Confirmed", { other: true, label: "Correction" }], pre: 0, own: true },
-      { id: "patent", t: "Patent: the site mentions no patent",
+      { id: "patent", refs: [X.patent], t: "Patent: the site mentions no patent",
         ctx: "US Patent 6,361,169 lapsed in 2014. The site says nothing about patents or a “patented design”.",
         prev: "“No Patent.”", opts: ["Confirmed", { other: true, label: "Correction" }], pre: 0, own: true },
-      { id: "offlabel", t: "The −10.00 D sentence on the Lenses page",
+      { id: "offlabel", refs: [site("Lenses page (the sentence is under the lens cards)", "lenses"), D.insert], t: "The −10.00 D sentence on the Lenses page",
         ctx: "As you asked, the professionals’ Lenses page now says: “Approved indications are in each lens’s package insert. Off-label use to treat myopia up to −10.00 diopters.” It does not appear on any patient page. Please note: FDA rules let a doctor prescribe a lens off-label, but they treat a manufacturer advertising an unapproved use as off-label promotion. That is why we recommend VIPOK’s counsel approve this sentence.",
         prev: "“Use ‘Off label use to treat Myopia up to -10.00 diopters.’”",
         opts: ["Keep it as published", { other: true, label: "Change the wording to" }, "Remove it until VIPOK’s counsel approves it"], pre: 0, own: true },
-      { id: "offlabel-counsel", t: "Has VIPOK’s counsel reviewed the −10.00 D sentence?",
+      { id: "offlabel-counsel", refs: [site("Lenses page", "lenses"), X.r352], t: "Has VIPOK’s counsel reviewed the −10.00 D sentence?",
         opts: ["Not yet; counsel will review it", "Yes, counsel approved it", "VIPOK does not plan a counsel review", { other: true, label: "Other" }], pre: 0, own: false },
-      { id: "chart", t: "Reference chart: the full VIPOK II chart is public on vipok.com",
+      { id: "chart", refs: [site("Reference chart page", "selector")], t: "Reference chart: the full VIPOK II chart is public on vipok.com",
         ctx: "Since November 23, the chart and lens selector are on a public “Reference chart” page in the professionals’ section, open to anyone without a login. The old member.htm page is still archived on archive.org.",
         prev: "“Okay to include reference chart.”",
         opts: ["Keep it public on vipok.com", "Show it only to doctors who sign up (needs the doctor login, a later phase)", "Take it off the site"], pre: 0, own: true },
-      { id: "archive", t: "Should VIPOK ask archive.org to remove its 2002 copy of member.htm?",
+      { id: "archive", refs: [X.arch], t: "Should VIPOK ask archive.org to remove its 2002 copy of member.htm?",
         ctx: "Only the site owner can make that request. Since the chart is now public anyway, there’s little reason to.",
         opts: ["No, leave the archive.org copy", "Yes, VIPOK will ask archive.org to exclude it"], pre: 0, own: false },
-      { id: "harris", t: "Dr. Harris’s 2003 article: the site now discloses his connection",
+      { id: "harris", refs: [site("Literature page", "clinical"), X.cls, X.r255], t: "Dr. Harris’s 2003 article: the site now discloses his connection",
         ctx: "Beside each citation of the Contact Lens Spectrum case report, the site says: “Dr. Harris was a consultant to VIPOK when he wrote it; the article itself lists no disclosures.” The FTC requires disclosing a connection like this.",
         prev: "“Dr. Harris was a consultant for Vipok at the time when he wrote the article.”",
         opts: ["Confirmed, the wording is right", { other: true, label: "Correct the wording to" }], pre: 0, own: true },
-      { id: "terms", t: "Program terms: no enrollment fee",
+      { id: "terms", refs: [site("For professionals page", "pro")], t: "Program terms: no enrollment fee",
         ctx: "The professionals’ page now says there is no fee to join, practices start with the full 168-lens inventory set, a 24-lens fitting set or lens-by-lens orders, and hands-on training comes with the first purchase.",
         prev: "“Yes still true, no enrollment fees.”",
         opts: ["Confirmed", { other: true, label: "Correction" }], pre: 0, own: true },
-      { id: "address", t: "Company name and address",
+      { id: "address", refs: [site("Contact page", "contact"), site("Privacy Policy (first paragraph)", "privacy")], t: "Company name and address",
         ctx: "Contact and the Privacy Policy now say: VIPOK Inc., 1234 S. Garfield Ave., Suite 106, Alhambra, CA 91801. The old site said Suite 105.",
         prev: "“Vipok Inc. 1234 S. Garfield Ave. #106, Alhambra, CA 91801. Registered corporation in California.”",
         opts: ["Suite 106 is correct", "It is Suite 105", { other: true, label: "Other address" }], pre: 0, own: true },
-      { id: "law", t: "The Terms of Use are governed by California law",
+      { id: "law", refs: [site("Terms of Use (Governing law)", "terms")], t: "The Terms of Use are governed by California law",
         ctx: "Chosen because VIPOK Inc. is a California corporation.",
         opts: ["Confirmed, California", { other: true, label: "Another state" }], pre: 0, own: false },
-      { id: "photos", t: "Photos from the old home page",
+      { id: "photos", refs: [X.old], t: "Photos from the old home page",
         ctx: "The old vipok.com home page had a photo collage and a header photo (people and eyes). We found no license for them, so they are not on the new site.",
         prev: "“What photos?”",
         opts: ["Leave them off; the new site doesn’t need them", "VIPOK owns or licensed them and will send proof"], pre: 0, own: false },
     ]},
     { title: "Part 2 · Regulatory questions still open", qs: [
-      { id: "fda-vipok", t: "VIPOK: FDA status",
+      { id: "fda-vipok", refs: [D.fda, site("Lenses page (Specifications: Regulatory status)", "lenses"), X.pma], t: "VIPOK: FDA status",
         ctx: "The site says VIPOK lenses are made in Paragon HDS® 100 under Paragon Vision Sciences’ FDA premarket approval P870024 (product code NUU). Is that still correct?",
-        prev: "“Sent you FDA listing.”", files: [{ label: "FDA listing printout, January 6, 2017 (photo)", drive: "1kL2LwybqRtzbw17pfmJtd_G1MAPnLdYe" }],
+        prev: "“Sent you FDA listing.”",
         opts: ["Yes, correct", { other: true, label: "Correction" }], pre: 0, own: true },
-      { id: "fda-listing", t: "The current FDA listing no longer shows “Vipok”",
+      { id: "fda-listing", refs: [D.fda, X.pma], t: "The current FDA listing no longer shows “Vipok”",
         ctx: "The 2017 printout listed “Vipok” under Paragon. FDA’s public device listing today shows no “Vipok” under any company. The listing is the manufacturer’s to keep current. Who will update it?",
-        files: [{ label: "FDA listing printout, January 6, 2017 (photo)", drive: "1kL2LwybqRtzbw17pfmJtd_G1MAPnLdYe" }],
         opts: ["VIPOK will ask Paragon (CooperVision) to re-list it", "Paragon is already updating it", { other: true, label: "It is listed under another name" }, { other: true, label: "Other" }], pre: 0, own: false },
-      { id: "fda-ii", t: "VIPOK II: FDA status",
+      { id: "fda-ii", refs: [X.pma, site("Lenses page", "lenses")], t: "VIPOK II: FDA status",
         ctx: "Is VIPOK II made under the same Paragon PMA P870024, a different approval, or not FDA-approved?",
         opts: ["Same PMA P870024", { other: true, label: "A different approval (number)" }, "Not FDA-approved", "Not sure, VIPOK will check"], pre: null },
-      { id: "fda-xc", t: "VIPOK XC (XTREME CONTOUR): FDA status and whether it is still sold",
+      { id: "fda-xc", refs: [X.pma], t: "VIPOK XC (XTREME CONTOUR): FDA status and whether it is still sold",
         opts: ["Still sold, same PMA P870024", { other: true, label: "Still sold, a different approval (number)" }, "No longer sold: leave it off the site", "Not sure, VIPOK will check"], pre: null },
-      { id: "indication", t: "The approved range for the site’s “indications” line",
+      { id: "indication", refs: [D.insert, X.s043, site("Important Safety Information", "safety")], t: "The approved range for the site’s “indications” line",
         ctx: "The package insert’s indication says myopia up to 3.00 D, but its study section mentions −5.62 D, and FDA’s 2002 overnight approval for Paragon’s designs (P870024/S043) covers myopia up to 6.00 D and astigmatism up to 1.75 D. Which range should the site state for VIPOK?",
-        files: [{ label: "VIPOK package insert (Word)", drive: "1puMDfpH6gf9P4DgmmL4GrZ5ybNC1Puvy" }],
         opts: ["Up to 3.00 D, as in the indication", { other: true, label: "Another range" }, "Don’t state a range; refer to the insert"], pre: 2, own: false },
-      { id: "inserts", t: "Package inserts for VIPOK II and XC",
+      { id: "inserts", refs: [D.insert], t: "Package inserts for VIPOK II and XC",
         opts: ["VIPOK will send them (reply to Jimmy’s email)", "They use the same insert as VIPOK", "No separate inserts exist"], pre: null },
-      { id: "insert-fix", t: "Corrections to the VIPOK package insert",
+      { id: "insert-fix", refs: [D.insert, site("Important Safety Information (uses the insert’s safety wording)", "safety")], t: "Corrections to the VIPOK package insert",
         ctx: "The insert you sent contains text from other lenses (SuperBridge and Quadra RG), and its study data is from Paragon CRT. The site uses only its safety wording, never its study figures.",
-        prev: "Package insert received November 4 and again November 23.", files: [{ label: "VIPOK package insert (Word)", drive: "1puMDfpH6gf9P4DgmmL4GrZ5ybNC1Puvy" }],
+        prev: "Package insert received November 4 and again November 23.",
         opts: ["Fine as is for now", "VIPOK will send a corrected insert", "Paragon will correct it"], pre: 0, own: false },
-      { id: "myopia", t: "Myopia control: the site makes no myopia-control claim",
+      { id: "myopia", refs: [X.jj, X.healio, site("Patients and parents page", "patients")], t: "Myopia control: the site makes no myopia-control claim",
         ctx: "J&J’s ACUVUE Abiliti Overnight has been FDA-approved for myopia management since 2021, so you were right that one Ortho-K lens has that approval (our September question was out of date). But an FDA approval covers only the lens and studies it was granted for: J&J’s approval does not cover VIPOK, so the site still makes no myopia-control claim.",
         prev: "“Sent you J&J Abiliti OK which states for myopia management, thus OK is approved for slowing myopia progression.” (The J&J document did not reach us; please re-send it.)",
         opts: ["Agreed, keep myopia-control claims off", { other: true, label: "VIPOK has its own FDA approval for myopia control (number)" }], pre: 0, own: false },
-      { id: "cfg", t: "Certificate to Foreign Government (CFG): whose name is it in?",
+      { id: "cfg", refs: [site("About page (Availability)", "about")], t: "Certificate to Foreign Government (CFG): whose name is it in?",
         ctx: "You said VIPOK has a CFG and is not registered in other countries, so the site lists no foreign markets.",
         prev: "“We have CFG… Not approved in individual countries outside of US.” (The certificate did not reach us; please send a copy.)",
         opts: ["VIPOK Inc.", "Paragon Vision Sciences / CooperVision", { other: true, label: "Other" }], pre: null },
-      { id: "claims", t: "Other claims from the old site",
+      { id: "claims", refs: [X.old], t: "Other claims from the old site",
         ctx: "Your answers didn’t cover these, so they stay off: fits 85% of cases; about 80% first-selection accuracy; 2,000+ eyes fitted; “first to” make high-myopia Ortho-K lenses; day or night wear for 12+ hours; “advanced” material; more accurate than custom designs; lower cost; more profitable for practices.",
         opts: ["Keep them all off", { other: true, label: "VIPOK has data for some (which ones); will send it" }], pre: 0, own: false },
-      { id: "cases", t: "Case 1, Case 2 and the SSVIP case",
+      { id: "cases", refs: [X.old], t: "Case 1, Case 2 and the SSVIP case",
         ctx: "To show these old cases we need the treating doctor, the date, and the patients’ written consent. Both cases also started at about −7 to −8 D, outside the insert’s range.",
         prev: "“????”",
         opts: ["Leave them off the site", { other: true, label: "VIPOK will supply the doctor, date and consent" }], pre: 0, own: false },
     ]},
     { title: "Part 3 · Website details", qs: [
-      { id: "phone", t: "Phone and fax",
+      { id: "phone", refs: [site("Contact page", "contact")], t: "Phone and fax",
         ctx: "Phone 626-282-6658, fax 626-282-3667.",
         opts: ["Both are current", "Phone only; remove the fax", { other: true, label: "New numbers" }], pre: null },
-      { id: "hours", t: "Office hours for the Contact page",
+      { id: "hours", refs: [site("Contact page", "contact")], t: "Office hours for the Contact page",
         opts: ["Monday–Friday, 9 a.m.–5 p.m. Pacific", { other: true, label: "Other hours" }, "Don’t show hours"], pre: 0, own: false },
-      { id: "inbox", t: "Is customer_service@vipok.com read every business day?",
+      { id: "inbox", refs: [site("Contact page", "contact"), site("Important Safety Information (reporting problems)", "safety")], t: "Is customer_service@vipok.com read every business day?",
         ctx: "The site lists it for questions, privacy requests and problem reports.",
         opts: ["Yes", { other: true, label: "Use another address" }], pre: null },
-      { id: "privacy-contact", t: "Privacy contact",
+      { id: "privacy-contact", refs: [site("Privacy Policy", "privacy")], t: "Privacy contact",
         opts: ["customer_service@vipok.com", { other: true, label: "Another person or address" }], pre: 0, own: false },
-      { id: "retention", t: "How long VIPOK keeps information from the website",
+      { id: "retention", refs: [site("Privacy Policy (How long we keep it)", "privacy")], t: "How long VIPOK keeps information from the website",
         ctx: "The Privacy Policy should say how long VIPOK keeps form messages, doctor applications and order records.",
         opts: ["Messages and applications 2 years; order records 7 years", { other: true, label: "Other periods" }], pre: 0, own: false },
-      { id: "counsel", t: "Counsel review of the legal pages",
+      { id: "counsel", refs: [...LEGAL], t: "Counsel review of the legal pages",
         ctx: "Privacy Policy, Terms of Use, Practitioner Terms and Important Safety Information are live on vipok.com. Have VIPOK’s lawyers reviewed them?",
         opts: ["Counsel will review them (date in the note)", "Already reviewed", "VIPOK does not plan a counsel review"], pre: 0, own: false },
-      { id: "color", t: "Brand color",
-        ctx: "The October email offered the current blue or a green. Which should the site use?",
-        opts: ["Keep the current blue", "Switch to green", "No preference"], pre: null },
-      { id: "preview", t: "The design preview (vipok.pasadenaworks.com)",
+      { id: "blue", kind: "swatch", t: "Brand color, part 1: choose the blue",
+        ctx: "The site uses one blue (top banner, buttons, links) and one green (the headline accent and the patient button). These are the five blues from the October email. The preview under part 2 shows your pair in light and dark mode.",
+        opts: [{ label: "B1 Royal blue (current)", hex: "#1b39ad" }, { label: "B2 Navy", hex: "#14306e" }, { label: "B3 Bright medical blue", hex: "#2563c9" },
+               { label: "B4 Ocean blue", hex: "#0b5c8a" }, { label: "B5 Steel blue", hex: "#3a5a80" }],
+        refs: [site("Home page (current colors)", "home")], pre: 0, own: false },
+      { id: "green", kind: "swatch", t: "Brand color, part 2: choose the green",
+        ctx: "A green that is hard to read on the chosen blue (under 3:1) is marked “low”.",
+        opts: [{ label: "G1 Lime (current)", hex: "#64c800" }, { label: "G2 Fresh green", hex: "#3fbf5a" }, { label: "G3 Teal green", hex: "#19b39a" },
+               { label: "G4 Soft sage", hex: "#9ccf6a" }, { label: "G5 Mint", hex: "#6ee7b7" },
+               { label: "No green: white banner, blue only for buttons and links", hex: null }],
+        pre: 0, own: false, preview: true },
+      { id: "preview", refs: [ext("The design preview", "https://vipok.pasadenaworks.com/")], t: "The design preview (vipok.pasadenaworks.com)",
         ctx: "It is behind a passphrase, hidden from search engines, and shows sample chart data.",
         prev: "“Reviewing website.”",
         opts: ["Still reviewing", "Comfortable with it", { other: true, label: "Changes needed" }], pre: 0, own: true },
     ]},
     { title: "Part 4 · FDA foundations", qs: [
-      { id: "pma-design", t: "Which FDA approval covers the VIPOK lens design for overnight wear?",
+      { id: "pma-design", refs: [X.s043, X.pma, D.insert, D.fda], t: "Which FDA approval covers the VIPOK lens design for overnight wear?",
         ctx: "Paragon’s PMA P870024 covers its lens materials. Overnight orthokeratology was added in 2002 (supplement S043) for specific Paragon designs: Paragon CRT and Quadra RG. Being made from Paragon HDS 100 doesn’t by itself include a different lens design. The VIPOK insert still has Quadra RG wording, which suggests VIPOK may be covered as a Quadra RG-type design. Please send the supplement number, or a letter from Paragon/CooperVision confirming VIPOK’s overnight approval.",
         opts: ["Covered as a Quadra RG-type design under S043", { other: true, label: "Covered by another supplement (number)" }, "VIPOK will ask Paragon/CooperVision for a letter", "Not sure"], pre: null },
-      { id: "registration", t: "Is VIPOK Inc. registered with FDA as a device establishment?",
+      { id: "registration", refs: [X.r807, D.fda], t: "Is VIPOK Inc. registered with FDA as a device establishment?",
         ctx: "FDA requires a company that writes a device’s specifications and has another company make it to register and list the device every year (21 CFR 807.20). This may also explain why “Vipok” no longer appears in FDA’s listing.",
         opts: [{ other: true, label: "Yes (FEI or registration number)" }, "No; Paragon/CooperVision lists VIPOK", "No; VIPOK will look into registering", "Not sure"], pre: null },
-      { id: "restricted", t: "Advertising rules for prescription-only (“restricted”) devices",
+      { id: "restricted", refs: [X.r352, site("Important Safety Information", "safety"), site("Lenses page", "lenses")], t: "Advertising rules for prescription-only (“restricted”) devices",
         ctx: "If the FDA approval makes VIPOK lenses a restricted device, every advertisement, this website included, must carry a brief statement of the intended uses and the relevant warnings, precautions, side effects and contraindications. Every page links to Important Safety Information. VIPOK’s counsel should confirm that is enough, especially on the Lenses page with the −10.00 D sentence.",
         opts: ["Counsel will review this", "Counsel confirmed the current approach is enough", { other: true, label: "Other" }], pre: 0, own: false },
-      { id: "mdr", t: "Problem reports and FDA adverse-event reporting",
+      { id: "mdr", refs: [X.r803, site("Important Safety Information (reporting problems)", "safety"), site("Practitioner Terms (complaints)", "practitioner-terms")], t: "Problem reports and FDA adverse-event reporting",
         ctx: "The site asks doctors and patients to report problems to VIPOK’s customer-service address. FDA requires a device’s manufacturer to evaluate complaints and report certain events to FDA (Medical Device Reporting, 21 CFR 803). Who does this for VIPOK lenses?",
         opts: ["VIPOK Inc., with a written procedure", "VIPOK Inc.; a procedure still needs to be written", "Paragon/CooperVision", { other: true, label: "Other" }], pre: null },
-      { id: "exports", t: "Exports, and the Asia and Taiwan wording on the site",
+      { id: "exports", refs: [site("About page", "about"), site("Contact page", "contact")], t: "Exports, and the Asia and Taiwan wording on the site",
         ctx: "A CFG is used for exporting. The About page says VIPOK “focuses on the growing problem of myopia in Asia” and that “a regional headquarters in Taiwan provides … technical support and hands-on training to every VIPOK practitioner in the region”, and the Contact page invites questions about “distribution in your country”. Since VIPOK isn’t registered outside the US, we suggest removing these.",
         opts: ["Remove the Asia, Taiwan and foreign-distribution wording", { other: true, label: "VIPOK exports to these countries, registered as follows" }, "Keep the wording as is"], pre: 0, own: false },
     ]},
     { title: "Part 5 · Statements on the site that need support", qs: [
-      { id: "accelerated", t: "“Double reverse geometry lens for accelerated orthokeratology” (Lenses page)",
+      { id: "accelerated", refs: [site("Lenses page (VIPOK® card)", "lenses")], t: "“Double reverse geometry lens for accelerated orthokeratology” (Lenses page)",
         ctx: "“Accelerated” is a performance claim (faster than what?). FTC rules require evidence before a claim is made.",
         opts: ["Remove “accelerated”", { other: true, label: "VIPOK has evidence (describe it; send it by email)" }], pre: 0, own: false },
-      { id: "calculated", t: "“Individually calculated stock” and “avoids errors from transferring and recalculating fitting data”",
+      { id: "calculated", refs: [site("For professionals page", "pro"), site("FAQ", "faq")], t: "“Individually calculated stock” and “avoids errors from transferring and recalculating fitting data”",
         ctx: "Both appear on the professionals’ pages and in the FAQ. The second sentence implies VIPOK is more accurate than custom-calculated lenses, a claim removed in September.",
         opts: ["Keep “individually calculated”; remove the “avoids errors” sentence", { other: true, label: "Keep both; VIPOK’s support is" }, "Remove both"], pre: 0, own: false },
-      { id: "patients-claim", t: "“Many patients see without glasses or daytime contact lenses” (patient page)",
+      { id: "patients-claim", refs: [site("Patients and parents page", "patients")], t: "“Many patients see without glasses or daytime contact lenses” (patient page)",
         ctx: "It is followed by “results vary, the effect is temporary, and Ortho-K is not right for everyone.” Because it describes results, counsel should confirm it.",
         opts: ["Keep it; counsel will review", "Remove it", { other: true, label: "Reword it to" }], pre: 0, own: false },
-      { id: "course", t: "The VIPOK fitter certification course",
+      { id: "course", refs: [site("Get certified page", "certify")], t: "The VIPOK fitter certification course",
         ctx: "The Get certified page says doctors complete a short online course before their first order, then get a certificate. Does the course exist today?",
         opts: ["Yes, it exists and is required", "It exists but is optional", "Not yet: say on the page that it’s coming", { other: true, label: "Other" }], pre: null },
-      { id: "shrinkwrap", t: "“Every lens dispensed by a certified VIPOK doctor is individually shrink-wrapped” (FAQ)",
+      { id: "shrinkwrap", refs: [site("FAQ", "faq")], t: "“Every lens dispensed by a certified VIPOK doctor is individually shrink-wrapped” (FAQ)",
         opts: ["Still true", "Not true now: remove it"], pre: null },
-      { id: "team", t: "How the About page describes VIPOK’s team",
+      { id: "team", refs: [site("About page", "about")], t: "How the About page describes VIPOK’s team",
         ctx: "“Based in the United States, its team brings together ophthalmology and optometry professionals in contact lenses, vision therapy and myopia research, alongside contact lens manufacturing specialists, lens design experts and experienced clinical fitters.” Is this accurate today?",
         opts: ["Accurate", { other: true, label: "Correct it to" }], pre: null },
-      { id: "chart-current", t: "Is the public reference chart complete and current?",
+      { id: "chart-current", refs: [site("Reference chart page", "selector"), X.arch], t: "Is the public reference chart complete and current?",
         ctx: "Rows A–ZE, Mean K 39.74–47.53 D, power columns −1.50 to −5.00 D, taken from the old member.htm page (2002). Doctors can now fit from it.",
         opts: ["Yes, current and complete", { other: true, label: "There are changes (VIPOK will send the current chart)" }], pre: null },
-      { id: "nightwear", t: "Chart note: “If only the nightwear option is used, column 08 lenses can be dispensed directly without power adjustment”",
+      { id: "nightwear", refs: [site("Reference chart page (note under the chart)", "selector")], t: "Chart note: “If only the nightwear option is used, column 08 lenses can be dispensed directly without power adjustment”",
         ctx: "This comes from the old fitting guide. “Nightwear option” implies a daytime option, which the site no longer mentions.",
         opts: ["Remove the sentence", "Keep it as is", { other: true, label: "Reword it to" }], pre: 0, own: false },
-      { id: "paragon-tm", t: "Naming Paragon HDS® 100 on the site",
+      { id: "paragon-tm", refs: [site("Lenses page (Regulatory status)", "lenses"), site("Footer (any page)", "home")], t: "Naming Paragon HDS® 100 on the site",
         ctx: "The Lenses page says VIPOK is made in Paragon HDS® 100 under Paragon’s PMA, and the footer now says “Paragon HDS® is a registered trademark of Paragon Vision Sciences.” Is VIPOK allowed to name Paragon this way?",
         opts: ["Yes, VIPOK has permission", "VIPOK will ask Paragon/CooperVision", { other: true, label: "Other" }], pre: null },
     ]},
     { title: "Part 6 · Terms and business", qs: [
-      { id: "exchange", t: "Exchange and warranty terms",
+      { id: "exchange", refs: [site("Lenses page (Warranty and exchanges)", "lenses"), site("Practitioner Terms", "practitioner-terms")], t: "Exchange and warranty terms",
         ctx: "The Lenses page and the Practitioner Terms say to contact customer service. Ideally they would state the exchange window, the number of exchanges per lens, how inventory-set lenses are replaced, and any warranty.",
         opts: ["Keep “contact customer service” for now", { other: true, label: "The terms are (or VIPOK will send them)" }], pre: 0, own: false },
-      { id: "insurance", t: "Product liability insurance",
+      { id: "insurance", refs: [site("Practitioner Terms", "practitioner-terms")], t: "Product liability insurance",
         ctx: "The Practitioner Terms need to reflect who is responsible if something goes wrong with a lens.",
         opts: ["VIPOK has its own policy", "Covered by Paragon/CooperVision", "No policy", "Not sure"], pre: null },
-      { id: "chart-protect", t: "Protecting the public reference chart",
+      { id: "chart-protect", refs: [site("Reference chart page", "selector"), site("Terms of Use", "terms")], t: "Protecting the public reference chart",
         ctx: "Now that the chart is public: add “© VIPOK Inc.” to it, and a line in the Terms of Use that it may not be used to make lenses outside VIPOK’s program?",
         opts: ["Add both", "Only the copyright notice", "Neither"], pre: 0, own: false },
-      { id: "distributors", t: "Authorized distributors",
+      { id: "distributors", refs: [site("Lenses page (top)", "lenses")], t: "Authorized distributors",
         ctx: "The Lenses page says lenses are available “directly from VIPOK or through authorized distributors.”",
         opts: [{ other: true, label: "There are distributors (names)" }, "No distributors: say “directly from VIPOK” only"], pre: null },
-      { id: "consultants", t: "Dr. Harris and other paid consultants",
+      { id: "consultants", refs: [site("Literature page", "clinical"), X.r255], t: "Dr. Harris and other paid consultants",
         ctx: "Any doctor VIPOK pays whose article, talk or quote appears on the site needs the same disclosure as Dr. Harris.",
         opts: ["Dr. Harris no longer consults; there are no others", "Dr. Harris still consults; there are no others", { other: true, label: "There are others (names)" }], pre: null },
-      { id: "logo", t: "VIPOK® logo use by doctors",
+      { id: "logo", refs: [site("Practitioner Terms", "practitioner-terms")], t: "VIPOK® logo use by doctors",
         ctx: "The planned Practitioner Terms let approved doctors use the VIPOK® logo on their own websites and signage.",
         opts: ["Yes, under written guidelines", "No logo use by doctors", { other: true, label: "Other" }], pre: 0, own: false },
-      { id: "dnt", t: "Privacy Policy: “Do Not Track”",
+      { id: "dnt", refs: [site("Privacy Policy (What we collect)", "privacy")], t: "Privacy Policy: “Do Not Track”",
         ctx: "California law requires a privacy policy to say how the site responds to browser “Do Not Track” signals. We added: “The site doesn’t change its behavior for ‘Do Not Track’ signals, because it sets no analytics or tracking cookies unless you choose Accept.”",
         opts: ["Fine as written", { other: true, label: "Change it to" }], pre: 0, own: false },
-      { id: "state-rights", t: "Privacy Policy: state privacy rights",
+      { id: "state-rights", refs: [site("Privacy Policy (Your rights and choices)", "privacy"), X.ccpa], t: "Privacy Policy: state privacy rights",
         ctx: "The policy lets people ask to see, correct or delete their information. VIPOK is likely below the size at which California’s privacy law (CCPA) applies, so offering this is voluntary.",
         opts: ["Keep offering these rights", "Counsel will decide"], pre: 0, own: false },
     ]},
@@ -343,21 +396,74 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
   // Attachments live in Jimmy's Google Drive, shared view-only with Paul (the page itself is public).
   const driveView = id => "https://drive.google.com/file/d/" + encodeURIComponent(id) + "/view";
   const dlg = document.getElementById("doc"), frame = document.getElementById("doc-frame");
+  const PREFIX = { doc: "Document: ", site: "On vipok.com: ", ext: "Source: " };
+  const NOTE = {
+    doc: "Shown from Google Drive. If it stays blank, sign in to Google with the account Jimmy shared the files with, or use “Open in new tab”.",
+    site: "This is the live vipok.com page. Use “Open in new tab” to read it full size.",
+  };
   const fileItem = f => {
-    const view = el("button", { type: "button", className: "chip", textContent: "View" });
-    view.addEventListener("click", () => {
-      document.getElementById("doc-title").textContent = f.label;
-      document.getElementById("doc-open").href = driveView(f.drive);
-      frame.src = "https://drive.google.com/file/d/" + encodeURIComponent(f.drive) + "/preview";
-      dlg.showModal();
-    });
-    const open = el("a", { className: "chip", href: driveView(f.drive), target: "_blank", rel: "noopener", textContent: "Open" });
-    return el("li", {}, el("span", { textContent: "Attachment: " + f.label }), el("span", { className: "chips" }, view, open));
+    const href = f.kind === "doc" ? driveView(f.drive) : f.url;
+    const open = el("a", { className: "chip", href, target: "_blank", rel: "noopener", textContent: f.kind === "ext" ? "Open" : "Open in new tab" });
+    const chips = el("span", { className: "chips" });
+    if (f.kind !== "ext") {   // outside sites usually refuse to show inside another page
+      const view = el("button", { type: "button", className: "chip", textContent: "View" });
+      view.addEventListener("click", () => {
+        document.getElementById("doc-title").textContent = f.label;
+        document.getElementById("doc-open").href = href;
+        document.getElementById("doc-note").textContent = NOTE[f.kind];
+        frame.src = f.kind === "doc" ? "https://drive.google.com/file/d/" + encodeURIComponent(f.drive) + "/preview" : f.url;
+        dlg.showModal();
+      });
+      chips.append(view);
+    }
+    chips.append(open);
+    return el("li", {}, el("span", { textContent: PREFIX[f.kind] + f.label }), chips);
   };
   document.getElementById("doc-close").addEventListener("click", () => dlg.close());
   dlg.addEventListener("close", () => { frame.src = "about:blank"; });
   dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
   const root = document.getElementById("qs");
+  let colorPreview = null;
+
+  // Brand-color preview: the chosen pair as the top banner, in light and dark mode.
+  const rgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const hex = a => "#" + a.map(v => Math.round(v).toString(16).padStart(2, "0")).join("");
+  const mix = (h, w, t) => hex(rgb(h).map((v, i) => v + (rgb(w)[i] - v) * t));
+  const lum = h => { const c = rgb(h).map(v => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; };
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m); return (x + .05) / (y + .05); };
+  function tile(mode, blue, green) {
+    const dark = mode === "dark";
+    // Dark mode uses a deeper banner and lighter tints, as the site does today (approximate for the new options).
+    const banner = green ? (dark ? mix(blue, "#000000", .26) : blue) : (dark ? "#10183a" : "#ffffff");
+    const ink = green ? "#ffffff" : (dark ? "#e6eaf7" : "#0f1a44");
+    const accent = green ? (dark ? mix(green, "#ffffff", .22) : green) : (dark ? mix(blue, "#ffffff", .45) : blue);
+    const link = dark ? mix(blue, "#ffffff", .45) : blue;
+    const page = dark ? "#090e22" : "#f5f7fc", text = dark ? "#e6eaf7" : "#0f1a44";
+    const t = el("div", { className: "ctile" });
+    const b = el("div", { className: "cbanner" });
+    b.style.background = banner; b.style.color = ink;
+    const em = el("em", { textContent: "fitted by your eye doctor." }); em.style.color = accent;
+    const pill = el("span", { className: "cpill", textContent: "I’m a patient" });
+    pill.style.background = green ? accent : link; pill.style.color = green ? "#0f1a44" : (dark ? "#08102e" : "#ffffff");
+    b.append(el("span", { className: "cmode", textContent: dark ? "Dark mode" : "Light mode" }), el("p", {}, "Ortho-K lenses, ", em), pill);
+    const body = el("div", { className: "cbody" }); body.style.background = page; body.style.color = text;
+    const btn = el("span", { className: "cbtn", textContent: "Doctor interest form" }); btn.style.background = link; btn.style.color = dark ? "#08102e" : "#ffffff";
+    const a = el("span", { className: "clink", textContent: "See the lenses →" }); a.style.color = link;
+    body.append(btn, a);
+    t.append(b, body);
+    return t;
+  }
+  function renderColor() {
+    if (!colorPreview) return;
+    const bq = QS.find(q => q.id === "blue"), gq = QS.find(q => q.id === "green");
+    const bo = bq.opts[ans(bq).c ?? 0], go = gq.opts[ans(gq).c ?? 0];
+    const r = go.hex ? ratio(go.hex, bo.hex) : null;
+    const pair = bo.label.split(" ")[0] + (go.hex ? " + " + go.label.split(" ")[0] : " (no green)");
+    const head = el("p", { className: "chead" }, el("b", { textContent: "Your pair: " + pair }),
+      r ? " · green on blue " + r.toFixed(1) + ":1" : "");
+    if (r && r < 3) head.append(el("span", { className: "low", textContent: " low: hard to read" }));
+    colorPreview.replaceChildren(head, el("div", { className: "cgrid" }, tile("light", bo.hex, go.hex), tile("dark", bo.hex, go.hex)));
+  }
   let num = 0;
   for (const sec of SECTIONS) {
     root.append(el("h2", { textContent: sec.title }));
@@ -370,18 +476,17 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
       h.append(tag);
       card.append(h);
       if (q.ctx) card.append(el("p", { className: "ctx", textContent: q.ctx }));
-      if (q.prev || q.files) {
-        const p = el("div", { className: "prev" });
-        if (q.prev) p.append(el("b", { textContent: "You told us: " }), q.prev);
-        if (q.files) p.append(el("ul", { className: "files" }, ...q.files.map(fileItem)));
-        card.append(p);
-      }
+      if (q.prev) card.append(el("div", { className: "prev" }, el("b", { textContent: "You told us: " }), q.prev));
+      if (q.refs) card.append(el("div", { className: "refs" }, el("b", { textContent: "To review" }),
+        el("ul", { className: "files" }, ...q.refs.map(fileItem))));
       const fs = el("fieldset", {}, el("legend", { textContent: q.t }));
       const otherBox = el("input", { type: "text", placeholder: "Type here", value: a.other });
       otherBox.setAttribute("aria-label", q.t + ": details");
       q.opts.forEach((o, i) => {
         const r = el("input", { type: "radio", name: q.id, value: String(i), checked: a.c === i });
-        const lab = el("label", { className: "opt" }, r, el("span", { textContent: optLabel(o) }));
+        const sw = q.kind === "swatch" ? el("span", { className: "sw" + (o.hex ? "" : " none") }) : null;
+        if (sw && o.hex) sw.style.background = o.hex;
+        const lab = el("label", { className: "opt" }, r, sw, el("span", { textContent: optLabel(o) }), o.hex ? el("code", { className: "hex", textContent: o.hex }) : null);
         r.addEventListener("change", () => { a.c = i; a.touched = true; sync(); });
         fs.append(lab);
       });
@@ -391,7 +496,9 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
       addNote.addEventListener("click", () => { addNote.hidden = true; noteBox.hidden = false; noteBox.focus(); });
       otherBox.addEventListener("input", () => { a.other = otherBox.value; a.touched = true; sync(); });
       noteBox.addEventListener("input", () => { a.note = noteBox.value; sync(); });
-      card.append(fs, otherBox, addNote, noteBox);
+      card.append(fs);
+      if (q.preview) card.append(colorPreview = el("div", { className: "cprev" }));
+      card.append(otherBox, addNote, noteBox);
       root.append(card);
       q.ui = { tag, otherBox };
     }
@@ -416,6 +523,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
       (blank ? `${blank} to answer · ` : "All answered · ") + `${suggested} suggested` +
       (state.submits ? ` · sent ${state.submits}×` : "");
     document.getElementById("next").hidden = !blank;
+    renderColor();
     save();
   }
   sync();
@@ -435,7 +543,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
       for (const q of sec.qs) {
         num++;
         const a = ans(q), o = a.c == null ? null : q.opts[a.c];
-        let v = o == null ? "(no answer)" : optLabel(o) + (o.other && a.other ? ": " + a.other : "");
+        let v = o == null ? "(no answer)" : optLabel(o) + (o.hex ? " " + o.hex : "") + (o.other && a.other ? ": " + a.other : "");
         if (o != null && !a.touched) v += q.own ? "  [his Nov 23 answer, left as is]" : "  [our suggestion, left as is]";
         lines.push(`${num}. ${q.t}`, `   Answer: ${v}`);
         if (a.note) lines.push(`   Note: ${a.note}`);
