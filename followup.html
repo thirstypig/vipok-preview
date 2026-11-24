@@ -79,6 +79,10 @@ a{color:var(--brand)}
 .files li{margin:.35rem 0;display:grid;gap:.35rem}
 .refs{margin:0;font-size:.93rem;border:1px dashed var(--line);border-radius:10px;padding:.6rem .8rem}
 .refs .files{padding-left:1.1rem}
+.upload{display:grid;gap:.4rem;font-size:.93rem;border:1px dashed var(--ok);border-radius:10px;padding:.6rem .8rem;background:color-mix(in srgb,var(--ok-soft) 50%,transparent)}
+.upload .chip{border-color:var(--ok);color:var(--ok)}
+label.check{display:flex;gap:.55rem;align-items:center;min-height:40px;cursor:pointer}
+label.check input{width:20px;height:20px;accent-color:var(--brand)}
 .sw{flex:0 0 auto;width:28px;height:28px;border-radius:8px;border:1px solid var(--line);margin-top:-.1rem}
 .sw.none{background:repeating-linear-gradient(45deg,var(--surface) 0 5px,var(--sunk) 5px 10px)}
 .hex{margin-left:auto;font:400 .8rem/1.6 var(--mono);color:var(--muted)}
@@ -132,7 +136,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
   <div class="panel howto">
     <p><b>How it works.</b> Every question already has an answer selected. Where you answered before, it is your own answer, marked <span class="tag ok">Your answer</span>. Where you haven’t answered yet, it is our suggestion, marked <span class="tag sug">Suggested</span>: change it if it’s wrong. A few questions only VIPOK can answer start blank <span class="tag need">Needs your answer</span>.</p>
     <p>Your answers save in this browser as you go, so you can stop and come back. Press <b>Submit</b> at the bottom when you’re done. You can change answers and submit again at any time; the newest submission counts.</p>
-    <p>To send documents (package inserts, the certificate, the J&amp;J paper), reply to Jimmy’s email with them attached.</p>
+    <p>To send documents (package inserts, the certificate, the J&amp;J paper, Paragon’s letter), use <b>Upload a document</b> on the question it belongs to. It opens a Google Drive folder Jimmy shared with you; drag files in, or pick them on your phone. Tick “I uploaded something here” so Jimmy knows to look. You can also reply to Jimmy’s email with attachments.</p>
   </div>
 
   <div class="q">
@@ -236,45 +240,45 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
       { id: "law", refs: [site("Terms of Use (Governing law)", "terms")], t: "The Terms of Use are governed by California law",
         ctx: "Chosen because VIPOK Inc. is a California corporation.",
         opts: ["Confirmed, California", { other: true, label: "Another state" }], pre: 0, own: false },
-      { id: "photos", refs: [X.old], t: "Photos from the old home page",
+      { id: "photos", upload: "1_YPBL7Ms4ZvPtiKPKc_CKhlOcRYjZCxT", refs: [X.old], t: "Photos from the old home page",
         ctx: "The old vipok.com home page had a photo collage and a header photo (people and eyes). We found no license for them, so they are not on the new site.",
         prev: "“What photos?”",
         opts: ["Leave them off; the new site doesn’t need them", "VIPOK owns or licensed them and will send proof"], pre: 0, own: false },
     ]},
     { title: "Part 2 · Regulatory questions still open", qs: [
-      { id: "fda-vipok", refs: [D.fda, site("Lenses page (Specifications: Regulatory status)", "lenses"), X.pma], t: "VIPOK: FDA status",
+      { id: "fda-vipok", upload: "1JNbsVieQzzMGnPG0VgWTVK6YoGuIaLdn", refs: [D.fda, site("Lenses page (Specifications: Regulatory status)", "lenses"), X.pma], t: "VIPOK: FDA status",
         ctx: "The site says VIPOK lenses are made in Paragon HDS® 100 under Paragon Vision Sciences’ FDA premarket approval P870024 (product code NUU). Is that still correct?",
         prev: "“Sent you FDA listing.”",
         opts: ["Yes, correct", { other: true, label: "Correction" }], pre: 0, own: true },
-      { id: "fda-listing", refs: [D.fda, X.pma], t: "The current FDA listing no longer shows “Vipok”",
+      { id: "fda-listing", upload: "1uOx6XmJ3yCjbQIpxsLTt1nMGUd5at8O6", refs: [D.fda, X.pma], t: "The current FDA listing no longer shows “Vipok”",
         ctx: "The 2017 printout listed “Vipok” under Paragon. FDA’s public device listing today shows no “Vipok” under any company. The listing is the manufacturer’s to keep current. Who will update it?",
         opts: ["VIPOK will ask Paragon (CooperVision) to re-list it", "Paragon is already updating it", { other: true, label: "It is listed under another name" }, { other: true, label: "Other" }], pre: 0, own: false },
-      { id: "fda-ii", refs: [X.pma, site("Lenses page", "lenses")], t: "VIPOK II: FDA status",
+      { id: "fda-ii", upload: "1l3RJGBa4mWemOt_ybkkoekLb1Dm-RLC_", refs: [X.pma, site("Lenses page", "lenses")], t: "VIPOK II: FDA status",
         ctx: "Is VIPOK II made under the same Paragon PMA P870024, a different approval, or not FDA-approved?",
         opts: ["Same PMA P870024", { other: true, label: "A different approval (number)" }, "Not FDA-approved", "Not sure, VIPOK will check"], pre: null },
-      { id: "fda-xc", refs: [X.pma], t: "VIPOK XC (XTREME CONTOUR): FDA status and whether it is still sold",
+      { id: "fda-xc", upload: "1m_7FZvLpfL4v3gdV1CYiQK0yAkOfYGnG", refs: [X.pma], t: "VIPOK XC (XTREME CONTOUR): FDA status and whether it is still sold",
         opts: ["Still sold, same PMA P870024", { other: true, label: "Still sold, a different approval (number)" }, "No longer sold: leave it off the site", "Not sure, VIPOK will check"], pre: null },
-      { id: "indication", refs: [D.insert, X.s043, site("Important Safety Information", "safety")], t: "The approved range for the site’s “indications” line",
+      { id: "indication", upload: "15C-yngb891N2Ko4vn8uaup587kIlQH0T", refs: [D.insert, X.s043, site("Important Safety Information", "safety")], t: "The approved range for the site’s “indications” line",
         ctx: "The package insert’s indication says myopia up to 3.00 D, but its study section mentions −5.62 D, and FDA’s 2002 overnight approval for Paragon’s designs (P870024/S043) covers myopia up to 6.00 D and astigmatism up to 1.75 D. Which range should the site state for VIPOK?",
         opts: ["Up to 3.00 D, as in the indication", { other: true, label: "Another range" }, "Don’t state a range; refer to the insert"], pre: 2, own: false },
-      { id: "inserts", refs: [D.insert], t: "Package inserts for VIPOK II and XC",
+      { id: "inserts", upload: "1TJ7XKmYchPdKGju6x9HA46yzmXd3phcr", refs: [D.insert], t: "Package inserts for VIPOK II and XC",
         opts: ["VIPOK will send them (reply to Jimmy’s email)", "They use the same insert as VIPOK", "No separate inserts exist"], pre: null },
-      { id: "insert-fix", refs: [D.insert, site("Important Safety Information (uses the insert’s safety wording)", "safety")], t: "Corrections to the VIPOK package insert",
+      { id: "insert-fix", upload: "19YqeK0xiNLvFldT3pVQ3sH8U7eQbLFNU", refs: [D.insert, site("Important Safety Information (uses the insert’s safety wording)", "safety")], t: "Corrections to the VIPOK package insert",
         ctx: "The insert you sent contains text from other lenses (SuperBridge and Quadra RG), and its study data is from Paragon CRT. The site uses only its safety wording, never its study figures.",
         prev: "Package insert received November 4 and again November 23.",
         opts: ["Fine as is for now", "VIPOK will send a corrected insert", "Paragon will correct it"], pre: 0, own: false },
-      { id: "myopia", refs: [X.jj, X.healio, site("Patients and parents page", "patients")], t: "Myopia control: the site makes no myopia-control claim",
+      { id: "myopia", upload: "1-oQJuv7C_ua51Gr78iuXkxD8wAAwVw2L", refs: [X.jj, X.healio, site("Patients and parents page", "patients")], t: "Myopia control: the site makes no myopia-control claim",
         ctx: "J&J’s ACUVUE Abiliti Overnight has been FDA-approved for myopia management since 2021, so you were right that one Ortho-K lens has that approval (our September question was out of date). But an FDA approval covers only the lens and studies it was granted for: J&J’s approval does not cover VIPOK, so the site still makes no myopia-control claim.",
         prev: "“Sent you J&J Abiliti OK which states for myopia management, thus OK is approved for slowing myopia progression.” (The J&J document did not reach us; please re-send it.)",
         opts: ["Agreed, keep myopia-control claims off", { other: true, label: "VIPOK has its own FDA approval for myopia control (number)" }], pre: 0, own: false },
-      { id: "cfg", refs: [site("About page (Availability)", "about")], t: "Certificate to Foreign Government (CFG): whose name is it in?",
+      { id: "cfg", upload: "1Q969Q92dkr1MeO91NWiQBhk7wBG617Ta", refs: [site("About page (Availability)", "about")], t: "Certificate to Foreign Government (CFG): whose name is it in?",
         ctx: "You said VIPOK has a CFG and is not registered in other countries, so the site lists no foreign markets.",
         prev: "“We have CFG… Not approved in individual countries outside of US.” (The certificate did not reach us; please send a copy.)",
         opts: ["VIPOK Inc.", "Paragon Vision Sciences / CooperVision", { other: true, label: "Other" }], pre: null },
-      { id: "claims", refs: [X.old], t: "Other claims from the old site",
+      { id: "claims", upload: "1UIYF1ABpxwhSg8TteVkY0pgAHilyL1Da", refs: [X.old], t: "Other claims from the old site",
         ctx: "Your answers didn’t cover these, so they stay off: fits 85% of cases; about 80% first-selection accuracy; 2,000+ eyes fitted; “first to” make high-myopia Ortho-K lenses; day or night wear for 12+ hours; “advanced” material; more accurate than custom designs; lower cost; more profitable for practices.",
         opts: ["Keep them all off", { other: true, label: "VIPOK has data for some (which ones); will send it" }], pre: 0, own: false },
-      { id: "cases", refs: [X.old], t: "Case 1, Case 2 and the SSVIP case",
+      { id: "cases", upload: "1BaA06bzgzdPBhZTPP71l8YS7JWYd7stO", refs: [X.old], t: "Case 1, Case 2 and the SSVIP case",
         ctx: "To show these old cases we need the treating doctor, the date, and the patients’ written consent. Both cases also started at about −7 to −8 D, outside the insert’s range.",
         prev: "“????”",
         opts: ["Leave them off the site", { other: true, label: "VIPOK will supply the doctor, date and consent" }], pre: 0, own: false },
@@ -290,10 +294,10 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
         opts: ["Yes", { other: true, label: "Use another address" }], pre: null },
       { id: "privacy-contact", refs: [site("Privacy Policy", "privacy")], t: "Privacy contact",
         opts: ["customer_service@vipok.com", { other: true, label: "Another person or address" }], pre: 0, own: false },
-      { id: "retention", refs: [site("Privacy Policy (How long we keep it)", "privacy")], t: "How long VIPOK keeps information from the website",
+      { id: "retention", upload: "1MRxuRVCiIVHhfVyCMSpYS_l6LBK8NAxR", refs: [site("Privacy Policy (How long we keep it)", "privacy")], t: "How long VIPOK keeps information from the website",
         ctx: "The Privacy Policy should say how long VIPOK keeps form messages, doctor applications and order records.",
         opts: ["Messages and applications 2 years; order records 7 years", { other: true, label: "Other periods" }], pre: 0, own: false },
-      { id: "counsel", refs: [...LEGAL], t: "Counsel review of the legal pages",
+      { id: "counsel", upload: "1_PSE-o8TlJ1zGnA6Y4COmMWH55oVFASR", refs: [...LEGAL], t: "Counsel review of the legal pages",
         ctx: "Privacy Policy, Terms of Use, Practitioner Terms and Important Safety Information are live on vipok.com. Have VIPOK’s lawyers reviewed them?",
         opts: ["Counsel will review them (date in the note)", "Already reviewed", "VIPOK does not plan a counsel review"], pre: 0, own: false },
       { id: "blue", kind: "swatch", t: "Brand color, part 1: choose the blue",
@@ -313,33 +317,33 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
         opts: ["Still reviewing", "Comfortable with it", { other: true, label: "Changes needed" }], pre: 0, own: true },
     ]},
     { title: "Part 4 · FDA foundations", qs: [
-      { id: "pma-design", refs: [X.s043, X.pma, D.insert, D.fda], t: "Which FDA approval covers the VIPOK lens design for overnight wear?",
+      { id: "pma-design", upload: "1ubUQX1d_zWBnXub8PEH9-zgdZ_ZoAcgU", refs: [X.s043, X.pma, D.insert, D.fda], t: "Which FDA approval covers the VIPOK lens design for overnight wear?",
         ctx: "Paragon’s PMA P870024 covers its lens materials. Overnight orthokeratology was added in 2002 (supplement S043) for specific Paragon designs: Paragon CRT and Quadra RG. Being made from Paragon HDS 100 doesn’t by itself include a different lens design. The VIPOK insert still has Quadra RG wording, which suggests VIPOK may be covered as a Quadra RG-type design. Please send the supplement number, or a letter from Paragon/CooperVision confirming VIPOK’s overnight approval.",
         opts: ["Covered as a Quadra RG-type design under S043", { other: true, label: "Covered by another supplement (number)" }, "VIPOK will ask Paragon/CooperVision for a letter", "Not sure"], pre: null },
-      { id: "registration", refs: [X.r807, D.fda], t: "Is VIPOK Inc. registered with FDA as a device establishment?",
+      { id: "registration", upload: "1lfe53T4CfV553XO8wkrwuXlCBG8Txj7j", refs: [X.r807, D.fda], t: "Is VIPOK Inc. registered with FDA as a device establishment?",
         ctx: "FDA requires a company that writes a device’s specifications and has another company make it to register and list the device every year (21 CFR 807.20). This may also explain why “Vipok” no longer appears in FDA’s listing.",
         opts: [{ other: true, label: "Yes (FEI or registration number)" }, "No; Paragon/CooperVision lists VIPOK", "No; VIPOK will look into registering", "Not sure"], pre: null },
       { id: "restricted", refs: [X.r352, site("Important Safety Information", "safety"), site("Lenses page", "lenses")], t: "Advertising rules for prescription-only (“restricted”) devices",
         ctx: "If the FDA approval makes VIPOK lenses a restricted device, every advertisement, this website included, must carry a brief statement of the intended uses and the relevant warnings, precautions, side effects and contraindications. Every page links to Important Safety Information. VIPOK’s counsel should confirm that is enough, especially on the Lenses page with the −10.00 D sentence.",
         opts: ["Counsel will review this", "Counsel confirmed the current approach is enough", { other: true, label: "Other" }], pre: 0, own: false },
-      { id: "mdr", refs: [X.r803, site("Important Safety Information (reporting problems)", "safety"), site("Practitioner Terms (complaints)", "practitioner-terms")], t: "Problem reports and FDA adverse-event reporting",
+      { id: "mdr", upload: "1w3aKx8Qwck9gHPm8tBimhYwqdODbRz19", refs: [X.r803, site("Important Safety Information (reporting problems)", "safety"), site("Practitioner Terms (complaints)", "practitioner-terms")], t: "Problem reports and FDA adverse-event reporting",
         ctx: "The site asks doctors and patients to report problems to VIPOK’s customer-service address. FDA requires a device’s manufacturer to evaluate complaints and report certain events to FDA (Medical Device Reporting, 21 CFR 803). Who does this for VIPOK lenses?",
         opts: ["VIPOK Inc., with a written procedure", "VIPOK Inc.; a procedure still needs to be written", "Paragon/CooperVision", { other: true, label: "Other" }], pre: null },
-      { id: "exports", refs: [site("About page", "about"), site("Contact page", "contact")], t: "Exports, and the Asia and Taiwan wording on the site",
+      { id: "exports", upload: "12n74nJx_rtzgjYpb7MTMZ76uBLUkb6zT", refs: [site("About page", "about"), site("Contact page", "contact")], t: "Exports, and the Asia and Taiwan wording on the site",
         ctx: "A CFG is used for exporting. The About page says VIPOK “focuses on the growing problem of myopia in Asia” and that “a regional headquarters in Taiwan provides … technical support and hands-on training to every VIPOK practitioner in the region”, and the Contact page invites questions about “distribution in your country”. Since VIPOK isn’t registered outside the US, we suggest removing these.",
         opts: ["Remove the Asia, Taiwan and foreign-distribution wording", { other: true, label: "VIPOK exports to these countries, registered as follows" }, "Keep the wording as is"], pre: 0, own: false },
     ]},
     { title: "Part 5 · Statements on the site that need support", qs: [
-      { id: "accelerated", refs: [site("Lenses page (VIPOK® card)", "lenses")], t: "“Accelerated orthokeratology” was removed from the Lenses page",
+      { id: "accelerated", upload: "1zHr7p5gGfVrunHw6MW8s43xeJ93YURZL", refs: [site("Lenses page (VIPOK® card)", "lenses")], t: "“Accelerated orthokeratology” was removed from the Lenses page",
         ctx: "The VIPOK® card said “Double reverse geometry lens for accelerated orthokeratology.” “Accelerated” is a performance claim (faster than what?), and FTC rules require evidence before a claim is made, so on November 24 it was changed to “Double reverse geometry lens for orthokeratology.”",
         opts: ["Keep it removed", { other: true, label: "Restore it: VIPOK has evidence (describe it; send it by email)" }], pre: 0, own: false },
-      { id: "calculated", refs: [site("For professionals page", "pro"), site("FAQ", "faq")], t: "“Individually calculated stock”, and the removed “avoids errors” sentence",
+      { id: "calculated", upload: "19lvHzM_jY3_PErYdSF8HkgdOwrcEEh_n", refs: [site("For professionals page", "pro"), site("FAQ", "faq")], t: "“Individually calculated stock”, and the removed “avoids errors” sentence",
         ctx: "The professionals’ page and the FAQ say each stock lens is individually calculated for how corneas change from center to periphery and for flat versus steep corneas. On November 24 we removed the next sentence, “Selecting from a fixed chart also avoids errors from transferring and recalculating fitting data,” because it implies VIPOK is more accurate than custom-calculated lenses, a claim removed in September.",
         opts: ["Keep “individually calculated”; keep the sentence removed", { other: true, label: "Restore the sentence: VIPOK’s support is" }, "Remove “individually calculated” too"], pre: 0, own: false },
       { id: "patients-claim", refs: [site("Patients and parents page", "patients")], t: "“Many patients see without glasses or daytime contact lenses” (patient page)",
         ctx: "It is followed by “results vary, the effect is temporary, and Ortho-K is not right for everyone.” Because it describes results, counsel should confirm it.",
         opts: ["Keep it; counsel will review", "Remove it", { other: true, label: "Reword it to" }], pre: 0, own: false },
-      { id: "course", refs: [site("Get certified page", "certify")], t: "The VIPOK fitter certification course",
+      { id: "course", upload: "1_4qig58KBsJgB4CKODAV4p6kAQYdTskm", refs: [site("Get certified page", "certify")], t: "The VIPOK fitter certification course",
         ctx: "The Get certified page says doctors complete a short online course before their first order, then get a certificate. Does the course exist today?",
         opts: ["Yes, it exists and is required", "It exists but is optional", "Not yet: say on the page that it’s coming", { other: true, label: "Other" }], pre: null },
       { id: "shrinkwrap", refs: [site("FAQ", "faq")], t: "“Every lens dispensed by a certified VIPOK doctor is individually shrink-wrapped” (FAQ)",
@@ -347,33 +351,33 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
       { id: "team", refs: [site("About page", "about")], t: "How the About page describes VIPOK’s team",
         ctx: "“Based in the United States, its team brings together ophthalmology and optometry professionals in contact lenses, vision therapy and myopia research, alongside contact lens manufacturing specialists, lens design experts and experienced clinical fitters.” Is this accurate today?",
         opts: ["Accurate", { other: true, label: "Correct it to" }], pre: null },
-      { id: "chart-current", refs: [site("Reference chart page", "selector"), X.arch], t: "Is the public reference chart complete and current?",
+      { id: "chart-current", upload: "1Wo89VsexEfANNryEFS3ZWZmykM8uHb7R", refs: [site("Reference chart page", "selector"), X.arch], t: "Is the public reference chart complete and current?",
         ctx: "Rows A–ZE, Mean K 39.74–47.53 D, power columns −1.50 to −5.00 D, taken from the old member.htm page (2002). Doctors can now fit from it.",
         opts: ["Yes, current and complete", { other: true, label: "There are changes (VIPOK will send the current chart)" }], pre: null },
       { id: "nightwear", refs: [site("Reference chart page (note under the chart)", "selector")], t: "Chart note: “If only the nightwear option is used, column 08 lenses can be dispensed directly without power adjustment”",
         ctx: "This comes from the old fitting guide. “Nightwear option” implies a daytime option, which the site no longer mentions.",
         opts: ["Remove the sentence", "Keep it as is", { other: true, label: "Reword it to" }], pre: 0, own: false },
-      { id: "paragon-tm", refs: [site("Lenses page (Regulatory status)", "lenses"), site("Footer (any page)", "home")], t: "Naming Paragon HDS® 100 on the site",
+      { id: "paragon-tm", upload: "1t4VDeR3yFCDtbGEEkZzaQYp1rBnYFlRi", refs: [site("Lenses page (Regulatory status)", "lenses"), site("Footer (any page)", "home")], t: "Naming Paragon HDS® 100 on the site",
         ctx: "The Lenses page says VIPOK is made in Paragon HDS® 100 under Paragon’s PMA, and the footer now says “Paragon HDS® is a registered trademark of Paragon Vision Sciences.” Is VIPOK allowed to name Paragon this way?",
         opts: ["Yes, VIPOK has permission", "VIPOK will ask Paragon/CooperVision", { other: true, label: "Other" }], pre: null },
     ]},
     { title: "Part 6 · Terms and business", qs: [
-      { id: "exchange", refs: [site("Lenses page (Warranty and exchanges)", "lenses"), site("Practitioner Terms", "practitioner-terms")], t: "Exchange and warranty terms",
+      { id: "exchange", upload: "1k62nUeUEOE33uMtFBgcVED4AQdSrnCVM", refs: [site("Lenses page (Warranty and exchanges)", "lenses"), site("Practitioner Terms", "practitioner-terms")], t: "Exchange and warranty terms",
         ctx: "The Lenses page and the Practitioner Terms say to contact customer service. Ideally they would state the exchange window, the number of exchanges per lens, how inventory-set lenses are replaced, and any warranty.",
         opts: ["Keep “contact customer service” for now", { other: true, label: "The terms are (or VIPOK will send them)" }], pre: 0, own: false },
-      { id: "insurance", refs: [site("Practitioner Terms", "practitioner-terms")], t: "Product liability insurance",
+      { id: "insurance", upload: "1vobull1bhfWFdCjQkyqliu_fufXdzEqu", refs: [site("Practitioner Terms", "practitioner-terms")], t: "Product liability insurance",
         ctx: "The Practitioner Terms need to reflect who is responsible if something goes wrong with a lens.",
         opts: ["VIPOK has its own policy", "Covered by Paragon/CooperVision", "No policy", "Not sure"], pre: null },
       { id: "chart-protect", refs: [site("Reference chart page", "selector"), site("Terms of Use", "terms")], t: "Protecting the public reference chart",
         ctx: "Now that the chart is public: add “© VIPOK Inc.” to it, and a line in the Terms of Use that it may not be used to make lenses outside VIPOK’s program?",
         opts: ["Add both", "Only the copyright notice", "Neither"], pre: 0, own: false },
-      { id: "distributors", refs: [site("Lenses page (top)", "lenses")], t: "Authorized distributors",
+      { id: "distributors", upload: "1mgIfYrICY2qyg2b7qNTCojz3TUoct7Se", refs: [site("Lenses page (top)", "lenses")], t: "Authorized distributors",
         ctx: "The Lenses page says lenses are available “directly from VIPOK or through authorized distributors.”",
         opts: [{ other: true, label: "There are distributors (names)" }, "No distributors: say “directly from VIPOK” only"], pre: null },
       { id: "consultants", refs: [site("Literature page", "clinical"), X.r255], t: "Dr. Harris and other paid consultants",
         ctx: "Any doctor VIPOK pays whose article, talk or quote appears on the site needs the same disclosure as Dr. Harris.",
         opts: ["Dr. Harris no longer consults; there are no others", "Dr. Harris still consults; there are no others", { other: true, label: "There are others (names)" }], pre: null },
-      { id: "logo", refs: [site("Practitioner Terms", "practitioner-terms")], t: "VIPOK® logo use by doctors",
+      { id: "logo", upload: "18Ug2Bju68Q7hIzPb_DhJt5RZhtrHiLOp", refs: [site("Practitioner Terms", "practitioner-terms")], t: "VIPOK® logo use by doctors",
         ctx: "The planned Practitioner Terms let approved doctors use the VIPOK® logo on their own websites and signage.",
         opts: ["Yes, under written guidelines", "No logo use by doctors", { other: true, label: "Other" }], pre: 0, own: false },
       { id: "dnt", refs: [site("Privacy Policy (What we collect)", "privacy")], t: "Privacy Policy: “Do Not Track”",
@@ -479,6 +483,15 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
       if (q.prev) card.append(el("div", { className: "prev" }, el("b", { textContent: "You told us: " }), q.prev));
       if (q.refs) card.append(el("div", { className: "refs" }, el("b", { textContent: "To review" }),
         el("ul", { className: "files" }, ...q.refs.map(fileItem))));
+      if (q.upload) {
+        const box = el("input", { type: "checkbox", checked: !!a.uploaded });
+        box.addEventListener("change", () => { a.uploaded = box.checked; sync(); });
+        card.append(el("div", { className: "upload" },
+          el("span", { textContent: "Have a document for this question?" }),
+          el("span", { className: "chips" }, el("a", { className: "chip", href: "https://drive.google.com/drive/folders/" + encodeURIComponent(q.upload),
+            target: "_blank", rel: "noopener", textContent: "Upload a document" })),
+          el("label", { className: "check" }, box, el("span", { textContent: "I uploaded something here" }))));
+      }
       const fs = el("fieldset", {}, el("legend", { textContent: q.t }));
       const otherBox = el("input", { type: "text", placeholder: "Type here", value: a.other });
       otherBox.setAttribute("aria-label", q.t + ": details");
@@ -547,9 +560,12 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
         if (o != null && !a.touched) v += q.own ? "  [his Nov 23 answer, left as is]" : "  [our suggestion, left as is]";
         lines.push(`${num}. ${q.t}`, `   Answer: ${v}`);
         if (a.note) lines.push(`   Note: ${a.note}`);
+        if (q.upload && a.uploaded) lines.push(`   Uploaded a document: https://drive.google.com/drive/folders/${q.upload}`);
       }
       lines.push("");
     }
+    const ups = QS.filter(q => q.upload && ans(q).uploaded).length;
+    lines.splice(2, 0, `Documents uploaded on ${ups} question${ups === 1 ? "" : "s"} (folder: https://drive.google.com/drive/folders/1oioxA8beWGq03VOYkn_eaW8WEGfMK__K)`);
     if (state.extra) lines.push("ANYTHING ELSE", state.extra);
     return lines.join("\n");
   }
