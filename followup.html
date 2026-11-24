@@ -72,6 +72,16 @@ input[type=text]:focus,textarea:focus,.opt:focus-within{outline:2px solid var(--
 .status{margin:0;font-size:.92rem}
 .status.ok{color:var(--ok)} .status.err{color:var(--err)}
 a{color:var(--brand)}
+.linkbtn{font:inherit;color:var(--brand);background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
+.files li{margin:.15rem 0}
+dialog#doc{width:min(960px,calc(100% - 24px));height:min(88vh,1000px);padding:0;border:1px solid var(--line);border-radius:14px;
+  background:var(--surface);color:var(--ink);box-shadow:var(--shadow);overflow:hidden}
+dialog#doc[open]{display:grid;grid-template-rows:auto 1fr auto}
+dialog#doc::backdrop{background:rgba(9,14,34,.55)}
+.doc-head{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;padding:.7rem 1rem;border-bottom:1px solid var(--line)}
+.doc-head b{flex:1 1 240px}
+#doc-frame{width:100%;height:100%;border:0;background:var(--sunk)}
+.doc-note{margin:0;padding:.5rem 1rem;font-size:.82rem;color:var(--muted);border-top:1px solid var(--line)}
 @media (max-width:640px){.wrap{padding-top:24px}.bar .in{padding:.6rem 14px}.btn{flex:1}}
 </style>
 </head>
@@ -98,6 +108,16 @@ a{color:var(--brand)}
   <div class="q"><label for="extra" class="small">Corrections, questions, or anything we missed</label><textarea id="extra"></textarea></div>
 </main>
 
+<dialog id="doc" aria-labelledby="doc-title">
+  <div class="doc-head">
+    <b id="doc-title"></b>
+    <a id="doc-open" href="#" target="_blank" rel="noopener">Open in new tab</a>
+    <button type="button" class="linkbtn" onclick="this.closest('dialog').close()">Close</button>
+  </div>
+  <iframe id="doc-frame" title="Document preview" src="about:blank"></iframe>
+  <p class="doc-note">Shown from Google Drive. If it stays blank, sign in to Google as drpaultwoo@gmail.com or use “Open in new tab”.</p>
+</dialog>
+
 <div class="bar"><div class="in">
   <span class="count" id="count"></span>
   <button class="btn" type="button" id="submit">Submit answers</button>
@@ -117,7 +137,7 @@ a{color:var(--brand)}
     { title: "Part 1 · Confirm what you told us on November 23", qs: [
       { id: "trademark", t: "Trademark: the site uses “VIPOK®”",
         ctx: "USPTO registration 2,489,161 (VIPOK, contact lenses), renewed in 2022, next renewal due September 11, 2031. The site never puts ® on “XTREME CONTOUR” or “XC” (that registration was cancelled in 2013) or on “VIPOK Inc.”.",
-        prev: "“Trademark is valid. Sent you sect 8&9 renewal.”", files: ["8&9Renewal.pdf (section 8 & 9 renewal)"],
+        prev: "“Trademark is valid. Sent you sect 8&9 renewal.”", files: [{ label: "Trademark section 8 & 9 renewal (PDF)", drive: "1zKaKTwNMinIZJJKgMLrWb8Oq5GBJCI_b" }],
         opts: ["Confirmed", { other: true, label: "Correction" }], pre: 0, own: true },
       { id: "patent", t: "Patent: the site mentions no patent",
         ctx: "US Patent 6,361,169 lapsed in 2014. The site says nothing about patents or a “patented design”.",
@@ -158,10 +178,11 @@ a{color:var(--brand)}
     { title: "Part 2 · Regulatory questions still open", qs: [
       { id: "fda-vipok", t: "VIPOK: FDA status",
         ctx: "The site says VIPOK lenses are made in Paragon HDS® 100 under Paragon Vision Sciences’ FDA premarket approval P870024 (product code NUU). Is that still correct?",
-        prev: "“Sent you FDA listing.”", files: ["FDA listing printout dated January 6, 2017 (received November 4)"],
+        prev: "“Sent you FDA listing.”", files: [{ label: "FDA listing printout, January 6, 2017 (photo)", drive: "1kL2LwybqRtzbw17pfmJtd_G1MAPnLdYe" }],
         opts: ["Yes, correct", { other: true, label: "Correction" }], pre: 0, own: true },
       { id: "fda-listing", t: "The current FDA listing no longer shows “Vipok”",
         ctx: "The 2017 printout listed “Vipok” under Paragon. FDA’s public device listing today shows no “Vipok” under any company. The listing is the manufacturer’s to keep current. Who will update it?",
+        files: [{ label: "FDA listing printout, January 6, 2017 (photo)", drive: "1kL2LwybqRtzbw17pfmJtd_G1MAPnLdYe" }],
         opts: ["VIPOK will ask Paragon (CooperVision) to re-list it", "Paragon is already updating it", { other: true, label: "It is listed under another name" }, { other: true, label: "Other" }], pre: 0, own: false },
       { id: "fda-ii", t: "VIPOK II: FDA status",
         ctx: "Is VIPOK II made under the same Paragon PMA P870024, a different approval, or not FDA-approved?",
@@ -170,12 +191,13 @@ a{color:var(--brand)}
         opts: ["Still sold, same PMA P870024", { other: true, label: "Still sold, a different approval (number)" }, "No longer sold: leave it off the site", "Not sure, VIPOK will check"], pre: null },
       { id: "indication", t: "The approved range for the site’s “indications” line",
         ctx: "The package insert’s indication says myopia up to 3.00 D, but its study section mentions −5.62 D. Which range should the site state for VIPOK?",
+        files: [{ label: "VIPOK package insert (Word)", drive: "1puMDfpH6gf9P4DgmmL4GrZ5ybNC1Puvy" }],
         opts: ["Up to 3.00 D, as in the indication", { other: true, label: "Another range" }, "Don’t state a range; refer to the insert"], pre: 2, own: false },
       { id: "inserts", t: "Package inserts for VIPOK II and XC",
         opts: ["VIPOK will send them (reply to Jimmy’s email)", "They use the same insert as VIPOK", "No separate inserts exist"], pre: null },
       { id: "insert-fix", t: "Corrections to the VIPOK package insert",
         ctx: "The insert you sent contains text from other lenses (SuperBridge and Quadra RG), and its study data is from Paragon CRT. The site uses only its safety wording, never its study figures.",
-        prev: "Package insert received November 4 and again November 23.", files: ["Vipok Package Insert.docx"],
+        prev: "Package insert received November 4 and again November 23.", files: [{ label: "VIPOK package insert (Word)", drive: "1puMDfpH6gf9P4DgmmL4GrZ5ybNC1Puvy" }],
         opts: ["Fine as is for now", "VIPOK will send a corrected insert", "Paragon will correct it"], pre: 0, own: false },
       { id: "myopia", t: "Myopia control: the site makes no myopia-control claim",
         ctx: "J&J’s ACUVUE Abiliti Overnight has been FDA-approved for myopia management since 2021, so you were right that one Ortho-K lens has that approval (our September question was out of date). But an FDA approval covers only the lens and studies it was granted for: J&J’s approval does not cover VIPOK, so the site still makes no myopia-control claim.",
@@ -228,6 +250,22 @@ a{color:var(--brand)}
   const ans = q => state.a[q.id] || (state.a[q.id] = { c: q.pre, other: "", note: "", touched: false });
 
   const el = (tag, props = {}, ...kids) => { const n = Object.assign(document.createElement(tag), props); n.append(...kids.filter(k => k != null)); return n; };
+  // Attachments live in Jimmy's Google Drive, shared view-only with Paul (the page itself is public).
+  const driveView = id => "https://drive.google.com/file/d/" + encodeURIComponent(id) + "/view";
+  const dlg = document.getElementById("doc"), frame = document.getElementById("doc-frame");
+  const fileItem = f => {
+    const view = el("button", { type: "button", className: "linkbtn", textContent: "View" });
+    view.addEventListener("click", () => {
+      document.getElementById("doc-title").textContent = f.label;
+      document.getElementById("doc-open").href = driveView(f.drive);
+      frame.src = "https://drive.google.com/file/d/" + encodeURIComponent(f.drive) + "/preview";
+      dlg.showModal();
+    });
+    const open = el("a", { href: driveView(f.drive), target: "_blank", rel: "noopener", textContent: "Open in new tab" });
+    return el("li", {}, "Attachment: " + f.label + " · ", view, " · ", open);
+  };
+  dlg.addEventListener("close", () => { frame.src = "about:blank"; });
+  dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
   const root = document.getElementById("qs");
   let num = 0;
   for (const sec of SECTIONS) {
@@ -241,9 +279,10 @@ a{color:var(--brand)}
       h.append(tag);
       card.append(h);
       if (q.ctx) card.append(el("p", { className: "ctx", textContent: q.ctx }));
-      if (q.prev) {
-        const p = el("div", { className: "prev" }, el("b", { textContent: "You told us: " }), q.prev);
-        if (q.files) p.append(el("ul", { className: "files" }, ...q.files.map(f => el("li", { textContent: "Attachment: " + f }))));
+      if (q.prev || q.files) {
+        const p = el("div", { className: "prev" });
+        if (q.prev) p.append(el("b", { textContent: "You told us: " }), q.prev);
+        if (q.files) p.append(el("ul", { className: "files" }, ...q.files.map(fileItem)));
         card.append(p);
       }
       const fs = el("fieldset", {}, el("legend", { textContent: q.t }));
