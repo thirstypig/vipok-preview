@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<script>window.VIPOK_REVIEW={"hash": "917bfad9c0fa573fcc84eca2f427d0201c411d5c2393128054c4610d433354d8", "api": "https://vipok-review.jimmyc316.workers.dev"};</script>
+<script src="/review/gate.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VIPOK: follow-up questions for the new website</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root{
+  --bg:#f5f7fc; --surface:#ffffff; --sunk:#eaeef8;
+  --ink:#0f1a44; --muted:#4e5b86; --line:#d6dcec;
+  --brand:#1b39ad; --brand-hover:#13287d; --on-brand:#ffffff;
+  --ok:#2f6500; --ok-soft:#eaf7dc; --sug:#8a5200; --sug-soft:#fdeed2; --err:#a3221b;
+  --shadow:0 1px 2px rgba(15,26,68,.06),0 8px 24px rgba(15,26,68,.08);
+  --display:"Archivo","Arial Black","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    color-scheme:dark;
+    --bg:#090e22; --surface:#10183a; --sunk:#0c1330;
+    --ink:#e6eaf7; --muted:#9aa6cc; --line:#243059;
+    --brand:#7b93ff; --brand-hover:#9aadff; --on-brand:#08102e;
+    --ok:#b4ec7c; --ok-soft:#1b2d12; --sug:#ffc66b; --sug-soft:#3a2a08; --err:#ff8a80;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--body)}
+.wrap{max-width:820px;margin:0 auto;padding:40px 20px 120px}
+h1{font:800 clamp(1.8rem,4vw,2.6rem)/1.1 var(--display);font-stretch:110%;margin:.3rem 0 1rem}
+h2{font:750 1.35rem/1.2 var(--display);margin:2.5rem 0 .4rem}
+.eyebrow{font:500 .78rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lede{color:var(--muted);font-size:1.05rem}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem;box-shadow:var(--shadow)}
+.howto{display:grid;gap:.4rem;margin:1.25rem 0}
+.howto p{margin:0}
+.q{margin:1rem 0;display:grid;gap:.6rem}
+.q h3{margin:0;font-size:1.05rem;line-height:1.35}
+.q h3 .n{font-family:var(--mono);color:var(--muted);font-weight:500;margin-right:.4rem}
+.ctx{margin:0;color:var(--muted);font-size:.93rem}
+.prev{margin:0;font-size:.93rem;background:var(--sunk);border-radius:10px;padding:.6rem .8rem}
+.prev b{font-weight:600}
+.files{margin:.2rem 0 0;padding-left:1.1rem;font-size:.88rem;color:var(--muted)}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:.35rem}
+legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.opt{display:flex;gap:.6rem;align-items:flex-start;padding:.45rem .6rem;border:1px solid var(--line);border-radius:10px;cursor:pointer}
+.opt:hover{border-color:var(--brand)}
+.opt input{margin-top:.3rem;accent-color:var(--brand)}
+.opt:has(input:checked){border-color:var(--brand);background:color-mix(in srgb,var(--brand) 8%,transparent)}
+.tag{display:inline-block;font:500 .7rem/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:.3rem .45rem;border-radius:6px;margin-left:.35rem;vertical-align:middle}
+.tag.sug{background:var(--sug-soft);color:var(--sug)}
+.tag.ok{background:var(--ok-soft);color:var(--ok)}
+.tag.need{background:var(--sunk);color:var(--muted)}
+label.small{font-size:.85rem;color:var(--muted)}
+input[type=text],textarea{width:100%;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.55rem .7rem}
+textarea{min-height:64px;resize:vertical}
+input[type=text]:focus,textarea:focus,.opt:focus-within{outline:2px solid var(--brand);outline-offset:1px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);box-shadow:var(--shadow)}
+.bar .in{max-width:820px;margin:0 auto;padding:.75rem 20px;display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:center}
+.bar .count{flex:1 1 220px;font-size:.9rem;color:var(--muted)}
+.btn{font:600 .95rem/1 var(--body);padding:.75rem 1.2rem;border-radius:999px;border:1px solid var(--brand);background:var(--brand);color:var(--on-brand);cursor:pointer}
+.btn:hover{background:var(--brand-hover)}
+.btn:disabled{opacity:.6;cursor:wait}
+.status{margin:0;font-size:.92rem}
+.status.ok{color:var(--ok)} .status.err{color:var(--err)}
+a{color:var(--brand)}
+@media (max-width:640px){.wrap{padding-top:24px}.bar .in{padding:.6rem 14px}.btn{flex:1}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <p class="eyebrow">VIPOK Inc. · new vipok.com</p>
+  <h1>Follow-up questions for the new website</h1>
+  <p class="lede">Thank you for your answers of November 23. Most of them are already on vipok.com. This page confirms them and asks about what is still open.</p>
+
+  <div class="panel howto">
+    <p><b>How it works.</b> Every question already has an answer selected. Where you answered before, it is your own answer, marked <span class="tag ok">Your answer</span>. Where you haven’t answered yet, it is our suggestion, marked <span class="tag sug">Suggested</span>: change it if it’s wrong. A few questions only VIPOK can answer start blank <span class="tag need">Needs your answer</span>.</p>
+    <p>Your answers save in this browser as you go, so you can stop and come back. Press <b>Submit</b> at the bottom when you’re done. You can change answers and submit again at any time; the newest submission counts.</p>
+    <p>To send documents (package inserts, the certificate, the J&amp;J paper), reply to Jimmy’s email with them attached.</p>
+  </div>
+
+  <div class="q">
+    <label for="who"><b>Your name</b></label>
+    <input type="text" id="who" autocomplete="name" placeholder="Name and title">
+  </div>
+
+  <div id="qs"></div>
+
+  <h2>Anything else</h2>
+  <div class="q"><label for="extra" class="small">Corrections, questions, or anything we missed</label><textarea id="extra"></textarea></div>
+</main>
+
+<div class="bar"><div class="in">
+  <span class="count" id="count"></span>
+  <button class="btn" type="button" id="submit">Submit answers</button>
+  <p class="status" id="status" role="status" aria-live="polite" hidden></p>
+</div></div>
+
+<script>
+(() => {
+  // Set to the Formspree endpoint that emails jimmychang316@gmail.com. Until then, Submit opens an email instead.
+  const FORM_URL = "";
+  const FALLBACK_EMAIL = "jimmychang316@gmail.com";
+  const KEY = "vipok-followup-v1";
+
+  // pre: index of the selected option. own: true when it is Paul's own earlier answer, false when it is our suggestion.
+  // pre: null leaves the question blank. Options marked {other:true} show a text box.
+  const SECTIONS = [
+    { title: "Part 1 · Confirm what you told us on November 23", qs: [
+      { id: "trademark", t: "Trademark: the site uses “VIPOK®”",
+        ctx: "USPTO registration 2,489,161 (VIPOK, contact lenses), renewed in 2022, next renewal due September 11, 2031. The site never puts ® on “XTREME CONTOUR” or “XC” (that registration was cancelled in 2013) or on “VIPOK Inc.”.",
+        prev: "“Trademark is valid. Sent you sect 8&9 renewal.”", files: ["8&9Renewal.pdf (section 8 & 9 renewal)"],
+        opts: ["Confirmed", { other: true, label: "Correction" }], pre: 0, own: true },
+      { id: "patent", t: "Patent: the site mentions no patent",
+        ctx: "US Patent 6,361,169 lapsed in 2014. The site says nothing about patents or a “patented design”.",
+        prev: "“No Patent.”", opts: ["Confirmed", { other: true, label: "Correction" }], pre: 0, own: true },
+      { id: "offlabel", t: "The −10.00 D sentence on the Lenses page",
+        ctx: "As you asked, the professionals’ Lenses page now says: “Approved indications are in each lens’s package insert. Off-label use to treat myopia up to −10.00 diopters.” It does not appear on any patient page. Please note: FDA rules let a doctor prescribe a lens off-label, but they treat a manufacturer advertising an unapproved use as off-label promotion. That is why we recommend VIPOK’s counsel approve this sentence.",
+        prev: "“Use ‘Off label use to treat Myopia up to -10.00 diopters.’”",
+        opts: ["Keep it as published", { other: true, label: "Change the wording to" }, "Remove it until VIPOK’s counsel approves it"], pre: 0, own: true },
+      { id: "offlabel-counsel", t: "Has VIPOK’s counsel reviewed the −10.00 D sentence?",
+        opts: ["Not yet; counsel will review it", "Yes, counsel approved it", "VIPOK does not plan a counsel review", { other: true, label: "Other" }], pre: 0, own: false },
+      { id: "chart", t: "Reference chart: the full VIPOK II chart is public on vipok.com",
+        ctx: "Since November 23, the chart and lens selector are on a public “Reference chart” page in the professionals’ section, open to anyone without a login. The old member.htm page is still archived on archive.org.",
+        prev: "“Okay to include reference chart.”",
+        opts: ["Keep it public on vipok.com", "Show it only to doctors who sign up (needs the doctor login, a later phase)", "Take it off the site"], pre: 0, own: true },
+      { id: "archive", t: "Should VIPOK ask archive.org to remove its 2002 copy of member.htm?",
+        ctx: "Only the site owner can make that request. Since the chart is now public anyway, there’s little reason to.",
+        opts: ["No, leave the archive.org copy", "Yes, VIPOK will ask archive.org to exclude it"], pre: 0, own: false },
+      { id: "harris", t: "Dr. Harris’s 2003 article: the site now discloses his connection",
+        ctx: "Beside each citation of the Contact Lens Spectrum case report, the site says: “Dr. Harris was a consultant to VIPOK when he wrote it; the article itself lists no disclosures.” The FTC requires disclosing a connection like this.",
+        prev: "“Dr. Harris was a consultant for Vipok at the time when he wrote the article.”",
+        opts: ["Confirmed, the wording is right", { other: true, label: "Correct the wording to" }], pre: 0, own: true },
+      { id: "terms", t: "Program terms: no enrollment fee",
+        ctx: "The professionals’ page now says there is no fee to join, practices start with the full 168-lens inventory set, a 24-lens fitting set or lens-by-lens orders, and hands-on training comes with the first purchase.",
+        prev: "“Yes still true, no enrollment fees.”",
+        opts: ["Confirmed", { other: true, label: "Correction" }], pre: 0, own: true },
+      { id: "address", t: "Company name and address",
+        ctx: "Contact and the Privacy Policy now say: VIPOK Inc., 1234 S. Garfield Ave., Suite 106, Alhambra, CA 91801. The old site said Suite 105.",
+        prev: "“Vipok Inc. 1234 S. Garfield Ave. #106, Alhambra, CA 91801. Registered corporation in California.”",
+        opts: ["Suite 106 is correct", "It is Suite 105", { other: true, label: "Other address" }], pre: 0, own: true },
+      { id: "law", t: "The Terms of Use are governed by California law",
+        ctx: "Chosen because VIPOK Inc. is a California corporation.",
+        opts: ["Confirmed, California", { other: true, label: "Another state" }], pre: 0, own: false },
+      { id: "photos", t: "Photos from the old home page",
+        ctx: "The old vipok.com home page had a photo collage and a header photo (people and eyes). We found no license for them, so they are not on the new site.",
+        prev: "“What photos?”",
+        opts: ["Leave them off; the new site doesn’t need them", "VIPOK owns or licensed them and will send proof"], pre: 0, own: false },
+    ]},
+    { title: "Part 2 · Regulatory questions still open", qs: [
+      { id: "fda-vipok", t: "VIPOK: FDA status",
+        ctx: "The site says VIPOK lenses are made in Paragon HDS® 100 under Paragon Vision Sciences’ FDA premarket approval P870024 (product code NUU). Is that still correct?",
+        prev: "“Sent you FDA listing.”", files: ["FDA listing printout dated January 6, 2017 (received November 4)"],
+        opts: ["Yes, correct", { other: true, label: "Correction" }], pre: 0, own: true },
+      { id: "fda-listing", t: "The current FDA listing no longer shows “Vipok”",
+        ctx: "The 2017 printout listed “Vipok” under Paragon. FDA’s public device listing today shows no “Vipok” under any company. The listing is the manufacturer’s to keep current. Who will update it?",
+        opts: ["VIPOK will ask Paragon (CooperVision) to re-list it", "Paragon is already updating it", { other: true, label: "It is listed under another name" }, { other: true, label: "Other" }], pre: 0, own: false },
+      { id: "fda-ii", t: "VIPOK II: FDA status",
+        ctx: "Is VIPOK II made under the same Paragon PMA P870024, a different approval, or not FDA-approved?",
+        opts: ["Same PMA P870024", { other: true, label: "A different approval (number)" }, "Not FDA-approved", "Not sure, VIPOK will check"], pre: null },
+      { id: "fda-xc", t: "VIPOK XC (XTREME CONTOUR): FDA status and whether it is still sold",
+        opts: ["Still sold, same PMA P870024", { other: true, label: "Still sold, a different approval (number)" }, "No longer sold: leave it off the site", "Not sure, VIPOK will check"], pre: null },
+      { id: "indication", t: "The approved range for the site’s “indications” line",
+        ctx: "The package insert’s indication says myopia up to 3.00 D, but its study section mentions −5.62 D. Which range should the site state for VIPOK?",
+        opts: ["Up to 3.00 D, as in the indication", { other: true, label: "Another range" }, "Don’t state a range; refer to the insert"], pre: 2, own: false },
+      { id: "inserts", t: "Package inserts for VIPOK II and XC",
+        opts: ["VIPOK will send them (reply to Jimmy’s email)", "They use the same insert as VIPOK", "No separate inserts exist"], pre: null },
+      { id: "insert-fix", t: "Corrections to the VIPOK package insert",
+        ctx: "The insert you sent contains text from other lenses (SuperBridge and Quadra RG), and its study data is from Paragon CRT. The site uses only its safety wording, never its study figures.",
+        prev: "Package insert received November 4 and again November 23.", files: ["Vipok Package Insert.docx"],
+        opts: ["Fine as is for now", "VIPOK will send a corrected insert", "Paragon will correct it"], pre: 0, own: false },
+      { id: "myopia", t: "Myopia control: the site makes no myopia-control claim",
+        ctx: "J&J’s ACUVUE Abiliti Overnight has been FDA-approved for myopia management since 2021, so you were right that one Ortho-K lens has that approval (our September question was out of date). But an FDA approval covers only the lens and studies it was granted for: J&J’s approval does not cover VIPOK, so the site still makes no myopia-control claim.",
+        prev: "“Sent you J&J Abiliti OK which states for myopia management, thus OK is approved for slowing myopia progression.” (The J&J document did not reach us; please re-send it.)",
+        opts: ["Agreed, keep myopia-control claims off", { other: true, label: "VIPOK has its own FDA approval for myopia control (number)" }], pre: 0, own: false },
+      { id: "cfg", t: "Certificate to Foreign Government (CFG): whose name is it in?",
+        ctx: "You said VIPOK has a CFG and is not registered in other countries, so the site lists no foreign markets.",
+        prev: "“We have CFG… Not approved in individual countries outside of US.” (The certificate did not reach us; please send a copy.)",
+        opts: ["VIPOK Inc.", "Paragon Vision Sciences / CooperVision", { other: true, label: "Other" }], pre: null },
+      { id: "claims", t: "Other claims from the old site",
+        ctx: "Your answers didn’t cover these, so they stay off: fits 85% of cases; about 80% first-selection accuracy; 2,000+ eyes fitted; “first to” make high-myopia Ortho-K lenses; day or night wear for 12+ hours; “advanced” material; more accurate than custom designs; lower cost; more profitable for practices.",
+        opts: ["Keep them all off", { other: true, label: "VIPOK has data for some (which ones); will send it" }], pre: 0, own: false },
+      { id: "cases", t: "Case 1, Case 2 and the SSVIP case",
+        ctx: "To show these old cases we need the treating doctor, the date, and the patients’ written consent. Both cases also started at about −7 to −8 D, outside the insert’s range.",
+        prev: "“????”",
+        opts: ["Leave them off the site", { other: true, label: "VIPOK will supply the doctor, date and consent" }], pre: 0, own: false },
+    ]},
+    { title: "Part 3 · Website details", qs: [
+      { id: "phone", t: "Phone and fax",
+        ctx: "Phone 626-282-6658, fax 626-282-3667.",
+        opts: ["Both are current", "Phone only; remove the fax", { other: true, label: "New numbers" }], pre: null },
+      { id: "hours", t: "Office hours for the Contact page",
+        opts: ["Monday–Friday, 9 a.m.–5 p.m. Pacific", { other: true, label: "Other hours" }, "Don’t show hours"], pre: 0, own: false },
+      { id: "inbox", t: "Is customer_service@vipok.com read every business day?",
+        ctx: "The site lists it for questions, privacy requests and problem reports.",
+        opts: ["Yes", { other: true, label: "Use another address" }], pre: null },
+      { id: "privacy-contact", t: "Privacy contact",
+        opts: ["customer_service@vipok.com", { other: true, label: "Another person or address" }], pre: 0, own: false },
+      { id: "retention", t: "How long VIPOK keeps information from the website",
+        ctx: "The Privacy Policy should say how long VIPOK keeps form messages, doctor applications and order records.",
+        opts: ["Messages and applications 2 years; order records 7 years", { other: true, label: "Other periods" }], pre: 0, own: false },
+      { id: "counsel", t: "Counsel review of the legal pages",
+        ctx: "Privacy Policy, Terms of Use, Practitioner Terms and Important Safety Information are live on vipok.com. Have VIPOK’s lawyers reviewed them?",
+        opts: ["Counsel will review them (date in the note)", "Already reviewed", "VIPOK does not plan a counsel review"], pre: 0, own: false },
+      { id: "color", t: "Brand color",
+        ctx: "The October email offered the current blue or a green. Which should the site use?",
+        opts: ["Keep the current blue", "Switch to green", "No preference"], pre: null },
+      { id: "preview", t: "The design preview (vipok.pasadenaworks.com)",
+        ctx: "It is behind a passphrase, hidden from search engines, and shows sample chart data.",
+        prev: "“Reviewing website.”",
+        opts: ["Still reviewing", "Comfortable with it", { other: true, label: "Changes needed" }], pre: 0, own: true },
+    ]},
+  ];
+
+  const QS = SECTIONS.flatMap(s => s.qs);
+  const optLabel = o => typeof o === "string" ? o : o.label;
+  let state = { who: "", extra: "", a: {}, submits: 0 };
+  try { state = { ...state, ...JSON.parse(localStorage.getItem(KEY) || "{}") }; } catch {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+  const ans = q => state.a[q.id] || (state.a[q.id] = { c: q.pre, other: "", note: "", touched: false });
+
+  const el = (tag, props = {}, ...kids) => { const n = Object.assign(document.createElement(tag), props); n.append(...kids.filter(k => k != null)); return n; };
+  const root = document.getElementById("qs");
+  let num = 0;
+  for (const sec of SECTIONS) {
+    root.append(el("h2", { textContent: sec.title }));
+    for (const q of sec.qs) {
+      num++;
+      const a = ans(q);
+      const card = el("section", { className: "panel q", id: "q-" + q.id });
+      const h = el("h3", {}, el("span", { className: "n", textContent: num + "." }), q.t);
+      const tag = el("span", { className: "tag" });
+      h.append(tag);
+      card.append(h);
+      if (q.ctx) card.append(el("p", { className: "ctx", textContent: q.ctx }));
+      if (q.prev) {
+        const p = el("div", { className: "prev" }, el("b", { textContent: "You told us: " }), q.prev);
+        if (q.files) p.append(el("ul", { className: "files" }, ...q.files.map(f => el("li", { textContent: "Attachment: " + f }))));
+        card.append(p);
+      }
+      const fs = el("fieldset", {}, el("legend", { textContent: q.t }));
+      const otherBox = el("input", { type: "text", placeholder: "Type here", value: a.other });
+      otherBox.setAttribute("aria-label", q.t + ": details");
+      q.opts.forEach((o, i) => {
+        const r = el("input", { type: "radio", name: q.id, value: String(i), checked: a.c === i });
+        const lab = el("label", { className: "opt" }, r, el("span", { textContent: optLabel(o) }));
+        r.addEventListener("change", () => { a.c = i; a.touched = true; sync(); });
+        fs.append(lab);
+      });
+      const noteBox = el("textarea", { value: a.note, placeholder: "Optional note" });
+      noteBox.setAttribute("aria-label", q.t + ": note");
+      otherBox.addEventListener("input", () => { a.other = otherBox.value; a.touched = true; sync(); });
+      noteBox.addEventListener("input", () => { a.note = noteBox.value; sync(); });
+      card.append(fs, otherBox, noteBox);
+      root.append(card);
+      q.ui = { tag, otherBox };
+    }
+  }
+  const who = document.getElementById("who"), extra = document.getElementById("extra");
+  who.value = state.who; extra.value = state.extra;
+  who.addEventListener("input", () => { state.who = who.value; save(); });
+  extra.addEventListener("input", () => { state.extra = extra.value; save(); });
+
+  function sync() {
+    let blank = 0, suggested = 0;
+    for (const q of QS) {
+      const a = ans(q), o = a.c == null ? null : q.opts[a.c];
+      q.ui.otherBox.hidden = !(o && o.other);
+      const t = q.ui.tag;
+      if (a.c == null) { blank++; t.className = "tag need"; t.textContent = "Needs your answer"; }
+      else if (a.touched) { t.className = "tag ok"; t.textContent = "Answered"; }
+      else if (q.own) { t.className = "tag ok"; t.textContent = "Your answer"; }
+      else { suggested++; t.className = "tag sug"; t.textContent = "Suggested"; }
+    }
+    document.getElementById("count").textContent =
+      `${QS.length} questions · ${blank} need an answer · ${suggested} still on our suggestion` +
+      (state.submits ? ` · submitted ${state.submits}×` : "");
+    save();
+  }
+  sync();
+
+  function report() {
+    const lines = [`From: ${state.who || "(no name given)"}`, `Submission: ${state.submits + 1}`, ""];
+    let num = 0;
+    for (const sec of SECTIONS) {
+      lines.push(sec.title.toUpperCase());
+      for (const q of sec.qs) {
+        num++;
+        const a = ans(q), o = a.c == null ? null : q.opts[a.c];
+        let v = o == null ? "(no answer)" : optLabel(o) + (o.other && a.other ? ": " + a.other : "");
+        if (o != null && !a.touched) v += q.own ? "  [his Nov 23 answer, left as is]" : "  [our suggestion, left as is]";
+        lines.push(`${num}. ${q.t}`, `   Answer: ${v}`);
+        if (a.note) lines.push(`   Note: ${a.note}`);
+      }
+      lines.push("");
+    }
+    if (state.extra) lines.push("ANYTHING ELSE", state.extra);
+    return lines.join("\n");
+  }
+
+  const btn = document.getElementById("submit"), status = document.getElementById("status");
+  const say = (msg, cls, link) => {
+    status.hidden = false; status.className = "status " + cls; status.textContent = msg;
+    if (link) status.append(" ", link);
+  };
+  btn.addEventListener("click", async () => {
+    const blank = QS.filter(q => ans(q).c == null).length;
+    const body = report();
+    const subject = `VIPOK follow-up: answers from ${state.who || "Paul"}` + (state.submits ? ` (update ${state.submits + 1})` : "");
+    const mail = el("a", { href: `mailto:${FALLBACK_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, textContent: "Send them by email instead" });
+    if (!FORM_URL) { say("Online sending isn’t set up yet.", "err", mail); return; }
+    btn.disabled = true; say("Sending…", "");
+    try {
+      const r = await fetch(FORM_URL, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ _subject: subject, name: state.who, unanswered: blank, answers: body, data: JSON.stringify(state.a) }) });
+      if (!r.ok) throw new Error(r.status);
+      state.submits++; sync();
+      say(blank ? `Sent, thank you. ${blank} question${blank > 1 ? "s" : ""} still need an answer; you can finish later and submit again.` : "Sent, thank you. You can change any answer and submit again.", "ok");
+    } catch {
+      say("That didn’t send.", "err", mail);
+    } finally { btn.disabled = false; }
+  });
+})();
+</script>
+</body>
+</html>
