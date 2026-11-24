@@ -360,6 +360,7 @@ a.tile:hover{border-color:var(--brand);color:var(--ink)}
 .tbd{color:var(--muted);font-style:italic}
 .site-foot .foot-legal{grid-template-columns:1fr;padding-top:0;gap:.6rem}
 .site-foot .foot-legal nav{justify-content:flex-start}
+.site-foot .tm-note{margin:0;font-size:.8rem}
 .rx-only{max-width:90ch}
 .callout.warn{border-left-color:#d97706}
 .cite a{font-weight:600}
@@ -1458,6 +1459,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
         <li><b>Orders</b> (planned): what you order and where it ships. Orders identify patients only by your own reference number. Please do not send us patient names or other patient health information.</li><!-- preview-only:end -->
         <li><b>Technical information:</b> our hosting provider records standard server logs, such as IP address, browser type and pages requested. The site loads fonts from Google Fonts and scripts from cdnjs (Cloudflare), which receive your IP address when your browser requests them. We do not use advertising cookies.</li>
         <li><b>Analytics, only if you agree:</b> if you choose Accept in the cookie banner, vipok.com uses Google Analytics 4 to count visits and see which pages and forms are used. Google Analytics sets cookies (names starting with <code>_ga</code>) and receives your IP address and browser details; it does not store IP addresses. We keep analytics data for 14 months and do not use Google signals or advertising features. If you choose Decline, or don’t choose, Google Analytics is not loaded. You can change your choice at any time with “Cookie settings” at the bottom of the page.</li>
+        <li><b>“Do Not Track” signals:</b> the site doesn’t change its behavior for browser “Do Not Track” signals, because it sets no analytics or tracking cookies unless you choose Accept.</li>
       </ul>
       <h2>How we use it</h2>
       <p>To answer inquiries; to verify practitioner licenses with the issuing licensing boards and, for US practitioners, the NPPES NPI Registry; to run the doctor portal, certification and orders; to keep the site secure; and to meet legal and regulatory obligations, including medical device reporting.</p>
@@ -1650,6 +1652,7 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
   </div>
   <div class="wrap foot-legal">
     <p class="rx-only"><b>Rx only.</b> Caution: US federal law restricts this device to sale by or on the order of a licensed practitioner. Ortho-K lenses are medical devices; read the <a href="#safety">Important Safety Information</a> and the package insert.</p>
+    <p class="tm-note">VIPOK® is a registered trademark of VIPOK Inc. Paragon HDS® is a registered trademark of Paragon Vision Sciences.</p>
     <nav aria-label="Legal"><a href="#safety">Important Safety Information</a><a href="#privacy">Privacy Policy</a><a href="#terms">Terms of Use</a><a href="#practitioner-terms">Practitioner Terms</a><a href="#accessibility">Accessibility</a></nav>
   </div>
 </footer>
@@ -1847,8 +1850,10 @@ dialog.lightbox::backdrop{background:rgba(6,10,28,.9)}
     pill.className = "pill " + (canSeePortal() ? "ok" : "wait");
     applyTile.hidden = canSeePortal();
     applyTile.setAttribute("href", applied ? "#pending" : "#apply");
-    applyTile.querySelector("h3").textContent = applied ? "Application status" : "Apply to become a VIPOK doctor";
-    applyTile.querySelector(".go").textContent = applied ? "Check status →" : "Start the application →";
+    // vipok.com ships this tile as an empty stub (hidden level), so its children may be missing.
+    const tileH = applyTile.querySelector("h3"), tileGo = applyTile.querySelector(".go");
+    if (tileH) tileH.textContent = applied ? "Application status" : "Apply to become a VIPOK doctor";
+    if (tileGo) tileGo.textContent = applied ? "Check status →" : "Start the application →";
     if (canSeePortal() && typeof calc === "function") requestAnimationFrame(() => calc());
   }
   function setRole(next, route) {
