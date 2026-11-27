@@ -114,6 +114,20 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
 .doc-head b{flex:1 1 240px}
 #doc-frame{width:100%;height:100%;border:0;background:var(--sunk)}
 .doc-note{margin:0;padding:.5rem 1rem;font-size:.82rem;color:var(--muted);border-top:1px solid var(--line)}
+.tabs{display:flex;gap:.25rem;border-bottom:1px solid var(--line);margin:1.5rem 0 1rem;overflow-x:auto}
+.tab{font:600 .95rem/1 var(--body);color:var(--muted);background:none;border:0;border-bottom:3px solid transparent;
+  padding:.85rem .9rem .75rem;min-height:44px;cursor:pointer;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--brand);border-bottom-color:var(--brand)}
+.tab .badge{display:inline-block;margin-left:.4rem;font:500 .72rem/1 var(--mono);padding:.25rem .4rem;border-radius:6px;background:var(--sunk);color:var(--muted)}
+.tab .badge.need{background:var(--sug-soft);color:var(--sug)}
+.upd{display:grid;gap:.9rem;margin:0;padding:0;list-style:none}
+.upd > li{display:grid;gap:.5rem}
+.upd .date{font:500 .78rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:1.2rem 0 0}
+.chg{display:grid;gap:.45rem}
+.chg p{margin:0}
+.chg .why{font-size:.88rem;color:var(--muted)}
+.notes{margin:0;padding-left:1.2rem;display:grid;gap:.5rem}
 @media (max-width:640px){
   .wrap{padding:24px 16px 140px}
   .panel{padding:1rem}
@@ -124,6 +138,8 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
   .doc-head{padding:.6rem .8rem calc(.6rem) ;padding-top:calc(.6rem + env(safe-area-inset-top))}
   .doc-head b{flex-basis:100%;font-size:.95rem}
   .cgrid{grid-template-columns:1fr}
+  .tab{padding:.8rem .45rem .7rem;font-size:.9rem}
+  .tab .long{display:none}
 }
 </style>
 </head>
@@ -131,23 +147,49 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
 <main class="wrap">
   <p class="eyebrow">VIPOK Inc. · new vipok.com</p>
   <h1>Follow-up questions for the new website</h1>
-  <p class="lede">Thank you for your answers of November 23. Most of them are already on vipok.com. This page confirms them and asks about what is still open.</p>
-
-  <div class="panel howto">
-    <p><b>How it works.</b> Every question already has an answer selected. Where you answered before, it is your own answer, marked <span class="tag ok">Your answer</span>. Where you haven’t answered yet, it is our suggestion, marked <span class="tag sug">Suggested</span>: change it if it’s wrong. A few questions only VIPOK can answer start blank <span class="tag need">Needs your answer</span>.</p>
-    <p>Your answers save in this browser as you go, so you can stop and come back. Press <b>Submit</b> at the bottom when you’re done. You can change answers and submit again at any time; the newest submission counts.</p>
-    <p>To send documents (package inserts, the certificate, the J&amp;J paper, Paragon’s letter), use <b>Upload a document</b> on the question it belongs to. It opens a Google Drive folder Jimmy shared with you; drag files in, or pick them on your phone. Tick “I uploaded something here” so Jimmy knows to look. You can also reply to Jimmy’s email with attachments.</p>
-  </div>
+  <p class="lede">Thank you for your answers of November 23 and November 24. This page confirms them, asks about what is still open, and lists what changed on vipok.com because of them.</p>
 
   <div class="q">
     <label for="who"><b>Your name</b></label>
     <input type="text" id="who" autocomplete="name" placeholder="Name and title">
   </div>
 
-  <div id="qs"></div>
+  <div class="tabs" role="tablist" aria-label="Sections">
+    <button type="button" class="tab" role="tab" id="t-follow" aria-controls="p-follow" data-tab="follow">Follow-up<span class="long"> questions</span><span class="badge" id="b-follow"></span></button>
+    <button type="button" class="tab" role="tab" id="t-main" aria-controls="p-main" data-tab="main">Questions<span class="long"> 1–53</span><span class="badge" id="b-main"></span></button>
+    <button type="button" class="tab" role="tab" id="t-updates" aria-controls="p-updates" data-tab="updates">Site updates</button>
+  </div>
 
-  <h2>Anything else</h2>
-  <div class="q"><label for="extra" class="small">Corrections, questions, or anything we missed</label><textarea id="extra"></textarea></div>
+  <div role="tabpanel" id="p-follow" aria-labelledby="t-follow">
+    <div class="panel howto">
+      <p><b>New on November 27.</b> These questions come from your November 24 answers, mostly the FDA answer (“approved under VST, B&amp;L approval”), which differs from what the site says today. They start blank. Answer them here; they are sent with the same <b>Submit</b> button as the other questions.</p>
+    </div>
+    <div id="qs-follow"></div>
+  </div>
+
+  <div role="tabpanel" id="p-main" aria-labelledby="t-main">
+  <div class="panel howto">
+    <p><b>How it works.</b> Every question already has an answer selected. Where you answered before, it is your own answer, marked <span class="tag ok">Your answer</span>. Where you haven’t answered yet, it is our suggestion, marked <span class="tag sug">Suggested</span>: change it if it’s wrong. A few questions only VIPOK can answer start blank <span class="tag need">Needs your answer</span>.</p>
+    <p>Your answers save in this browser as you go, so you can stop and come back. Press <b>Submit</b> at the bottom when you’re done. You can change answers and submit again at any time; the newest submission counts.</p>
+    <p>To send documents (package inserts, the certificate, the J&amp;J paper, Paragon’s letter), use <b>Upload a document</b> on the question it belongs to. It opens a Google Drive folder Jimmy shared with you; drag files in, or pick them on your phone. Tick “I uploaded something here” so Jimmy knows to look. You can also reply to Jimmy’s email with attachments.</p>
+  </div>
+
+  <div id="qs"></div>
+  </div>
+
+  <div role="tabpanel" id="p-updates" aria-labelledby="t-updates">
+    <div class="panel howto">
+      <p><b>What changed on vipok.com, and where.</b> Newest first. Each change links to the page it is on (“View” opens it here). The question number shows which of your answers it came from.</p>
+    </div>
+    <ul class="upd" id="updates"></ul>
+    <h2>Notes</h2>
+    <div class="panel"><ul class="notes" id="notes"></ul></div>
+  </div>
+
+  <div id="extra-wrap">
+    <h2>Anything else</h2>
+    <div class="q"><label for="extra" class="small">Corrections, questions, or anything we missed</label><textarea id="extra"></textarea></div>
+  </div>
 </main>
 
 <dialog id="doc" aria-labelledby="doc-title">
@@ -188,6 +230,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
     tsdr: ext("USPTO record for registration 2,489,161", "https://tsdr.uspto.gov/#caseNumber=2489161&caseType=US_REGISTRATION_NO&searchType=statusSearch"),
     patent: ext("US Patent 6,361,169 (Google Patents)", "https://patents.google.com/patent/US6361169B1/en"),
     s043: ext("FDA summary of P870024/S043 (2002 overnight approval)", "https://webharvest.gov/peth04/20041117135654/http://www.fda.gov/cdrh/mda/docs/p870024s043.html"),
+    vst: ext("FDA PMA database: P010062 (Bausch + Lomb Boston Orthokeratology / Vision Shaping Treatment)", "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpma/pma.cfm?id=P010062"),
     pma: ext("FDA PMA database: P870024", "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpma/pma.cfm?id=P870024"),
     r807: ext("21 CFR 807.20: who must register and list", "https://www.ecfr.gov/current/title-21/chapter-I/subchapter-H/part-807/subpart-B/section-807.20"),
     r803: ext("21 CFR 803: Medical Device Reporting", "https://www.ecfr.gov/current/title-21/chapter-I/subchapter-H/part-803"),
@@ -247,7 +290,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
     ]},
     { title: "Part 2 · Regulatory questions still open", qs: [
       { id: "fda-vipok", upload: "1JNbsVieQzzMGnPG0VgWTVK6YoGuIaLdn", refs: [D.fda, site("Lenses page (Specifications: Regulatory status)", "lenses"), X.pma], t: "VIPOK: FDA status",
-        ctx: "The site says VIPOK lenses are made in Paragon HDS® 100 under Paragon Vision Sciences’ FDA premarket approval P870024 (product code NUU). Is that still correct?",
+        ctx: "The site says VIPOK lenses are made in Paragon HDS® 100 under Paragon Vision Sciences’ FDA premarket approval P870024 (product code NUU). Is that still correct? (Your November 24 answer said VST under Bausch + Lomb; see follow-up question 54.)",
         prev: "“Sent you FDA listing.”",
         opts: ["Yes, correct", { other: true, label: "Correction" }], pre: 0, own: true },
       { id: "fda-listing", upload: "1uOx6XmJ3yCjbQIpxsLTt1nMGUd5at8O6", refs: [D.fda, X.pma], t: "The current FDA listing no longer shows “Vipok”",
@@ -330,7 +373,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
         ctx: "The site asks doctors and patients to report problems to VIPOK’s customer-service address. FDA requires a device’s manufacturer to evaluate complaints and report certain events to FDA (Medical Device Reporting, 21 CFR 803). Who does this for VIPOK lenses?",
         opts: ["VIPOK Inc., with a written procedure", "VIPOK Inc.; a procedure still needs to be written", "Paragon/CooperVision", { other: true, label: "Other" }], pre: null },
       { id: "exports", upload: "12n74nJx_rtzgjYpb7MTMZ76uBLUkb6zT", refs: [site("About page", "about"), site("Contact page", "contact")], t: "Exports, and the Asia and Taiwan wording on the site",
-        ctx: "A CFG is used for exporting. The About page says VIPOK “focuses on the growing problem of myopia in Asia” and that “a regional headquarters in Taiwan provides … technical support and hands-on training to every VIPOK practitioner in the region”, and the Contact page invites questions about “distribution in your country”. Since VIPOK isn’t registered outside the US, we suggest removing these.",
+        ctx: "A CFG is used for exporting. The About page says VIPOK “focuses on the growing problem of myopia in Asia” and that “a regional headquarters in Taiwan provides … technical support and hands-on training to every VIPOK practitioner in the region”, and the Contact page invites questions about “distribution in your country”. Since VIPOK isn’t registered outside the US, we suggest removing these. Removed on November 27, following the answer below; change it if the wording should come back.",
         opts: ["Remove the Asia, Taiwan and foreign-distribution wording", { other: true, label: "VIPOK exports to these countries, registered as follows" }, "Keep the wording as is"], pre: 0, own: false },
     ]},
     { title: "Part 5 · Statements on the site that need support", qs: [
@@ -355,7 +398,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
         ctx: "Rows A–ZE, Mean K 39.74–47.53 D, power columns −1.50 to −5.00 D, taken from the old member.htm page (2002). Doctors can now fit from it.",
         opts: ["Yes, current and complete", { other: true, label: "There are changes (VIPOK will send the current chart)" }], pre: null },
       { id: "nightwear", refs: [site("Reference chart page (note under the chart)", "selector")], t: "Chart note: “If only the nightwear option is used, column 08 lenses can be dispensed directly without power adjustment”",
-        ctx: "This comes from the old fitting guide. “Nightwear option” implies a daytime option, which the site no longer mentions.",
+        ctx: "This comes from the old fitting guide. “Nightwear option” implies a daytime option, which the site no longer mentions. Removed on November 27, following the answer below.",
         opts: ["Remove the sentence", "Keep it as is", { other: true, label: "Reword it to" }], pre: 0, own: false },
       { id: "paragon-tm", upload: "1t4VDeR3yFCDtbGEEkZzaQYp1rBnYFlRi", refs: [site("Lenses page (Regulatory status)", "lenses"), site("Footer (any page)", "home")], t: "Naming Paragon HDS® 100 on the site",
         ctx: "The Lenses page says VIPOK is made in Paragon HDS® 100 under Paragon’s PMA, and the footer now says “Paragon HDS® is a registered trademark of Paragon Vision Sciences.” Is VIPOK allowed to name Paragon this way?",
@@ -387,6 +430,64 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
         ctx: "The policy lets people ask to see, correct or delete their information. VIPOK is likely below the size at which California’s privacy law (CCPA) applies, so offering this is voluntary.",
         opts: ["Keep offering these rights", "Counsel will decide"], pre: 0, own: false },
     ]},
+    { title: "Part 7 · Follow-up questions, November 27", tab: "follow", qs: [
+      { id: "fda-basis", upload: "1JNbsVieQzzMGnPG0VgWTVK6YoGuIaLdn", refs: [X.vst, X.pma, site("Lenses page (Specifications: Regulatory status)", "lenses")], t: "Which FDA approval, and which material, are VIPOK lenses made under today?",
+        ctx: "Your November 24 answer: “Vipok FDA approved under VST. B&L approval.” Bausch + Lomb’s Vision Shaping Treatment (VST) is FDA approval P010062, for lenses made in B&L’s Boston material (oprifocon A, Boston Equalens II). On November 23 VIPOK said the lenses are made in Paragon HDS® 100 under Paragon’s approval P870024, and the Lenses page says so today. A lens is made under one approval, so the site needs to know which. The Lenses page stays as it is until you answer.",
+        prev: "“Vipok FDA approved under VST. B&L approval.” and “VST under B&L”",
+        opts: ["Bausch + Lomb VST, P010062, Boston material", "Paragon, P870024, Paragon HDS 100 (as the site says now)", { other: true, label: "Some lenses under each (say which)" }, "Not sure, VIPOK will check"], pre: null },
+      { id: "vst-letter", upload: "1uOx6XmJ3yCjbQIpxsLTt1nMGUd5at8O6", refs: [X.vst], t: "If VST: can you send Bausch + Lomb’s letter or agreement that covers the VIPOK design?",
+        ctx: "Under VST, Bausch + Lomb’s approval covers lens designs that FDA added through supplements to P010062, and the design company usually has an agreement with Bausch + Lomb. A letter, the agreement, or the supplement number confirms VIPOK is one of them.",
+        opts: ["VIPOK will upload or email the letter or agreement", { other: true, label: "The supplement number is" }, "There is no letter or agreement", "Not sure"], pre: null },
+      { id: "vst-designs", upload: "1l3RJGBa4mWemOt_ybkkoekLb1Dm-RLC_", refs: [X.vst, site("Lenses page", "lenses")], t: "Do VIPOK, VIPOK II and XC all fall under the same approval?",
+        ctx: "You noted VIPOK II is “Under VST” and XC is “Under VST off label use”.",
+        opts: ["Yes, all three", { other: true, label: "No (say which lens is under which approval)" }, "Not sure, VIPOK will check"], pre: null },
+      { id: "xc-offlabel", upload: "1m_7FZvLpfL4v3gdV1CYiQK0yAkOfYGnG", refs: [X.vst, X.r352], t: "XC: what does “under VST off label use” mean?",
+        ctx: "A doctor may prescribe a lens off-label. FDA treats a manufacturer that makes, sells or advertises a lens for a use its approval doesn’t cover as off-label promotion. Which of these describes XC?",
+        opts: ["XC is made within the approved range; “off label” is how some doctors use it", "XC is made for powers or uses outside the approval", "XC is no longer sold", { other: true, label: "Other" }], pre: null },
+      { id: "insert-basis", upload: "1TJ7XKmYchPdKGju6x9HA46yzmXd3phcr", refs: [D.insert, X.vst], t: "Which package insert goes with the approval in question 54?",
+        ctx: "The insert you sent is written for Paragon lenses (it mentions Paragon CRT, SuperBridge and Quadra RG). If the lenses are made under Bausch + Lomb’s VST approval, the insert would normally be the VST one. The site’s Important Safety Information uses the insert’s safety wording.",
+        opts: ["VIPOK will upload or email the VST insert", "The insert already sent is the right one", { other: true, label: "Other" }], pre: null },
+      { id: "confirm-left", t: "Your answers left on the pre-selected choice (questions 1–53)",
+        ctx: "On November 24, 33 answers were sent without being changed from the pre-selected choice (shown as “Suggested” or “Your answer”). We only act on them once you confirm. Two of them also disagree with an answer you did change: question 4 says VIPOK plans no counsel review of the −10.00 D sentence, while 28, 34 and 39 are still on “counsel will review”.",
+        opts: ["I confirm all of them", "I changed the ones that were wrong; the rest are confirmed", "I haven’t gone through them yet"], pre: null },
+    ]},
+  ];
+
+  // Site updates tab: what changed on vipok.com because of VIPOK's answers. Newest first. Facts only (this page is in a public repo).
+  const UPDATES = [
+    { date: "November 27, 2026", items: [
+      { what: "Removed the paragraph saying VIPOK focuses on myopia in Asia and has a regional headquarters in Taiwan.", q: "36", where: [site("About page", "about")] },
+      { what: "Removed “distribution in your country” from the Contact page (its introduction and the message box).", q: "36", where: [site("Contact page", "contact")] },
+      { what: "Removed the chart note “If only the nightwear option is used, column 08 lenses can be dispensed directly without power adjustment.”", q: "44", where: [site("Reference chart page", "selector")] },
+    ]},
+    { date: "November 24, 2026", items: [
+      { what: "“Double reverse geometry lens for accelerated orthokeratology” became “… for orthokeratology”.", q: "37", where: [site("Lenses page (VIPOK® card)", "lenses")] },
+      { what: "Removed “Selecting from a fixed chart also avoids errors from transferring and recalculating fitting data.”", q: "38", where: [site("For professionals page", "pro"), site("FAQ", "faq")] },
+      { what: "Added the “Do Not Track” line to the Privacy Policy.", q: "52", where: [site("Privacy Policy (What we collect)", "privacy")] },
+      { what: "Added to the footer: “VIPOK® is a registered trademark of VIPOK Inc. Paragon HDS® is a registered trademark of Paragon Vision Sciences.”", q: "1, 45", where: [site("Footer (any page)", "home")] },
+    ]},
+    { date: "November 23, 2026", items: [
+      { what: "Published the full VIPOK II reference chart and lens selector on a public Reference chart page.", q: "5", where: [site("Reference chart page", "selector")] },
+      { what: "Added “Approved indications are in each lens’s package insert. Off-label use to treat myopia up to −10.00 diopters.” (professionals only, not on patient pages).", q: "3", where: [site("Lenses page", "lenses")] },
+      { what: "Added the disclosure that Dr. Harris was a consultant to VIPOK beside each citation of his 2003 article.", q: "7", where: [site("Literature page", "clinical"), site("About page", "about")] },
+      { what: "Restored the program terms: no fee to join, hands-on training with the first purchase.", q: "8", where: [site("For professionals page", "pro")] },
+      { what: "Added VIPOK Inc., 1234 S. Garfield Ave., Suite 106, Alhambra, CA 91801.", q: "9", where: [site("Contact page", "contact"), site("Privacy Policy", "privacy")] },
+      { what: "Set the Terms of Use to California law.", q: "10", where: [site("Terms of Use", "terms")] },
+    ]},
+    { date: "November 13, 2026", items: [
+      { what: "Added visitor statistics (Google Analytics) that run only if a visitor chooses Accept, and described them in the Privacy Policy.", where: [site("Privacy Policy", "privacy")] },
+    ]},
+    { date: "November 8, 2026", items: [
+      { what: "The new vipok.com went live. The Contact and doctor interest forms send their messages by email.", where: [site("Home page", "home"), site("Contact page", "contact")] },
+    ]},
+  ];
+  const NOTES = [
+    "Your November 24 submission arrived (it was sent twice; both copies are the same). It answered 5 questions directly; 33 were left on the pre-selected choice and 15 were blank. No documents had been uploaded yet.",
+    "The Lenses page still says the lenses are made in Paragon HDS® 100 under Paragon’s approval P870024. Your answer says VST under Bausch + Lomb. Follow-up question 54 asks which is correct; the page changes once you answer.",
+    "Not changed yet, because each would add a new statement to the site: office hours (question 24), how long information is kept (27), and the chart copyright notice and Terms line (48). They go on once you confirm them (follow-up question 59).",
+    "The −10.00 D sentence stays on the Lenses page as you directed.",
+    "Brand colors: your answers keep the current blue and green, so nothing changed.",
+    "Your earlier answers are still filled in under “Questions 1–53”. Anything you change there or here is sent with your next Submit.",
   ];
 
   const QS = SECTIONS.flatMap(s => s.qs);
@@ -426,7 +527,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
   document.getElementById("doc-close").addEventListener("click", () => dlg.close());
   dlg.addEventListener("close", () => { frame.src = "about:blank"; });
   dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
-  const root = document.getElementById("qs");
+  const root = document.getElementById("qs"), rootFollow = document.getElementById("qs-follow");
   let colorPreview = null;
 
   // Brand-color preview: the chosen pair as the top banner, in light and dark mode.
@@ -470,7 +571,9 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
   }
   let num = 0;
   for (const sec of SECTIONS) {
-    root.append(el("h2", { textContent: sec.title }));
+    const host = sec.tab === "follow" ? rootFollow : root;
+    for (const q of sec.qs) q.tab = sec.tab || "main";
+    host.append(el("h2", { textContent: sec.title }));
     for (const q of sec.qs) {
       num++;
       const a = ans(q);
@@ -512,7 +615,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
       card.append(fs);
       if (q.preview) card.append(colorPreview = el("div", { className: "cprev" }));
       card.append(otherBox, addNote, noteBox);
-      root.append(card);
+      host.append(card);
       q.ui = { tag, otherBox };
     }
   }
@@ -520,6 +623,36 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
   who.value = state.who; extra.value = state.extra;
   who.addEventListener("input", () => { state.who = who.value; save(); });
   extra.addEventListener("input", () => { state.extra = extra.value; save(); });
+
+  const updList = document.getElementById("updates");
+  for (const day of UPDATES) {
+    updList.append(el("li", {}, el("p", { className: "date", textContent: day.date }),
+      ...day.items.map(c => el("div", { className: "panel chg" },
+        el("p", { textContent: c.what }),
+        c.q ? el("p", { className: "why", textContent: "From your answer to question " + c.q + "." }) : null,
+        el("ul", { className: "files" }, ...c.where.map(fileItem))))));
+  }
+  document.getElementById("notes").append(...NOTES.map(t => el("li", { textContent: t })));
+
+  const tabs = [...document.querySelectorAll(".tab")];
+  function showTab(name) {
+    for (const t of tabs) {
+      const on = t.dataset.tab === name;
+      t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    }
+    document.getElementById("extra-wrap").hidden = name === "updates";
+    state.tab = name; save();
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => showTab(t.dataset.tab));
+    t.addEventListener("keydown", e => {
+      const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!d) return;
+      const n = tabs[(i + d + tabs.length) % tabs.length]; showTab(n.dataset.tab); n.focus();
+    });
+  });
+  showTab(tabs.some(t => t.dataset.tab === state.tab) ? state.tab : "follow");
 
   function sync() {
     let blank = 0, suggested = 0;
@@ -536,13 +669,19 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
       (blank ? `${blank} to answer · ` : "All answered · ") + `${suggested} suggested` +
       (state.submits ? ` · sent ${state.submits}×` : "");
     document.getElementById("next").hidden = !blank;
+    for (const name of ["follow", "main"]) {
+      const n = QS.filter(q => q.tab === name && ans(q).c == null).length, b = document.getElementById("b-" + name);
+      b.replaceChildren(n ? String(n) : "done", n ? el("span", { className: "long", textContent: " to answer" }) : ""); b.className = "badge" + (n ? " need" : "");
+    }
     renderColor();
     save();
   }
   sync();
   document.getElementById("next").addEventListener("click", () => {
-    const q = QS.find(q => ans(q).c == null);
+    const blankQ = q => ans(q).c == null;   // current tab first, then the rest
+    const q = QS.find(q => q.tab === state.tab && blankQ(q)) || QS.find(blankQ);
     if (!q) return;
+    showTab(q.tab);
     const card = document.getElementById("q-" + q.id);
     card.scrollIntoView({ behavior: "smooth", block: "start" });
     card.querySelector("input[type=radio]").focus({ preventScroll: true });
