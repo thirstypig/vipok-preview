@@ -79,8 +79,11 @@ a{color:var(--brand)}
 .files li{margin:.35rem 0;display:grid;gap:.35rem}
 .refs{margin:0;font-size:.93rem;border:1px dashed var(--line);border-radius:10px;padding:.6rem .8rem}
 .refs .files{padding-left:1.1rem}
-.upload{display:grid;gap:.4rem;font-size:.93rem;border:1px dashed var(--ok);border-radius:10px;padding:.6rem .8rem;background:color-mix(in srgb,var(--ok-soft) 50%,transparent)}
-.upload .chip{border-color:var(--ok);color:var(--ok)}
+.upload{display:flex;flex-wrap:wrap;gap:.2rem 1rem;align-items:center;font-size:.88rem;color:var(--muted);border-top:1px solid var(--line);padding-top:.5rem}
+.upload a{min-height:40px;display:inline-flex;align-items:center}
+.upload label.check{font-size:.88rem}
+.submit-end{display:grid;gap:.5rem;justify-items:start;margin-top:1rem}
+.submit-end p{margin:0;font-size:.9rem;color:var(--muted)}
 label.check{display:flex;gap:.55rem;align-items:center;min-height:40px;cursor:pointer}
 label.check input{width:20px;height:20px;accent-color:var(--brand)}
 .sw{flex:0 0 auto;width:28px;height:28px;border-radius:8px;border:1px solid var(--line);margin-top:-.1rem}
@@ -162,8 +165,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
 
   <div role="tabpanel" id="p-follow" aria-labelledby="t-follow">
     <div class="panel howto">
-      <p><b>Only four questions are still open.</b> Each is about something vipok.com says today: the phone and fax numbers, the customer-service inbox, the online course, and the reference chart. They are sent with the same <b>Submit</b> button.</p>
-      <p><b>FDA:</b> you confirmed the lenses are FDA-approved under Bausch + Lomb’s Vision Shaping Treatment (VST). We are relying on that and are not asking further FDA questions. Questions we no longer need are marked “No longer needed”; you can skip them. See <b>Site updates</b> for what changed and a few notes for VIPOK’s records.</p>
+      <p><b>Four questions are left</b>, all about what vipok.com says today. Answer them and press <b>Submit</b>.</p>
     </div>
     <h2>Still open</h2>
     <div id="qs-follow"></div>
@@ -191,6 +193,11 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
   <div id="extra-wrap">
     <h2>Anything else</h2>
     <div class="q"><label for="extra" class="small">Corrections, questions, or anything we missed</label><textarea id="extra"></textarea></div>
+    <div class="submit-end">
+      <button class="btn" type="button" id="submit2">Submit answers</button>
+      <p>Jimmy gets your answers by email. You can come back, change anything and submit again.</p>
+      <p class="status" id="status2" role="status" aria-live="polite" hidden></p>
+    </div>
   </div>
 </main>
 
@@ -470,7 +477,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
     "Your November 24 submission arrived (it was sent twice; both copies are the same). No documents had been uploaded.",
     "FDA: you confirmed the lenses are FDA-approved under Bausch + Lomb’s Vision Shaping Treatment (VST). We are relying on that, have removed the Paragon wording, and are not asking further FDA questions.",
     "For VIPOK’s records, no answer needed: FDA’s original VST approval (P010062, 2004) was for myopia up to 5.00 D. The −10.00 D sentence on the Lenses page and XC’s “off label use” describe use beyond that range, and the package insert you sent is written for Paragon lenses, so it may not match a VST lens. These are VIPOK’s to manage; the site keeps the −10.00 D sentence as you directed.",
-    "Questions we no longer need are marked “No longer needed”. Four remain, on the Follow-up questions tab.",
+    "Questions we no longer need are marked “No longer needed” under “Questions 1–53”; you can skip them. Four remain, on the Follow-up questions tab.",
     "Office hours are not shown on the site, and the Privacy Policy’s section on how long information is kept stays as it reads now.",
     "Brand colors: your answers keep the current blue and green, so nothing changed.",
     "Your earlier answers are still filled in under “Questions 1–53”. Anything you change is sent with your next Submit.",
@@ -572,14 +579,14 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
       if (q.prev) card.append(el("div", { className: "prev" }, el("b", { textContent: "You told us: " }), q.prev));
       if (q.refs) card.append(el("div", { className: "refs" }, el("b", { textContent: "To review" }),
         el("ul", { className: "files" }, ...q.refs.map(fileItem))));
+      let upload = null;   // optional, shown after the answer choices
       if (q.upload) {
         const box = el("input", { type: "checkbox", checked: !!a.uploaded });
         box.addEventListener("change", () => { a.uploaded = box.checked; sync(); });
-        card.append(el("div", { className: "upload" },
-          el("span", { textContent: "Have a document for this question?" }),
-          el("span", { className: "chips" }, el("a", { className: "chip", href: "https://drive.google.com/drive/folders/" + encodeURIComponent(q.upload),
-            target: "_blank", rel: "noopener", textContent: "Upload a document" })),
-          el("label", { className: "check" }, box, el("span", { textContent: "I uploaded something here" }))));
+        upload = el("div", { className: "upload" },
+          el("span", {}, "Have a document? ", el("a", { href: "https://drive.google.com/drive/folders/" + encodeURIComponent(q.upload),
+            target: "_blank", rel: "noopener", textContent: "Upload it (optional)" })),
+          el("label", { className: "check" }, box, el("span", { textContent: "I uploaded something here" })));
       }
       const fs = el("fieldset", {}, el("legend", { textContent: q.t }));
       const otherBox = el("input", { type: "text", placeholder: "Type here", value: a.other });
@@ -600,7 +607,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
       noteBox.addEventListener("input", () => { a.note = noteBox.value; sync(); });
       card.append(fs);
       if (q.preview) card.append(colorPreview = el("div", { className: "cprev" }));
-      card.append(otherBox, addNote, noteBox);
+      card.append(otherBox, addNote, noteBox, upload);
       host.append(card);
       q.ui = { tag, otherBox };
     }
@@ -641,7 +648,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
   showTab(tabs.some(t => t.dataset.tab === state.tab) ? state.tab : "follow");
 
   function sync() {
-    let blank = 0, suggested = 0;
+    let blank = 0;
     for (const q of QS) {
       const a = ans(q), o = a.c == null ? null : q.opts[a.c];
       q.ui.otherBox.hidden = !(o && o.other);
@@ -650,10 +657,10 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
       else if (a.c == null) { blank++; t.className = "tag need"; t.textContent = "Needs your answer"; }
       else if (a.touched) { t.className = "tag ok"; t.textContent = "Answered"; }
       else if (q.own) { t.className = "tag ok"; t.textContent = "Your answer"; }
-      else { suggested++; t.className = "tag sug"; t.textContent = "Suggested"; }
+      else { t.className = "tag sug"; t.textContent = "Suggested"; }
     }
     document.getElementById("count").textContent =
-      (blank ? `${blank} to answer · ` : "All answered · ") + `${suggested} suggested` +
+      (blank ? `${blank} to answer` : "All answered, ready to submit") +
       (state.submits ? ` · sent ${state.submits}×` : "");
     document.getElementById("next").hidden = !blank;
     for (const name of ["follow", "main"]) {
@@ -696,12 +703,14 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
     return lines.join("\n");
   }
 
-  const btn = document.getElementById("submit"), status = document.getElementById("status");
-  const say = (msg, cls, link) => {
-    status.hidden = false; status.className = "status " + cls; status.textContent = msg;
-    if (link) status.append(" ", link);
-  };
-  btn.addEventListener("click", async () => {
+  const btns = [document.getElementById("submit"), document.getElementById("submit2")];
+  const statuses = [document.getElementById("status"), document.getElementById("status2")];
+  const say = (msg, cls, link) => statuses.forEach((st, i) => {
+    st.hidden = false; st.className = "status " + cls; st.textContent = msg;
+    if (link && i === 0) st.append(" ", link);
+    else if (link) st.append(" ", Object.assign(link.cloneNode(true), { onclick: () => link.click() }));
+  });
+  const send = async () => {
     const blank = QS.filter(q => !q.dropped && ans(q).c == null).length;
     const body = report();
     const subject = `VIPOK follow-up: answers from ${state.who || "Paul"}` + (state.submits ? ` (update ${state.submits + 1})` : "");
@@ -712,7 +721,7 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
       catch { say("Couldn’t copy. Please try Submit again later.", "err"); }
     });
     if (!FORM_URL) { say("Online sending isn’t set up yet.", "err", mail); return; }
-    btn.disabled = true; say("Sending…", "");
+    btns.forEach(b => b.disabled = true); say("Sending…", "");
     try {
       const r = await fetch(FORM_URL, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({ _subject: subject, name: state.who, unanswered: blank, answers: body, data: JSON.stringify(state.a) }) });
@@ -721,8 +730,9 @@ dialog#doc::backdrop{background:rgba(9,14,34,.55)}
       say(blank ? `Sent, thank you. ${blank} question${blank > 1 ? "s" : ""} still need an answer; you can finish later and submit again.` : "Sent, thank you. You can change any answer and submit again.", "ok");
     } catch {
       say("That didn’t send. Check your connection and try again, or:", "err", mail);
-    } finally { btn.disabled = false; }
-  });
+    } finally { btns.forEach(b => b.disabled = false); }
+  };
+  btns.forEach(b => b.addEventListener("click", send));
 })();
 </script>
 </body>
